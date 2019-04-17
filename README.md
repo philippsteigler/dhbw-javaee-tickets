@@ -4,7 +4,8 @@
 
 1. Start Wildfly Server (%WildflyHome%/bin/standalone.sh or .bat)
 2. Start jboss-cli (%WildflyHome%/bin/jboss-cli.sh or .bat)
-3. Enter the following commands:
+3. Connect to Wildfly Server via command "connect"
+4. Enter the following commands:
 
 ### MySQL Driver
 ```
