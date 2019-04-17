@@ -1,8 +1,10 @@
-# Pizza Factory Article Db
+# Ticket System DB
 
 ## Configuration
 
-Start jboss-cli and enter the following commands:
+1. Start Wildfly Server (%WildflyHome%/bin/standalone.sh or .bat)
+2. Start jboss-cli (%WildflyHome%/bin/jboss-cli.sh or .bat)
+3. Enter the following commands:
 
 ### MySQL Driver
 ```
