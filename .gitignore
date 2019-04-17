@@ -1,0 +1,11 @@
+/.gradle/
+/bin/
+/build/
+/target/
+/.settings/
+/.project
+/.classpath
+/derby.log
+/phantomjsdriver.log
+/.metadata/
+/.idea/
