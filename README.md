@@ -1,4 +1,4 @@
-# Pizza Factory Article Db
+# Ticket System DB
 
 ## Configuration
 
