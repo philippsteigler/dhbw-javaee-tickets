@@ -38,8 +38,8 @@
 ./subsystem=security/security-domain=ticketsDomain/authentication=classic:add( \
   login-modules=[{code=Database, flag=Required, module-options={ \
     dsJndiName="java:jboss/datasources/ticketsDS", \
-    principalsQuery="SELECT password from appuser WHERE loginId=?", \
-    rolesQuery="SELECT ar.name, 'Roles' FROM approle ar, appuser_approle auar, appuser au WHERE ar.id = auar.roles_id AND au.id = auar.AppUser_id AND au.loginId = ?", \
+    principalsQuery="SELECT password from user WHERE login_id=?", \
+    rolesQuery="SELECT r.name, 'Roles' FROM role r, user_role ur, user u WHERE r.id = ur.roles_id AND u.id = ur.User_id AND u.login_id = ?", \
     hashAlgorithm=SHA-256, \
     hashEncoding=base64, \
 	hashUserPassword=true, \

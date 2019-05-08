@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @InterceptorBinding
 @Target(value = { ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CdiRoleCheck {
+public @interface CDIRoleCheck {
 }

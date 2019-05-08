@@ -1,6 +1,6 @@
 package org.dhbw.mosbach.ai.tickets.database;
 
-import org.dhbw.mosbach.ai.tickets.ejb.CdiRoleCheck;
+import org.dhbw.mosbach.ai.tickets.ejb.CDIRoleCheck;
 import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.User;
 import org.jboss.security.Base64Encoder;
@@ -17,9 +17,9 @@ import java.security.NoSuchAlgorithmException;
 
 @Named
 @Dependent
-@CdiRoleCheck
+@CDIRoleCheck
 @RolesAllowed(value = { Roles.ADMIN })
-public class UserDAO extends DefaultDAO<User, Long> {
+public class UserDAO extends BaseDAO<User, Long> {
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
 

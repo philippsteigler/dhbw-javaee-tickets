@@ -12,7 +12,7 @@
 		<!-- Use ENABLE_SELECTIVE to disable caching globally. Caching can the be enabled for each entity by setting @Cacheable(true) -->
 		<shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
 		<properties>
-			<!--  <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/> -->
+			<!-- <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/> -->
 			<!-- <property name="javax.persistence.schema-generation.database.action" value="create"/> -->
 			<!-- <property name="javax.persistence.schema-generation.database.action" value="none"/> -->
 

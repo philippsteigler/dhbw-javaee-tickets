@@ -1,6 +1,7 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
 import java.security.Principal;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.enterprise.context.RequestScoped;
@@ -37,11 +38,11 @@ public class SecurityBean {
     }
 
     private Optional<Principal> getPrincipal() {
-        return Optional.ofNullable(getRequest().getUserPrincipal());
+        return Optional.ofNullable(Objects.requireNonNull(getRequest()).getUserPrincipal());
     }
 
     public String getLoginName() {
-        return getPrincipal().map(p -> p.getName()).orElse("");
+        return getPrincipal().map(Principal::getName).orElse("");
     }
 
     public boolean isAuthenticated() {
@@ -49,7 +50,7 @@ public class SecurityBean {
     }
 
     public boolean isUserInRole(String role) {
-        return getRequest().isUserInRole(role);
+        return Objects.requireNonNull(getRequest()).isUserInRole(role);
     }
 
     public User getUser() {
@@ -57,7 +58,7 @@ public class SecurityBean {
 
         if (principal.isPresent()) {
             if ((loggedInUser == null) || !principal.get().getName().equals(loggedInUser.getLoginID())) {
-                loggedInUser = userDAO.findByUnique("loginId", principal.get().getName());
+                loggedInUser = userDAO.findByUnique("login_id", principal.get().getName());
             }
 
             return loggedInUser;
@@ -73,7 +74,6 @@ public class SecurityBean {
 
     public String logout() {
         final HttpServletRequest request = getRequest();
-
         loggedInUser = null;
 
         try {

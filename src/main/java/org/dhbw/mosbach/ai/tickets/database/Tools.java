@@ -1,30 +1,34 @@
 package org.dhbw.mosbach.ai.tickets.database;
 
-import com.google.common.base.Preconditions;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.spi.CDI;
-import javax.persistence.EntityManager;
-import javax.persistence.Id;
-import javax.persistence.PersistenceContext;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
 
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.spi.CDI;
+import javax.persistence.EntityManager;
+import javax.persistence.Id;
+import javax.persistence.PersistenceContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Preconditions;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
 /**
  * Database Tool functions.
  *
- * @author Alexander Auch
+ * @author Alexander.Auch
+ *
  */
 @Dependent
-public final class Tools {
+public final class Tools
+{
 	private static final Logger logger = LoggerFactory.getLogger(Tools.class);
 
 	@PersistenceContext
@@ -33,7 +37,7 @@ public final class Tools {
 	private static final LoadingCache<Class<?>, Method> idGetters = CacheBuilder.newBuilder().maximumSize(20)
 			.build(new CacheLoader<Class<?>, Method>() {
 				@Override
-				public Method load(Class<?> key) {
+				public Method load(Class<?> key) throws Exception {
 					return getEntityKeyGetterByReflection(key);
 				}
 			});
@@ -56,7 +60,8 @@ public final class Tools {
 	 * Returns the getter method for the given entity's primary key by using
 	 * reflection.
 	 *
-	 * @param entityClass entity class
+	 * @param entityClass
+	 *          entity class
 	 * @return getter method or null if none found
 	 */
 	private static Method getEntityKeyGetterByReflection(Class<?> entityClass) {
@@ -66,10 +71,12 @@ public final class Tools {
 			}
 		}
 
+		// Or search for field
 		for (final Field field : entityClass.getDeclaredFields()) {
 			if (field.isAnnotationPresent(Id.class)) {
 				final String fieldName = field.getName();
-				final String getterMethodName = String.format("get%c%s", Character.toUpperCase(fieldName.charAt(0)), fieldName.substring(1));
+				final String getterMethodName = String.format("get%c%s",
+						Character.valueOf(Character.toUpperCase(fieldName.charAt(0))), fieldName.substring(1));
 
 				try {
 					return entityClass.getMethod(getterMethodName);
@@ -88,7 +95,8 @@ public final class Tools {
 	 * cache lookup. If no entry exists in the cache, it is searched by
 	 * reflection.
 	 *
-	 * @param entityClass entity class
+	 * @param entityClass
+	 *          entity class
 	 * @return getter method or null if none found
 	 */
 	public static Method getEntityKeyGetter(Class<?> entityClass) {
@@ -115,7 +123,8 @@ public final class Tools {
 	/**
 	 * Tries to invoke {@link #loadFully(Object)} for each object in the list.
 	 *
-	 * @param list list
+	 * @param list
+	 *          list
 	 */
 	public static void loadFully(List<?> list) {
 		list.forEach(Tools::loadFully);
@@ -127,12 +136,14 @@ public final class Tools {
 	 * methods. The operation is not transitive, i.e., no getters of referenced
 	 * objects will be called.
 	 *
-	 * @param obj object to be loaded fully
+	 * @param obj
+	 *          object to be loaded fully
 	 */
 	public static void loadFully(Object obj) {
 		Preconditions.checkNotNull(obj);
 
 		for (final Method method : obj.getClass().getMethods()) {
+			// check whether method starts with get and has no parameters
 			if (method.getName().startsWith("get") && (method.getParameterTypes().length == 0)) {
 				try {
 					final Object result = method.invoke(obj);
@@ -143,6 +154,7 @@ public final class Tools {
 
 					System.out.println(result);
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					// silently ignore errors here
 					logger.info(String.format("Exception while invoking %s.%s", obj.getClass().getName(), method.getName()), e);
 				}
 			}

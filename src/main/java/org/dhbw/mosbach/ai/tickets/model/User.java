@@ -21,7 +21,7 @@ public class User {
     private long id;
 
     @Column(nullable = false, length = 32, unique = true)
-    private String loginID;
+    private String login_id;
 
     @Column(length = 256)
     private String password;
@@ -39,9 +39,9 @@ public class User {
         super();
     }
 
-    public User(String loginID, String name) {
+    public User(String login_id, String name) {
         super();
-        this.loginID = loginID;
+        this.login_id = login_id;
         this.name = name;
     }
 
@@ -56,11 +56,11 @@ public class User {
 
     @XmlAttribute(required = true)
     public String getLoginID() {
-        return loginID;
+        return login_id;
     }
 
-    public void setLoginID(String loginID) {
-        this.loginID = loginID;
+    public void setLoginID(String login_id) {
+        this.login_id = login_id;
     }
 
     public String getPassword() {

@@ -1,27 +1,31 @@
 package org.dhbw.mosbach.ai.tickets.database;
 
-import com.google.common.collect.Lists;
-import com.google.common.reflect.TypeToken;
-
-import javax.persistence.CacheRetrieveMode;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 
+import javax.persistence.CacheRetrieveMode;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
+import com.google.common.collect.Lists;
+import com.google.common.reflect.TypeToken;
+
 /**
  * Abstract Data Access Object base class.
  *
- * @author Alexander Auch
- * @param <E> Entity
- * @param <I> Type of Identity value (primary key type)
+ * @author Alexander.Auch
+ *
+ * @param <E>
+ *          Entity
+ * @param <I>
+ *          Type of Identity value (primary key type)
  */
-public abstract class DefaultDAO<E, I> implements Serializable {
+public abstract class BaseDAO<E, I> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@PersistenceContext
@@ -30,7 +34,7 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	protected final Class<?> entityClass;
 	protected boolean enableQueryCaching = true;
 
-	public DefaultDAO() {
+	public BaseDAO() {
 		@SuppressWarnings("serial")
 		final TypeToken<E> type = new TypeToken<E>(getClass()) {
 		};
@@ -64,7 +68,7 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	 * Tries to determine whether the entity is new or already in the DB by
 	 * looking at its Id key.
 	 *
-	 * @param entity entity
+	 * @param entity
 	 */
 	@Transactional
 	public void persistOrMerge(E entity) {
@@ -78,7 +82,8 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	/**
 	 * Flush the entity manager.
 	 */
-	public void flush() {
+	public void flush()
+	{
 		em.flush();
 	}
 
@@ -86,7 +91,7 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	 * Tries to determine whether the entity is new or already in the DB by
 	 * looking at its Id key.
 	 *
-	 * @param entity entity
+	 * @param entity
 	 * @return true if it is persisted in the DB according to its primary key
 	 */
 	public boolean isPersisted(E entity) {
@@ -98,7 +103,7 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	/**
 	 * Removes managed entities.
 	 *
-	 * @param entity entity
+	 * @param entity
 	 */
 	@Transactional
 	public void remove(E entity) {
@@ -108,7 +113,7 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	/**
 	 * Removes managed and detached entities.
 	 *
-	 * @param detachedEntity detachedEntity
+	 * @param detachedEntity
 	 */
 	@Transactional
 	public void removeDetached(E detachedEntity) {
@@ -118,12 +123,11 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	/**
 	 * Checks whether the given entity is in the db prior to trying to delete it
 	 *
-	 * @param entity entity
+	 * @param entity
 	 */
 	public void removeSilently(E entity) {
-		if (isPersisted(entity)) {
+		if (isPersisted(entity))
 			remove(entity);
-		}
 	}
 
 	@Transactional
@@ -134,7 +138,8 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	/**
 	 * Tries to find the entity for the given id.
 	 *
-	 * @param id id
+	 * @param id
+	 *          id
 	 * @return entity or null if no matching entity found
 	 */
 	@SuppressWarnings("unchecked")
@@ -145,8 +150,10 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	/**
 	 * Tries to find an instance in the db by using the given key.
 	 *
-	 * @param fieldName field to search the key
-	 * @param key key to search
+	 * @param fieldName
+	 *          field to search the key
+	 * @param key
+	 *          key to search
 	 * @return entity or null if none found
 	 */
 	public E findByUnique(String fieldName, Object key) {
@@ -154,7 +161,7 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 
 		@SuppressWarnings("unchecked")
 		final List<E> resultList = (List<E>) cacheable(em.createQuery(query, entityClass)).setParameter("key", key)
-		.getResultList();
+				.getResultList();
 
 		return resultList.isEmpty() ? null : resultList.get(0);
 	}
@@ -178,7 +185,8 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	 * Returns a list sorted by the given function. The list will be sorted by
 	 * Java, so this is an expensive operation for big lists.
 	 *
-	 * @param stringFieldExtractor extractor function, e.g. <code>Entity::getName</code>
+	 * @param stringFieldExtractor
+	 *          extractor function, e.g. <code>Entity::getName</code>
 	 * @return sorted list.
 	 */
 	public List<E> getAllSortedBy(Function<E, String> stringFieldExtractor) {
@@ -191,7 +199,8 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	/**
 	 * Determines the primary key of the given entity by using reflection.
 	 *
-	 * @param e entity
+	 * @param e
+	 *          entity
 	 * @return primary key of the given entity
 	 */
 	public I getId(E e) {
@@ -207,7 +216,8 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	 * persistence context!</strong> If the entity is not persisted nor has a
 	 * valid key, null will be returned.
 	 *
-	 * @param e entity
+	 * @param e
+	 *          entity
 	 * @return managed entity
 	 */
 	@Transactional
@@ -218,7 +228,8 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	/**
 	 * Reloads an entity from the database, and reattaches it if needed.
 	 *
-	 * @param e entity
+	 * @param e
+	 *          entity
 	 * @return refreshed entity
 	 */
 	@Transactional
@@ -235,7 +246,7 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 	/**
 	 * Sets property to enable query caching.
 	 *
-	 * @param query query
+	 * @param query
 	 * @return query
 	 */
 	protected <T> TypedQuery<T> cacheable(TypedQuery<T> query) {

@@ -9,8 +9,15 @@
 	<h:form>
 		<b:navBar brand="#{msgs['nav.bar.brand']}" brand-href="#" fixed="top" inverse="true">
 			<b:navbarLinks>
+
 				<b:navCommandLink value="Home" action="/pages/index.xhtml?faces-redirect=true" immediate="true" />
+
 				<b:navCommandLink value="Login" action="#{securityBean.login()}" rendered="#{not securityBean.authenticated}" />
+
+				<b:dropMenu value="User: #{securityBean.loginName}" rendered="#{securityBean.authenticated}">
+					<b:navCommandLink value="Logout" action="#{securityBean.logout()}" ajax="false" />
+				</b:dropMenu>
+
 			</b:navbarLinks>
 		</b:navBar>
 	</h:form>
