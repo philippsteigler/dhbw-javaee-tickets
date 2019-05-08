@@ -53,9 +53,8 @@ public abstract class DefaultDAO<E, I> implements Serializable {
 		em.persist(checkConsistencyBeforeSave(entity));
 	}
 
-	@SafeVarargs
 	@Transactional
-	public final void persist(@SuppressWarnings("unchecked") E... entities) {
+	public void persist(@SuppressWarnings("unchecked") E... entities) {
 		for (final E entity : entities) {
 			persist(entity);
 		}
