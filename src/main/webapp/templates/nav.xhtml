@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition>
+	<h:form>
+		<b:navBar brand="#{msgs['nav.bar.brand']}" brand-href="#" fixed="top" inverse="true">
+			<b:navbarLinks>
+				<b:navCommandLink value="Home" action="/pages/index.xhtml?faces-redirect=true" immediate="true" />
+				<b:navCommandLink value="Login" action="#{securityBean.login()}" rendered="#{not securityBean.authenticated}" />
+			</b:navbarLinks>
+		</b:navBar>
+	</h:form>
+</ui:composition>
+
+</html>

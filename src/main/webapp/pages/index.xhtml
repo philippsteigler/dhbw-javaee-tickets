@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/templates/basic.xhtml">
+    <ui:define name="title">#{msgs['index.title']}</ui:define>
+    <ui:define name="header">#{msgs['index.header']}</ui:define>
+    <ui:define name="content">
+
+        <p>Flow Test: #{facesContext.application.flowHandler.currentFlow != null}</p>
+        <p>Flow ID: #{facesContext.application.flowHandler.currentFlow.id}</p>
+        <p>User: #{securityBean.loginName}</p>
+
+    </ui:define>
+</ui:composition>
+
+</html>

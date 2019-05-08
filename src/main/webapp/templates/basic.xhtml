@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title><ui:insert name="title">#{msgs['default.title']}</ui:insert></title>
+</h:head>
+
+<h:body style="padding: 30px 30px 60px;">
+    <h:outputStylesheet name="basic.css" library="styles" />
+    <f:facet name="last">
+		<ui:remove>Ensure (by using facet name=last) that basic.css rules them all!</ui:remove>
+	</f:facet>
+
+	<div id="menu"><ui:include src="/templates/nav.xhtml" /></div>
+
+	<b:container fluid="true">
+		<p:growl><p:autoUpdate/></p:growl>
+
+        <h1><ui:insert name="header">#{msgs['default.header']}</ui:insert></h1>
+        <div id="content"><ui:insert name="content">#{msgs['default.content']}</ui:insert></div>
+
+        <b:navBar fixed="bottom" sticky="true">
+            <b:navbarLinks>
+                <b:navLink value="#{msgs['nav.bottom.copyright']}" href="https://www.hgicht.de/" target="_blank" />
+            </b:navbarLinks>
+        </b:navBar>
+	</b:container>
+
+</h:body>
+
+</html>
