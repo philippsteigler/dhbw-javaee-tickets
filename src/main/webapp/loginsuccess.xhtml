@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/templates/basic.xhtml">
+	<ui:define name="title">Login successful</ui:define>
+	<ui:define name="header">Login successful</ui:define>
+	<ui:define name="content">
+		<p>Login was successful as user #{securityBean.loginName} (#{securityBean.user.name})</p>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,32 @@
+table.borderedTable {
+	border:2px solid yellow;
+	border-collapse: collapse;
+	margin:5px;
+}
+
+table.borderedTable th {
+	border:2px solid yellow;
+	padding:3px;
+	font-weight: bold;
+}
+
+
+table.borderedTable td {
+	border:2px solid yellow;
+	padding:3px;
+}
+
+table.noborder td {
+	border:none;
+	padding:3px;	
+}
+
+.ui-growl {   
+	position:fixed;
+	top: 70px;
+	right: 10px;
+}
+
+.ui-cell-editor-output {
+	white-space:normal;
+}
