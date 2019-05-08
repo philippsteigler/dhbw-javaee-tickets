@@ -1,4 +1,4 @@
-# Ticket System DB
+# Ticket Master ENTERPRISE Edition
 
 ## Configuration
 
