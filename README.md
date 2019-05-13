@@ -1,4 +1,5 @@
-# Ticket System DB
+# Ticket Master ENTERPRISE Edition
+Issue-Tracking-Application built with Java EE
 
 ## Configuration
 
