@@ -15,7 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<version.spec.java>1.8</version.spec.java>
+		<version.spec.java>11</version.spec.java>
 		<version.spec.javaee-api>8.0</version.spec.javaee-api>
 		<version.spec.ejb>3.2</version.spec.ejb>
 
@@ -49,7 +49,8 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		 -->
+		-->
+
 		<repository>
 			<id>primefaces-repository</id>
 			<name>PrimeFaces Maven Repository</name>
@@ -59,7 +60,8 @@
 	</repositories>
 
 	<dependencies>
-		<dependency> <!-- javaee-api -->
+		<dependency>
+			<!-- javaee-api -->
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>${version.spec.javaee-api}</version>
@@ -123,21 +125,23 @@
 		</dependency>
 
 		<dependency>
-				<!-- for Java9 -->
+			<!-- for Java9 -->
 			<groupId>javax.annotation</groupId>
 			<artifactId>javax.annotation-api</artifactId>
 			<version>1.3.2</version>
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency> <!-- slf4j -->
+		<dependency>
+			<!-- slf4j -->
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${version.slf4j-api}</version>
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency> <!-- logback -->
+		<dependency>
+			<!-- logback -->
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${version.logback}</version>
@@ -226,28 +230,30 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-      <dependency>
-        <groupId>org.jboss.arquillian.selenium</groupId>
-        <artifactId>selenium-bom</artifactId>
-        <version>3.9.1</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-drone-bom</artifactId>
-            <version>${version.arquillian-drone-bom}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>		
 
+			<dependency>
+				<groupId>org.jboss.arquillian.selenium</groupId>
+				<artifactId>selenium-bom</artifactId>
+				<version>3.9.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+		  	</dependency>
+
+			<dependency>
+				<groupId>org.jboss.arquillian.extension</groupId>
+				<artifactId>arquillian-drone-bom</artifactId>
+				<version>${version.arquillian-drone-bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<build>
 		<finalName>tickets</finalName>
 		<plugins>
-			<plugin> <!-- maven-compiler-plugin -->
+			<plugin>
+				<!-- maven-compiler-plugin -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
@@ -257,7 +263,9 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
-			<plugin> <!-- maven-war-plugin -->
+
+			<plugin>
+				<!-- maven-war-plugin -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.5</version>
@@ -277,7 +285,8 @@
 			</plugin>
 		</plugins>
 		
-		<testResources> <!-- see http://arquillian.org/guides/functional_testing_using_graphene/ -->
+		<testResources>
+			<!-- see http://arquillian.org/guides/functional_testing_using_graphene/ -->
 			<testResource>
 			  <directory>src/test/resources</directory>
 			  <filtering>true</filtering>
@@ -288,6 +297,7 @@
 	<profiles>
 		<profile>
 			<!-- Default profile, currently disabled -->
+			<id>default</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
@@ -296,15 +306,12 @@
 		<profile>
 			<!-- Arquillian Tests -->
 			<id>arquillian-wildfly-managed</id>
-			
 			<properties>
 				<browser>phantomJS</browser>
 			</properties>
-
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-
 			<dependencies>
 				<dependency>
 					<groupId>org.wildfly.arquillian</groupId>
@@ -318,8 +325,7 @@
 					<version>1.2.1.1</version>
 					<scope>test</scope>
 				</dependency>
-    			</dependencies>
-
+			</dependencies>
 			<build>
 				<pluginManagement>
 					<!-- Config for Eclipse to ignore maven-dependency-plugin -->
@@ -350,7 +356,6 @@
 						</plugin>
 					</plugins>
 				</pluginManagement>
-
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -382,7 +387,6 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
 						<version>2.18.1</version>
-
 						<executions>
 							<execution>
 								<goals>
@@ -408,7 +412,6 @@
 					</plugin>
 				</plugins>
 			</build>
-
 		</profile>
 	</profiles>
 
