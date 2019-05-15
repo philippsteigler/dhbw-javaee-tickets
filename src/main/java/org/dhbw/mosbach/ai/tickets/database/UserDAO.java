@@ -1,6 +1,6 @@
 package org.dhbw.mosbach.ai.tickets.database;
 
-import org.dhbw.mosbach.ai.tickets.ejb.CDIRoleCheck;
+import org.dhbw.mosbach.ai.tickets.security.CDIRoleCheck;
 import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.User;
 import org.jboss.security.Base64Encoder;

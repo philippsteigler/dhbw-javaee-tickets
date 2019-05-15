@@ -1,4 +1,4 @@
-package org.dhbw.mosbach.ai.tickets.ejb.demo;
+package org.dhbw.mosbach.ai.tickets.ejb;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;

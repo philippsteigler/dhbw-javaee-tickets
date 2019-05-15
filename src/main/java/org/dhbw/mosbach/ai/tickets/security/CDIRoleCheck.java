@@ -1,4 +1,4 @@
-package org.dhbw.mosbach.ai.tickets.ejb;
+package org.dhbw.mosbach.ai.tickets.security;
 
 import javax.interceptor.InterceptorBinding;
 import java.lang.annotation.ElementType;

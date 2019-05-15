@@ -1,4 +1,4 @@
-package org.dhbw.mosbach.ai.tickets.ejb.demo;
+package org.dhbw.mosbach.ai.tickets.ejb;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.ElementType;

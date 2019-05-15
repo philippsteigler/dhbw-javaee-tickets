@@ -1,4 +1,4 @@
-package org.dhbw.mosbach.ai.tickets.ejb.demo;
+package org.dhbw.mosbach.ai.tickets.ejb;
 
 import org.dhbw.mosbach.ai.tickets.model.Role;
 import org.dhbw.mosbach.ai.tickets.model.Roles;
