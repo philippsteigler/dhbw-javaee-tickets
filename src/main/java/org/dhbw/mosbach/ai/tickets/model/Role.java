@@ -9,8 +9,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class Role {
+
+	@Id
+	@GeneratedValue
 	private long id;
+
+	@Column(nullable = false, length = 64, unique = true)
 	private String name;
+
+	@Column(length = 1024)
 	private String description;
 
 	public Role() {
@@ -23,8 +30,6 @@ public class Role {
 		this.description = description;
 	}
 
-	@Id
-	@GeneratedValue
 	@XmlTransient
 	public long getId() {
 		return id;
@@ -34,7 +39,6 @@ public class Role {
 		this.id = id;
 	}
 
-	@Column(nullable = false, length = 64, unique = true)
 	@XmlAttribute(required = true)
 	public String getName() {
 		return name;
@@ -44,7 +48,6 @@ public class Role {
 		this.name = name;
 	}
 
-	@Column(nullable = true, length = 1024)
 	public String getDescription() {
 		return description;
 	}

@@ -16,6 +16,7 @@ import com.google.common.collect.Sets;
 
 @Entity
 public class User {
+
     @Id
     @GeneratedValue
     private long id;
@@ -31,9 +32,6 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = Sets.newHashSet();
-
-    @OneToOne(optional = false, fetch = FetchType.EAGER, mappedBy = "user")
-    private UserData userData;
 
     public User() {
         super();
