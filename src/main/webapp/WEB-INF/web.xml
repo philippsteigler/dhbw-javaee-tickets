@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
     <display-name>HelloWorld</display-name>
+
     <!-- JSF CONFIG -->
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
@@ -30,6 +31,7 @@
         <param-value>spacelab</param-value>
     </context-param>
 
+    <!-- Servlets -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -45,6 +47,15 @@
         <welcome-file>/pages/index.xhtml</welcome-file>
     </welcome-file-list>
 
+    <!-- Security Roles -->
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
+    <security-role>
+        <role-name>editor</role-name>
+    </security-role>
+
+    <!-- Security Constraints -->
     <security-constraint>
         <display-name>Admin-Constraint</display-name>
         <web-resource-collection>
@@ -64,6 +75,7 @@
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
+            <role-name>editor</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -87,8 +99,4 @@
             <form-error-page>/login.xhtml</form-error-page>
         </form-login-config>
     </login-config>
-
-    <security-role>
-        <role-name>admin</role-name>
-    </security-role>
 </web-app>

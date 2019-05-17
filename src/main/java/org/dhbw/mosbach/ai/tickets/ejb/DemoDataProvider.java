@@ -18,7 +18,7 @@ import java.util.Arrays;
 @Startup
 @Singleton
 @RunAs(Roles.ADMIN)
-public class DemoDataProvider {
+class DemoDataProvider {
 	private static final Logger logger = LoggerFactory.getLogger(DemoDataProvider.class);
 
 	@PersistenceContext
@@ -55,20 +55,15 @@ public class DemoDataProvider {
 
 	private void createUsers() {
 		final Role adminRole = new Role(Roles.ADMIN, "Administrator");
+		final Role editorRole = new Role(Roles.EDITOR, "Editor");
 		em.persist(adminRole);
+		em.persist(editorRole);
 
+		createUser("root", "Root", "toor", adminRole, editorRole);
 		createUser("admin", "Administrator", "admin", adminRole);
+		createUser("editor", "Future Man", "tiger", editorRole);
 	}
 
-	/**
-	 * Creates a new user with given login, user name, password, and role.
-	 *
-	 * @param login login
-	 * @param userName user name
-	 * @param password password
-	 * @param userRoles roles
-	 * @return created user
-	 */
 	private User createUser(String login, String userName, String password, Role... userRoles) {
 		final User user = new User(login, userName);
 		user.getRoles().addAll(Arrays.asList(userRoles));
