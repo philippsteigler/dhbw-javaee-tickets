@@ -60,7 +60,7 @@ class DemoDataProvider {
 		em.persist(editorRole);
 
 		createUser("root", "Root", "toor", adminRole, editorRole);
-		createUser("admin", "Administrator", "admin", adminRole);
+		createUser("admin", "The Admin", "admin", adminRole);
 		createUser("editor", "Future Man", "tiger", editorRole);
 	}
 
