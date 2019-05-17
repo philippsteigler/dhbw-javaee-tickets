@@ -47,9 +47,6 @@ public class SecurityInterceptor implements Serializable {
 		return (ec != null) ? (HttpServletRequest) ec.getRequest() : null;
 	}
 
-	/**
-	 * @return the {@link EJBContext}.
-	 */
 	private EJBContext getEJBContext() {
 		try {
 			final InitialContext ic = new InitialContext();
@@ -112,32 +109,10 @@ public class SecurityInterceptor implements Serializable {
 		}
 	}
 
-	/**
-	 * Looks up request or context (if request is null) to check if current user
-	 * has the given role.
-	 *
-	 * @param role
-	 *          role
-	 * @param request
-	 *          {@link HttpServletRequest}
-	 * @param context
-	 *          EJB context
-	 * @return
-	 */
 	private boolean isUserInRole(String role, HttpServletRequest request, EJBContext context) {
 		return (request != null) ? request.isUserInRole(role) : (context != null) && context.isCallerInRole(role);
 	}
 
-	/**
-	 * Tries to get the principal object of the current user. Request context will
-	 * be preferred over EJB context.
-	 *
-	 * @param request
-	 *          {@link HttpServletRequest} (nullable)
-	 * @param context
-	 *          {@link EJBContext} (nullable)
-	 * @return prinicpal or null if there is no authenticated user
-	 */
 	private Principal getPrincipal(HttpServletRequest request, EJBContext context) {
 		try {
 			return (request != null) ? request.getUserPrincipal() : (context != null) ? context.getCallerPrincipal() : null;
@@ -147,42 +122,16 @@ public class SecurityInterceptor implements Serializable {
 		}
 	}
 
-	/**
-	 * Checks whether the given runas annotation has role {@link Roles#ADMIN}.
-	 *
-	 * @param runAs
-	 *          runas annotation or null if no annotation present
-	 * @return true if runas annotation has role {@link Roles#ADMIN}.
-	 */
 	private boolean runsAsAdmin(RunAs runAs) {
 		final Optional<String> runAsRole = Optional.ofNullable(runAs).map(RunAs::value);
 
 		return runAsRole.isPresent() && Roles.ADMIN.equalsIgnoreCase(runAsRole.get());
 	}
 
-	/**
-	 * Returns {@link RolesAllowed} annotation of the invoked method. If the
-	 * invoked method has no annotation, the target object's annotation will be
-	 * used.
-	 *
-	 * @param ctx
-	 *          context
-	 * @return {@link RolesAllowed} or null if none found
-	 */
 	private RolesAllowed getAllowedRoles(InvocationContext ctx) {
 		return lookupAnnotation(ctx, RolesAllowed.class);
 	}
 
-	/**
-	 * Looks for the given annotation in the method call and also in the class
-	 * hierarchy if necessary.
-	 *
-	 * @param ctx
-	 *          context
-	 * @param annotationClass
-	 *          annotation class
-	 * @return annotation or null if none found
-	 */
 	private <T extends Annotation> T lookupAnnotation(InvocationContext ctx, Class<T> annotationClass) {
 		T annotation = ctx.getMethod().getAnnotation(annotationClass);
 		Class<?> clazz = ctx.getTarget().getClass();
@@ -197,16 +146,6 @@ public class SecurityInterceptor implements Serializable {
 		return annotation;
 	}
 
-	/**
-	 * Checks whether the method to be invoked has the given annotation. Does not
-	 * check if the annotation is present at class level.
-	 *
-	 * @param ctx
-	 *          context
-	 * @param annotationClass
-	 *          annotation class
-	 * @return true if annotation is present
-	 */
 	private boolean methodHasAnnotation(InvocationContext ctx, Class<? extends Annotation> annotationClass) {
 		return ctx.getMethod().isAnnotationPresent(annotationClass);
 	}
