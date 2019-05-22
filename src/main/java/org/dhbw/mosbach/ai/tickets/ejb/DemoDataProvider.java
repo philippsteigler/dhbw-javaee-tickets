@@ -18,7 +18,7 @@ import java.util.Arrays;
 @Startup
 @Singleton
 @RunAs(Roles.ADMIN)
-class DemoDataProvider {
+public class DemoDataProvider {
 	private static final Logger logger = LoggerFactory.getLogger(DemoDataProvider.class);
 
 	@PersistenceContext
