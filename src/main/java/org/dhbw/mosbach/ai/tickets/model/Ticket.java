@@ -1,12 +1,22 @@
 package org.dhbw.mosbach.ai.tickets.model;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 public class Ticket {
+
+    public enum Status{
+        open,
+        closed,
+        inProcess
+    }
 
     //Persistent Fields:
     @Id
@@ -17,22 +27,22 @@ public class Ticket {
     private String subject;
 
     @Column
-    private String status;
+    private Status status;
 
     @Column
     private long editorId;
 
     @OneToMany
-    private Set<Entry> entries = Sets.newHashSet();
+    private List<Entry> entries = new ArrayList<>();
 
     //Constructor:
-    public Ticket() {
-    }
+    public Ticket() { super(); }
 
-    Ticket (String subject, String status, long editorId) {
+    public Ticket (String subject, Status status, long editorId) {
         this.subject = subject;
         this.status = status;
         this.editorId = editorId;
+        this.entries = Lists.newArrayList();
     }
 
     //Accessor Methods:
@@ -40,11 +50,11 @@ public class Ticket {
         return subject;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -54,6 +64,10 @@ public class Ticket {
 
     public void setEditorId(long editorId) {
         this.editorId = editorId;
+    }
+
+    public void addEntry(Entry entry) {
+        entries.add(entry);
     }
 }
 

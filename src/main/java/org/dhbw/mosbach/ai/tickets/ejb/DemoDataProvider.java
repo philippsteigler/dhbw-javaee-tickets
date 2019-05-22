@@ -1,8 +1,6 @@
 package org.dhbw.mosbach.ai.tickets.ejb;
 
-import org.dhbw.mosbach.ai.tickets.model.Role;
-import org.dhbw.mosbach.ai.tickets.model.Roles;
-import org.dhbw.mosbach.ai.tickets.model.User;
+import org.dhbw.mosbach.ai.tickets.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.Date;
 
 @Startup
 @Singleton
@@ -33,6 +32,12 @@ public class DemoDataProvider {
 	@EJB
 	private UserDAOProxy userDAOProxy;
 
+	@EJB
+	private TicketDAOProxy ticketDAOProxy;
+
+	@EJB
+	private EntryDAOProxy entryDAOProxy;
+
 	@PostConstruct
 	private void init() {
 		timerService.createSingleActionTimer(1, new TimerConfig("ddp", false));
@@ -48,9 +53,13 @@ public class DemoDataProvider {
 
 		// Check whether any data exists
 		final Long userCount = (Long) em.createQuery("SELECT COUNT(u) FROM User u").getSingleResult();
+		final Long ticketCount = (Long) em.createQuery("SELECT COUNT(t) FROM Ticket t").getSingleResult();
 
 		if (userCount == 0)
 			createUsers();
+
+		if (ticketCount == 0)
+			createTickets();
 	}
 
 	private void createUsers() {
@@ -72,4 +81,19 @@ public class DemoDataProvider {
 
 		return user;
 	}
+
+	private void createTickets() {
+		createTicket("computer is broken", Ticket.Status.open, 0, "otto", "no content", new Date());
+		createTicket("ie11 shortcuts", Ticket.Status.open, 0, "wulf", "good content", new Date());
+	}
+
+	private Ticket createTicket(String subject, Ticket.Status status, long editorId, String creator, String content, Date createDate){
+		final Ticket ticket = new Ticket(subject, status, editorId);
+		final Entry entry = new Entry(creator, content, createDate);
+		ticket.addEntry(entry);
+		ticketDAOProxy.persist(ticket);
+		entryDAOProxy.persist(entry);
+		return ticket;
+	}
+
 }

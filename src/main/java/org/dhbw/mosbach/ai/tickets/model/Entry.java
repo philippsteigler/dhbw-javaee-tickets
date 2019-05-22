@@ -24,10 +24,9 @@ public class Entry {
     private Date createDate;
 
     //Constructor:
-    public Entry() {
-    }
+    public Entry() { super(); }
 
-    Entry (String creator, String content, Date createDate) {
+    public Entry (String creator, String content, Date createDate) {
         this.creator = creator;
         this.content = content;
         this.createDate = createDate;
