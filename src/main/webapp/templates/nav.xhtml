@@ -14,7 +14,7 @@
 
 				<b:navCommandLink value="Login" action="#{securityBean.login()}" rendered="#{not securityBean.authenticated}" />
 
-				<b:dropMenu value="User: #{securityBean.loginName}" rendered="#{securityBean.authenticated}">
+				<b:dropMenu value="User: #{securityBean.user.name}" rendered="#{securityBean.authenticated}">
 					<b:navCommandLink value="Logout" action="#{securityBean.logout()}" ajax="false" />
 				</b:dropMenu>
 
