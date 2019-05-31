@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -27,16 +28,21 @@ public class TicketBean implements Serializable {
      * Initializes data structures. This method will be called after the instance
      * has been created.
      */
-    @PostConstruct
+    /*@PostConstruct
     public void init()
     {
         this.tickets = ticketDAOProxy.getAllFullyLoaded();
         this.currentSelection = null;
-    }
+    }*/
 
     @PermitAll
     public List<Ticket> getAllArticles()
     {
-        return ticketDAOProxy.getAll();
+        Ticket ticket1 = new Ticket("ui", Ticket.Status.open, 5);
+        Ticket ticket2 = new Ticket ("hjhjhj", Ticket.Status.closed, 1);
+        List<Ticket> ticketList = new ArrayList<>();
+        ticketList.add(ticket1);
+        ticketList.add(ticket2);
+        return ticketList;
     }
 }

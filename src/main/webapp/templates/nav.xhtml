@@ -12,6 +12,10 @@
 
 				<b:navCommandLink value="Home" action="/pages/index.xhtml?faces-redirect=true" immediate="true" />
 
+				<b:navCommandLink value="Tickets" action="/pages/tickets.xhtml?faces-redirect=true" immediate="true" />
+
+				<b:navCommandLink value="Test" action="/pages/testlol.xhtml?faces-redirect=true" immediate="true" />
+
 				<b:navCommandLink value="Login" action="#{securityBean.login()}" rendered="#{not securityBean.authenticated}" />
 
 				<b:dropMenu value="User: #{securityBean.user.name}" rendered="#{securityBean.authenticated}">
