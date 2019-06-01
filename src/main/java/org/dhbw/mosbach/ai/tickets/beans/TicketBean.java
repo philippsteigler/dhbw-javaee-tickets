@@ -38,11 +38,16 @@ public class TicketBean implements Serializable {
     @PermitAll
     public List<Ticket> getAllArticles()
     {
-        Ticket ticket1 = new Ticket("ui", Ticket.Status.open, 5);
-        Ticket ticket2 = new Ticket ("hjhjhj", Ticket.Status.closed, 1);
         List<Ticket> ticketList = new ArrayList<>();
-        ticketList.add(ticket1);
-        ticketList.add(ticket2);
+        for(int i = 0; i < 30; i+=3) {
+            Ticket ticket1 = new Ticket("Test", Ticket.Status.open, i);
+            Ticket ticket2 = new Ticket("Test", Ticket.Status.closed, i+1);
+            Ticket ticket3 = new Ticket("Test", Ticket.Status.inProcess, i+2);
+            ticketList.add(ticket1);
+            ticketList.add(ticket2);
+            ticketList.add(ticket3);
+        }
+
         return ticketList;
     }
 }
