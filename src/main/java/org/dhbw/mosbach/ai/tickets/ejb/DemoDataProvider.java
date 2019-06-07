@@ -1,5 +1,7 @@
 package org.dhbw.mosbach.ai.tickets.ejb;
 
+import org.dhbw.mosbach.ai.tickets.database.EntryDAO;
+import org.dhbw.mosbach.ai.tickets.database.TicketDAO;
 import org.dhbw.mosbach.ai.tickets.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.annotation.security.RunAs;
 import javax.ejb.*;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.security.Principal;
@@ -32,11 +35,11 @@ public class DemoDataProvider {
 	@EJB
 	private UserDAOProxy userDAOProxy;
 
-	@EJB
-	private TicketDAOProxy ticketDAOProxy;
+	@Inject
+	private TicketDAO ticketDAOProxy;
 
-	@EJB
-	private EntryDAOProxy entryDAOProxy;
+	@Inject
+	private EntryDAO entryDAOProxy;
 
 	@PostConstruct
 	private void init() {
