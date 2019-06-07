@@ -7,13 +7,11 @@ import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
+import java.io.Serializable;
 import java.text.MessageFormat;
 
-public class AbstractBean {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+public class AbstractBean implements Serializable {
+    private static final long serialVersionUID = -3736657471169078540L;
 
     @Inject
     private ResourceBundleProxy localeMessages;
@@ -24,13 +22,11 @@ public class AbstractBean {
     }
 
     @Deprecated
-    protected void addFacesMessage(FacesMessage.Severity severity, String message)
-    {
+    protected void addFacesMessage(FacesMessage.Severity severity, String message) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, message, ""));
     }
 
-    protected void addLocalizedFacesMessage(FacesMessage.Severity severity, String key, Object... params)
-    {
+    protected void addLocalizedFacesMessage(FacesMessage.Severity severity, String key, Object... params) {
         addFacesMessage(severity, MessageFormat.format(localeMessages.getString(key), params));
     }
 
@@ -39,13 +35,11 @@ public class AbstractBean {
         return FacesContext.getCurrentInstance().getExternalContext().getFlash();
     }
 
-    protected NavigationHandler getNavigationHandler()
-    {
+    protected NavigationHandler getNavigationHandler() {
         return FacesContext.getCurrentInstance().getApplication().getNavigationHandler();
     }
 
-    protected void navigateTo(String outcome)
-    {
+    protected void navigateTo(String outcome) {
         getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, outcome);
     }
 }
