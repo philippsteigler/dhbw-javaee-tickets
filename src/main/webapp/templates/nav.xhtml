@@ -10,7 +10,10 @@
 		<b:navBar brand="#{msgs['nav.bar.brand']}" brand-href="#" fixed="top" inverse="true">
 			<b:navbarLinks>
 
-				<b:navCommandLink value="Dashboard 2" action="/pages/dashboard2.xhtml?faces-redirect=true" immediate="true" />
+				<b:dropMenu value="Editor" rendered="#{securityBean.isUserInRole('editor')}">
+					<b:navCommandLink value="Home" action="/pages/editor/home.xhtml?faces-redirect=true" immediate="true" />
+					<b:navCommandLink value="Tickets" action="/pages/editor/tickets.xhtml?faces-redirect=true" immediate="true" />
+				</b:dropMenu>
 
 				<b:navCommandLink value="Dashboard Ajax" action="/pages/dashboardAjax.xhtml?faces-redirect=true" immediate="true" />
 

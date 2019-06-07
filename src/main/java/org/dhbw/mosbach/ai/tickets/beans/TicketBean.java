@@ -1,12 +1,16 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
 import org.dhbw.mosbach.ai.tickets.database.TicketDAO;
+import org.dhbw.mosbach.ai.tickets.model.Role;
+import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.Ticket;
+import org.dhbw.mosbach.ai.tickets.security.CDIRoleCheck;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -19,13 +23,18 @@ import java.util.stream.Collectors;
 
 @Named
 @SessionScoped
+@CDIRoleCheck
 public class TicketBean implements Serializable {
     private static final long serialVersionUID = -1843025922631961397L;
 
     @Inject
     private TicketDAO ticketDAO;
 
+    @Inject
+    private SecurityBean securityBean;
+
     private List<Ticket> tickets;
+    private List<Ticket> currentList;
 
     private Ticket currentTicket;
 
@@ -44,21 +53,81 @@ public class TicketBean implements Serializable {
     {
         this.tickets = ticketDAO.getAllFullyLoaded();
         this.currentTicket = null;
-        this.ticketSearchResult = tickets;
+        this.currentList = null;
     }
 
     public void doSearch()
     {
-        //TODO
-        // final List<Ticket> ticketSearchResultList = getMatchingTickets(ticketSearchString);
-        // ticketSearchResult = ticketSearchResultList.isEmpty() ? null : ticketSearchResultList.get(0);
-
-        ticketSearchResult = new ArrayList<>();
+        ticketSearchResult = tickets;
         for (Ticket ticket: tickets) {
             if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
                 ticketSearchResult.add(ticket);
             }
         }
+    }
+
+    @RolesAllowed({Roles.EDITOR})
+    public void doEditorSearchHome()
+    {
+        currentList = getEditorsTicketsHome();
+        ticketSearchResult = currentList;
+        for (Ticket ticket: currentList) {
+            if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
+                ticketSearchResult.add(ticket);
+            }
+        }
+    }
+
+    private List<Ticket> getEditorsTicketsHome() {
+        //TODO Entries durchsuchen
+        return tickets.stream().filter(ticket -> ticket.getEditorId() == securityBean.getUser().getId()).collect(Collectors.toList());
+    }
+
+    @RolesAllowed({Roles.EDITOR})
+    public void doEditorSearchTickets()
+    {
+        currentList = tickets;
+        ticketSearchResult = currentList;
+        for (Ticket ticket: currentList) {
+            if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
+                ticketSearchResult.add(ticket);
+            }
+        }
+    }
+
+    @RolesAllowed({Roles.CUSTOMER})
+    public void doCustomerSearchHome()
+    {
+        currentList = getCustomersTicketsHome();
+        ticketSearchResult = currentList;
+        for (Ticket ticket: currentList) {
+            if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
+                ticketSearchResult.add(ticket);
+            }
+        }
+    }
+
+    private List<Ticket> getCustomersTicketsHome() {
+        //TODO Load all tickets Customer has created
+        //return return tickets.stream().filter(ticket -> ticket. == securityBean.getUser().getId()).collect(Collectors.toList());
+        return null;
+    }
+
+    @RolesAllowed({Roles.CUSTOMER})
+    public void doCustomerSearchTickets()
+    {
+        currentList = getCustomersTicketsTickets();
+        ticketSearchResult = currentList;
+        for (Ticket ticket: currentList) {
+            if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
+                ticketSearchResult.add(ticket);
+            }
+        }
+    }
+
+    private List<Ticket> getCustomersTicketsTickets() {
+        //TODO Load all tickets Customer can see
+        return null;
     }
 
     public List<Ticket> getTickets()
@@ -85,9 +154,5 @@ public class TicketBean implements Serializable {
 
     public Ticket getCurrentTicket() {
         return currentTicket;
-    }
-
-    public void ticketDetailView() {
-
     }
 }
