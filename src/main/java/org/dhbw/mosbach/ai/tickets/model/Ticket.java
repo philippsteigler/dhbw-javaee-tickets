@@ -30,7 +30,13 @@ public class Ticket {
     private Status status;
 
     @Column
+    private String content;
+
+    @Column
     private long editorId;
+
+    @Column
+    private long customerId;
 
     @OneToMany
     private List<Entry> entries = new ArrayList<>();
@@ -38,10 +44,12 @@ public class Ticket {
     //Constructor:
     public Ticket() { super(); }
 
-    public Ticket (String subject, Status status, long editorId) {
+    public Ticket (String subject, Status status, String content, long editorId, long customerId) {
         this.subject = subject;
         this.status = status;
+        this.content = content;
         this.editorId = editorId;
+        this.customerId = customerId;
         this.entries = Lists.newArrayList();
     }
 
@@ -54,16 +62,18 @@ public class Ticket {
         return status;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+    public String getContent() { return content; }
 
     public long getEditorId() {
         return editorId;
     }
 
-    public void setEditorId(long editorId) {
-        this.editorId = editorId;
+    public long getId() {
+        return id;
+    }
+
+    public long getCustomerId() {
+        return customerId;
     }
 
     public void addEntry(Entry entry) {
