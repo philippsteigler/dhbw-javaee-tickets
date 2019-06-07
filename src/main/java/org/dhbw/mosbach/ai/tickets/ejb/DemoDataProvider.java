@@ -68,7 +68,7 @@ public class DemoDataProvider {
 	private void createUsers() {
 		final Role adminRole = new Role(Roles.ADMIN, "Administrator");
 		final Role editorRole = new Role(Roles.EDITOR, "Editor");
-		final Role customerRole = new Role(Roles.EDITOR, "Kunde");
+		final Role customerRole = new Role(Roles.CUSTOMER, "Kunde");
 		em.persist(adminRole);
 		em.persist(editorRole);
 		em.persist(customerRole);

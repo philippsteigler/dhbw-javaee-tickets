@@ -35,6 +35,8 @@ public class Ticket {
     @Column
     private long editorId;
 
+    @Column
+    private long customerId;
 
     @OneToMany(fetch = FetchType.EAGER)
 
