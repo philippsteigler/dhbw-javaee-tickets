@@ -18,6 +18,8 @@
 
 				<b:navCommandLink value="Dashboard 2" action="/pages/dashboard2.xhtml?faces-redirect=true" immediate="true" />
 
+				<b:navCommandLink value="Dashboard Ajax" action="/pages/dashboardAjax.xhtml?faces-redirect=true" immediate="true" />
+
 				<b:navCommandLink value="Login" action="#{securityBean.login()}" rendered="#{not securityBean.authenticated}" />
 
 				<b:dropMenu value="User: #{securityBean.user.name}" rendered="#{securityBean.authenticated}">
