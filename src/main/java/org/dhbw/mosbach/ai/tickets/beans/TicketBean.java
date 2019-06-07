@@ -65,4 +65,29 @@ public class TicketBean implements Serializable {
     {
         return tickets;
     }
+
+    public String detail(long id) {
+        this.currentTicket = tickets.stream().filter(ticket -> ticket.getId() == id).collect(Collectors.toList()).get(0);
+        return DETAIL;
+    }
+
+    public void setTicketSearchString(String ticketSearchString) {
+        this.ticketSearchString = ticketSearchString;
+    }
+
+    public String getTicketSearchString() {
+        return ticketSearchString;
+    }
+
+    public List<Ticket> getTicketSearchResult() {
+        return ticketSearchResult;
+    }
+
+    public Ticket getCurrentTicket() {
+        return currentTicket;
+    }
+
+    public void ticketDetailView() {
+
+    }
 }
