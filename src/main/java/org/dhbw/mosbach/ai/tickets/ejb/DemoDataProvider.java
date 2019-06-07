@@ -73,7 +73,7 @@ public class DemoDataProvider {
 		em.persist(editorRole);
 		em.persist(customerRole);
 
-		createUser("root", "Root", "Ticket Master", "toor", adminRole, editorRole);
+		createUser("root", "Root", "Ticket Master", "toor", adminRole, editorRole, customerRole);
 		createUser("admin", "The Admin", "Ticket Master","admin", adminRole);
 		createUser("editor1", "Wiz Khalifa", "Ticket Master","mosbach", editorRole);
 		createUser("editor2", "Dirk Saller", "Ticket Master","mosbach", editorRole);
