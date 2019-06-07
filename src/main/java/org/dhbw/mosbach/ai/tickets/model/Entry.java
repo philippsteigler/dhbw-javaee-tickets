@@ -15,7 +15,7 @@ public class Entry {
     private long id;
 
     @Column
-    private String creator;
+    private long creatorId;
 
     @Column
     private String content;
@@ -26,15 +26,15 @@ public class Entry {
     //Constructor:
     public Entry() { super(); }
 
-    public Entry (String creator, String content, Date createDate) {
-        this.creator = creator;
+    public Entry (long creatorId, String content, Date createDate) {
+        this.creatorId = creatorId;
         this.content = content;
         this.createDate = createDate;
     }
 
     //Accessor Methods:
-    public String getCreator() {
-        return creator;
+    public long getCustomerID() {
+        return creatorId;
     }
 
     public String getContent() {

@@ -6,7 +6,7 @@ import javax.ejb.Stateless;
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
 import org.dhbw.mosbach.ai.tickets.model.User;
 
-@Stateless(name = "UserDAOProxy")
+@Stateless(name = "userDAOProxy")
 @SpecialUserDAO
 @PermitAll
 public class UserDAOProxy extends UserDAO {
