@@ -68,16 +68,21 @@ public class DemoDataProvider {
 	private void createUsers() {
 		final Role adminRole = new Role(Roles.ADMIN, "Administrator");
 		final Role editorRole = new Role(Roles.EDITOR, "Editor");
+		final Role customerRole = new Role(Roles.EDITOR, "Kunde");
 		em.persist(adminRole);
 		em.persist(editorRole);
+		em.persist(customerRole);
 
-		createUser("root", "Root", "toor", adminRole, editorRole);
-		createUser("admin", "The Admin", "admin", adminRole);
-		createUser("editor", "Future Man", "tiger", editorRole);
+		createUser("root", "Root", "Ticket Master", "toor", adminRole, editorRole);
+		createUser("admin", "The Admin", "Ticket Master","admin", adminRole);
+		createUser("editor1", "Wiz Khalifa", "Ticket Master","mosbach", editorRole);
+		createUser("editor2", "Dirk Saller", "Ticket Master","mosbach", editorRole);
+		createUser("customer1", "Edwin Kopf", "IBM","mosbach", customerRole);
+		createUser("customer2", "Jend Weidmann", "Deutsche Bundesbank","mosbach", customerRole);
 	}
 
-	private User createUser(String login, String userName, String password, Role... userRoles) {
-		final User user = new User(login, userName);
+	private User createUser(String login, String userName, String companyName, String password, Role... userRoles) {
+		final User user = new User(login, userName, companyName);
 		user.getRoles().addAll(Arrays.asList(userRoles));
 		userDAOProxy.changePassword(user, password);
 		userDAOProxy.persist(user);

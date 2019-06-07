@@ -28,8 +28,8 @@ import org.slf4j.LoggerFactory;
 @CDIRoleCheck
 @Priority(Interceptor.Priority.APPLICATION)
 public class SecurityInterceptor implements Serializable {
+	private static final long serialVersionUID = -165894850318969710L;
 	private static final String UNAUTHENTICATED_USERNAME = "ANONYMOUS";
-	private static final long serialVersionUID = -609666584947836079L;
 	private static final Logger logger = LoggerFactory.getLogger(SecurityInterceptor.class);
 
 	@Inject
