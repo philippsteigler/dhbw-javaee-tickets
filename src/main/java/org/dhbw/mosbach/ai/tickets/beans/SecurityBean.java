@@ -29,8 +29,9 @@ public class SecurityBean {
     private User loggedInUser;
 
     private HttpServletRequest getRequest() {
-        if (request != null)
+        if (request != null) {
             return request;
+        }
 
         final FacesContext facesContext = FacesContext.getCurrentInstance();
 

@@ -20,8 +20,12 @@ import java.security.NoSuchAlgorithmException;
 @CDIRoleCheck
 @RolesAllowed(value = { Roles.ADMIN })
 public class UserDAO extends BaseDAO<User, Long> {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -6308185751264138344L;
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
+
+    public UserDAO() {
+        super();
+    }
 
     private MessageDigest getMessageDigest() {
         try {

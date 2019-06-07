@@ -35,10 +35,9 @@ public class Ticket {
     @Column
     private long editorId;
 
-    @Column
-    private long customerId;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
+
     private List<Entry> entries = new ArrayList<>();
 
     //Constructor:
@@ -74,6 +73,7 @@ public class Ticket {
 
     public long getCustomerId() {
         return customerId;
+
     }
 
     public void addEntry(Entry entry) {
