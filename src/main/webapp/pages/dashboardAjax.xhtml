@@ -45,8 +45,8 @@
             Scroll Down to Load More Tickets
         </f:facet>
 
-        <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
-            <h:commandButton action="#{ticketBean.ticketClick}" value="Details" id="detailsButton"/>
+        <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
+            <h:commandButton action="#{ticketBean.detail(ticket.id)}" value="Details" id="detailsButton"/>
 
             <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}"/>
 

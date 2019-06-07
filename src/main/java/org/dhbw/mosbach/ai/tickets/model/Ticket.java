@@ -32,7 +32,7 @@ public class Ticket {
     @Column
     private long editorId;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Entry> entries = new ArrayList<>();
 
     //Constructor:
@@ -60,6 +60,10 @@ public class Ticket {
 
     public long getEditorId() {
         return editorId;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public void setEditorId(long editorId) {

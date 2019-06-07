@@ -2,18 +2,23 @@ package org.dhbw.mosbach.ai.tickets.beans;
 
 import org.dhbw.mosbach.ai.tickets.database.TicketDAO;
 import org.dhbw.mosbach.ai.tickets.model.Ticket;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.security.PermitAll;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class TicketBean implements Serializable {
     private static final long serialVersionUID = -1843025922631961397L;
 
@@ -22,13 +27,13 @@ public class TicketBean implements Serializable {
 
     private List<Ticket> tickets;
 
-    private Ticket currentSelection;
+    private Ticket currentTicket;
 
     private String ticketSearchString = "";
 
     private List<Ticket> ticketSearchResult;
 
-    private static final String TICKET_CLICK = "dashboard";
+    private static final String DETAIL = "detail";
 
     /**
      * Initializes data structures. This method will be called after the instance
@@ -38,8 +43,9 @@ public class TicketBean implements Serializable {
     public void init()
     {
         this.tickets = ticketDAO.getAllFullyLoaded();
-        this.currentSelection = null;
-    }*/
+        this.currentTicket = null;
+        this.ticketSearchResult = tickets;
+    }
 
     public void doSearch()
     {
@@ -47,18 +53,8 @@ public class TicketBean implements Serializable {
         // final List<Ticket> ticketSearchResultList = getMatchingTickets(ticketSearchString);
         // ticketSearchResult = ticketSearchResultList.isEmpty() ? null : ticketSearchResultList.get(0);
 
-        List<Ticket> ticketList = new ArrayList<>();
-        for(int i = 0; i < 30; i+=3) {
-            Ticket ticket1 = new Ticket("Roman", Ticket.Status.open, i);
-            Ticket ticket2 = new Ticket("Jarno", Ticket.Status.closed, i+1);
-            Ticket ticket3 = new Ticket("Philipp", Ticket.Status.inProcess, i+2);
-            ticketList.add(ticket1);
-            ticketList.add(ticket2);
-            ticketList.add(ticket3);
-        }
-
         ticketSearchResult = new ArrayList<>();
-        for (Ticket ticket: ticketList) {
+        for (Ticket ticket: tickets) {
             if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
                 ticketSearchResult.add(ticket);
             }
@@ -68,21 +64,11 @@ public class TicketBean implements Serializable {
     public List<Ticket> getTickets()
     {
         return tickets;
-        List<Ticket> ticketList = new ArrayList<>();
-        for(int i = 0; i < 30; i+=3) {
-            Ticket ticket1 = new Ticket("Test", Ticket.Status.open, i);
-            Ticket ticket2 = new Ticket("Test", Ticket.Status.closed, i+1);
-            Ticket ticket3 = new Ticket("Test", Ticket.Status.inProcess, i+2);
-            ticketList.add(ticket1);
-            ticketList.add(ticket2);
-            ticketList.add(ticket3);
-        }
-
-        return ticketList;
     }
 
-    public String ticketClick() {
-        return TICKET_CLICK;
+    public String detail(long id) {
+        this.currentTicket = tickets.stream().filter(ticket -> ticket.getId() == id).collect(Collectors.toList()).get(0);
+        return DETAIL;
     }
 
     public void setTicketSearchString(String ticketSearchString) {
@@ -95,5 +81,13 @@ public class TicketBean implements Serializable {
 
     public List<Ticket> getTicketSearchResult() {
         return ticketSearchResult;
+    }
+
+    public Ticket getCurrentTicket() {
+        return currentTicket;
+    }
+
+    public void ticketDetailView() {
+
     }
 }
