@@ -54,6 +54,9 @@
     <security-role>
         <role-name>editor</role-name>
     </security-role>
+    <security-role>
+        <role-name>customer</role-name>
+    </security-role>
 
     <!-- Security Constraints -->
     <security-constraint>
@@ -80,6 +83,18 @@
     </security-constraint>
 
     <security-constraint>
+        <display-name>Customer-Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Customer-Pages</web-resource-name>
+            <url-pattern>/pages/customer/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+            <role-name>customer</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
         <display-name>Login-Constraint</display-name>
         <web-resource-collection>
             <web-resource-name>loginsuccess</web-resource-name>
@@ -89,6 +104,7 @@
             <description>all authenticated users</description>
             <role-name>admin</role-name>
             <role-name>editor</role-name>
+            <role-name>customer</role-name>
         </auth-constraint>
     </security-constraint>
 

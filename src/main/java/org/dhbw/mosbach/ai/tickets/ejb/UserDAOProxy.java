@@ -10,7 +10,7 @@ import org.dhbw.mosbach.ai.tickets.model.User;
 @SpecialUserDAO
 @PermitAll
 public class UserDAOProxy extends UserDAO {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3572429638173844556L;
 
     @PermitAll
     @Override

@@ -25,13 +25,11 @@ public class AbstractBean implements Serializable {
     }
 
     @Deprecated
-    protected void addFacesMessage(FacesMessage.Severity severity, String message)
-    {
+    protected void addFacesMessage(FacesMessage.Severity severity, String message) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, message, ""));
     }
 
-    protected void addLocalizedFacesMessage(FacesMessage.Severity severity, String key, Object... params)
-    {
+    protected void addLocalizedFacesMessage(FacesMessage.Severity severity, String key, Object... params) {
         addFacesMessage(severity, MessageFormat.format(localeMessages.getString(key), params));
     }
 
@@ -40,13 +38,11 @@ public class AbstractBean implements Serializable {
         return FacesContext.getCurrentInstance().getExternalContext().getFlash();
     }
 
-    protected NavigationHandler getNavigationHandler()
-    {
+    protected NavigationHandler getNavigationHandler() {
         return FacesContext.getCurrentInstance().getApplication().getNavigationHandler();
     }
 
-    protected void navigateTo(String outcome)
-    {
+    protected void navigateTo(String outcome) {
         getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, outcome);
     }
 }
