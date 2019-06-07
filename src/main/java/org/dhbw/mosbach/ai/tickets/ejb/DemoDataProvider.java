@@ -36,10 +36,10 @@ public class DemoDataProvider {
 	private UserDAOProxy userDAOProxy;
 
 	@Inject
-	private TicketDAO ticketDAOProxy;
+	private TicketDAO ticketDAO;
 
 	@Inject
-	private EntryDAO entryDAOProxy;
+	private EntryDAO entryDAO;
 
 	@PostConstruct
 	private void init() {
@@ -86,16 +86,28 @@ public class DemoDataProvider {
 	}
 
 	private void createTickets() {
-		createTicket("computer is broken", Ticket.Status.open, 0, "otto", "no content", new Date());
-		createTicket("ie11 shortcuts", Ticket.Status.open, 0, "wulf", "good content", new Date());
+		createTicket("The Grinch hated Christmas", Ticket.Status.open, 0, "Dr. Seuss", "How the Grinch Stole Christmas!", new Date());
+		createTicket("We should take Bikini Bottom and push it somewhere else", Ticket.Status.closed, 0, "Patrick", "SpongeBob SquarePants", new Date());
+		createTicket("Computer is broken", Ticket.Status.closed, 0, "Maria", "No Content", new Date());
+		createTicket("IE11 is broken", Ticket.Status.inProcess, 0, "Hank", "What's the difference between snowmen and snowladies? Snowballs", new Date());
+		createTicket("Windows is broken 1", Ticket.Status.inProcess, 0, "Robert", "I am a nobody, nobody is perfect, therefore I am perfect.", new Date());
+		createTicket("Windows is broken 2", Ticket.Status.open, 0, "John", "I wondered why the frisbee was getting bigger, and then it hit me.", new Date());
+		createTicket("Windows is broken 3", Ticket.Status.open, 0, "Maya", "If con is the opposite of pro, it must mean Congress is the opposite of progress?", new Date());
+		createTicket("How do you make holy water?", Ticket.Status.open, 0, "Frank", "You boil the hell out of it.", new Date());
+		createTicket("What do you call a fat psychic?", Ticket.Status.open, 0, "Wulf", "A four chin teller.", new Date());
+		createTicket("Light travels faster than sound", Ticket.Status.open, 0, "Tiger", "This is why some people appear bright until they speak.", new Date());
+		createTicket("I used to like my neighbors", Ticket.Status.open, 0, "Fish", "Until they put a password on their Wi-Fi.", new Date());
+		createTicket("I once farted in an elevator", Ticket.Status.open, 0, "Damian", "I once farted in an elevator, it was wrong on so many levels.", new Date());
+		createTicket("What do you call a bear with no teeth?", Ticket.Status.open, 0, "Mitch", "A gummy bear!", new Date());
+		createTicket("Just deleted the internet", Ticket.Status.open, 0, "Lily", "Please Help", new Date());
 	}
 
 	private Ticket createTicket(String subject, Ticket.Status status, long editorId, String creator, String content, Date createDate){
 		final Ticket ticket = new Ticket(subject, status, editorId);
 		final Entry entry = new Entry(creator, content, createDate);
 		ticket.addEntry(entry);
-		ticketDAOProxy.persist(ticket);
-		entryDAOProxy.persist(entry);
+		ticketDAO.persist(ticket);
+		entryDAO.persist(entry);
 		return ticket;
 	}
 
