@@ -66,7 +66,6 @@ public class TicketBean implements Serializable {
         }
     }
 
-    @RolesAllowed({Roles.EDITOR})
     public void doEditorSearchHome()
     {
         currentList = getEditorsTicketsHome();
@@ -83,7 +82,6 @@ public class TicketBean implements Serializable {
         return tickets.stream().filter(ticket -> ticket.getEditorId() == securityBean.getUser().getId()).collect(Collectors.toList());
     }
 
-    @RolesAllowed({Roles.EDITOR})
     public void doEditorSearchTickets()
     {
         currentList = tickets;
@@ -95,7 +93,6 @@ public class TicketBean implements Serializable {
         }
     }
 
-    @RolesAllowed({Roles.CUSTOMER})
     public void doCustomerSearchHome()
     {
         currentList = getCustomersTicketsHome();
@@ -109,11 +106,9 @@ public class TicketBean implements Serializable {
 
     private List<Ticket> getCustomersTicketsHome() {
         //TODO Load all tickets Customer has created
-        //return return tickets.stream().filter(ticket -> ticket. == securityBean.getUser().getId()).collect(Collectors.toList());
-        return null;
+        return tickets.stream().filter(ticket -> ticket.getCustomerId() == securityBean.getUser().getId()).collect(Collectors.toList());
     }
 
-    @RolesAllowed({Roles.CUSTOMER})
     public void doCustomerSearchTickets()
     {
         currentList = getCustomersTicketsTickets();
