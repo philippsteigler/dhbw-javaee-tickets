@@ -7,13 +7,14 @@ import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
+import java.io.Serializable;
 import java.text.MessageFormat;
 
-public class AbstractBean {
+public class AbstractBean implements Serializable {
     /**
      *
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5791757036321568029L;
 
     @Inject
     private ResourceBundleProxy localeMessages;
