@@ -1,27 +1,16 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
-import org.dhbw.mosbach.ai.tickets.database.EntryDAO;
 import org.dhbw.mosbach.ai.tickets.database.TicketDAO;
 import org.dhbw.mosbach.ai.tickets.model.Entry;
-import org.dhbw.mosbach.ai.tickets.model.Role;
-import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.Ticket;
-import org.dhbw.mosbach.ai.tickets.security.CDIRoleCheck;
-import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.TreeNode;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Named
@@ -36,7 +25,6 @@ public class TicketBean extends AbstractBean {
     private SecurityBean securityBean;
 
     private List<Ticket> tickets;
-    private List<Ticket> currentList;
 
     private Ticket currentTicket;
 
@@ -59,7 +47,6 @@ public class TicketBean extends AbstractBean {
     {
         this.tickets = ticketDAO.getAllFullyLoaded();
         this.currentTicket = null;
-        this.currentList = new ArrayList<>();
     }
 
     private void doSearch(List<Ticket> searchThis)
