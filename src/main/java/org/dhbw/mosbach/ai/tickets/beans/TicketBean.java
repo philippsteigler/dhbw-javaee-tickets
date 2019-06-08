@@ -24,6 +24,8 @@ public class TicketBean extends AbstractBean {
     @Inject
     private SecurityBean securityBean;
 
+    @Inject UserBean userBean;
+
     private List<Ticket> tickets;
 
     private Ticket currentTicket;
@@ -101,8 +103,7 @@ public class TicketBean extends AbstractBean {
     }
 
     private List<Ticket> getCustomersTicketsTickets() {
-        //TODO Load all tickets Customer can see
-        return null;
+        return tickets.stream().filter(ticket -> userBean.getUserCompany(ticket.getCustomerId()) == securityBean.getUser().getCompany()).collect(Collectors.toList());
     }
 
     public List<Ticket> getTickets()
