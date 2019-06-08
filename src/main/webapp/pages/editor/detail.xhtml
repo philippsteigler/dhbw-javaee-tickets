@@ -46,7 +46,7 @@
 
         <p:dialog header="#{msgs['entry.edit']}" widgetVar="dlgEntry" modal="true" height="200" width="500">
             <p:inputTextarea style="margin: 0 auto" rows="8" cols="70" id="entryText" value="#{ticketBean.entryContent}" />
-            <p:commandButton value="Eintrag Hinzufühen" action="#{ticketBean.addEntryToTicket(0, ticketBean.entryContent)}" />
+            <p:commandButton value="Eintrag Hinzufühen" action="#{ticketBean.addEntryToTicket(0, ticketBean.entryContent)}" onclick="location.reload();"/>
         </p:dialog>
 
         <p:dialog header="#{msgs['ticket.delegate']}" widgetVar="dlgDelegate" modal="true" height="600" width="500" resizable="false">
@@ -57,7 +57,7 @@
 
                 <h:panelGrid columns="2" style="width:100%" columnClasses="delegate,delegateButtons">
                     <h:outputText value="#{user.name}" />
-                    <p:commandButton value="Delegieren" action="#{ticketBean.delegateTicket(user.id)}" />
+                    <p:commandButton value="Delegieren" action="#{ticketBean.delegateTicket(user.id)}" onclick="location.reload();"/>
                 </h:panelGrid>
             </p:dataScroller>
         </p:dialog>
@@ -67,7 +67,7 @@
             <h:panelGrid columns="3" class="buttons">
                 <p:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" />
                 <p:commandButton value="#{msgs['button.delegate']}" type="button" onclick="PF('dlgDelegate').show();" />
-                <p:commandButton action="#{ticketBean.releaseTicket()}" value="#{msgs['button.release']}"  />
+                <p:commandButton action="#{ticketBean.releaseTicket()}" value="#{msgs['button.release']}"  onclick="location.reload();"/>
             </h:panelGrid>
 
             <p:graphicImage library="images" name="#{ticketBean.currentTicket.status}.png" alt="#{ticketBean.currentTicket.status}" />

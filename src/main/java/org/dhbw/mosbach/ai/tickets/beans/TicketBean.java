@@ -229,4 +229,4 @@ public class TicketBean extends AbstractBean {
 
     public String getEntryContent(){ return entryContent; }
 
-}//onclick="location.reload();"
+}
