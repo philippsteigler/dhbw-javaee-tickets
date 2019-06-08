@@ -5,7 +5,14 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+
+<ui:composition template="/templates/basic.xhtml">
+<ui:define name="title">#{msgs['admin.user.title']}</ui:define>
+<ui:define name="header">#{msgs['admin.details.title']}</ui:define>
+<ui:define name="content">
+<h:form id="form">
+        Hallo Welt
+</h:form>
+</ui:define>
+</ui:composition>
 </html>

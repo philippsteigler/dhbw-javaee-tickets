@@ -11,7 +11,8 @@
 			<b:navbarLinks>
 
 				<b:dropMenu value="Admin" rendered="#{securityBean.isUserInRole('admin')}">
-
+					<b:navCommandLink value="Users" action="/pages/admin/users.xhtml?faces-redirect=true" immediate="true" />
+					<b:navCommandLink value="Tickets" action="/pages/admin/tickets.xhtml?faces-redirect=true" immediate="true" />
 				</b:dropMenu>
 
 				<b:dropMenu value="Editor" rendered="#{securityBean.isUserInRole('editor')}">
