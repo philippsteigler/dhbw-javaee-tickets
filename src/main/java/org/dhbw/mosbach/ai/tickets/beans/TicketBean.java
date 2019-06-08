@@ -99,11 +99,7 @@ public class TicketBean extends AbstractBean {
 
     public void doCustomerSearchTickets()
     {
-        doSearch(getCustomersTicketsTickets());
-    }
-
-    private List<Ticket> getCustomersTicketsTickets() {
-        return tickets.stream().filter(ticket -> userBean.getUserCompany(ticket.getCustomerId()) == securityBean.getUser().getCompany()).collect(Collectors.toList());
+        doSearch(tickets.stream().filter(ticket -> userBean.getUserCompany(ticket.getCustomerId()).equals(securityBean.getUser().getCompany())).collect(Collectors.toList()));
     }
 
     public List<Ticket> getTickets()
