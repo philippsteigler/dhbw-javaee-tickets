@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class UserBean extends AbstractBean {
     private static final long serialVersionUID = -7105806000082771152L;
 
@@ -35,8 +35,8 @@ public class UserBean extends AbstractBean {
         return users;
     }
 
-    public List<User> getUsers(String requestedRole) {
-        return users.stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals(requestedRole))).collect(Collectors.toList());
+    public List<User> getEditors() {
+        return users.stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("editor"))).collect(Collectors.toList());
     }
 
     public String getUserName(long id) {
