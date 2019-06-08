@@ -5,14 +5,13 @@ import org.dhbw.mosbach.ai.tickets.model.User;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Named
-@ViewScoped
+@Named("userBean")
+@SessionScoped
 public class UserBean extends AbstractBean {
     private static final long serialVersionUID = -7105806000082771152L;
 
@@ -28,6 +27,10 @@ public class UserBean extends AbstractBean {
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public List<User> getUsers(String requestedRole) {
+        return users.stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals(requestedRole))).collect(Collectors.toList());
     }
 
     public String getUserName(long id) {

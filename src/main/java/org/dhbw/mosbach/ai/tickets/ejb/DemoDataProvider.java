@@ -16,6 +16,9 @@ import javax.persistence.PersistenceContext;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 @Startup
 @Singleton
@@ -67,7 +70,7 @@ public class DemoDataProvider {
 
 	private void createUsers() {
 		final Role adminRole = new Role(Roles.ADMIN, "Administrator");
-		final Role editorRole = new Role(Roles.EDITOR, "Editor");
+		final Role editorRole = new Role(Roles.EDITOR, "Bearbeiter");
 		final Role customerRole = new Role(Roles.CUSTOMER, "Kunde");
 		em.persist(adminRole);
 		em.persist(editorRole);
@@ -75,10 +78,14 @@ public class DemoDataProvider {
 
 		createUser("root", "Root", "Ticket Master", "toor", adminRole, editorRole, customerRole);
 		createUser("admin", "The Admin", "Ticket Master","admin", adminRole);
-		createUser("editor1", "Wiz Khalifa", "Ticket Master","mosbach", editorRole);
-		createUser("editor2", "Dirk Saller", "Ticket Master","mosbach", editorRole);
+		createUser("editor1", "Rolf Meyer", "Ticket Master","mosbach", editorRole);
+		createUser("editor2", "Alex Löwen", "Ticket Master","mosbach", editorRole);
+		createUser("editor3", "Mike Pfeffer", "Ticket Master","mosbach", editorRole);
+		createUser("editor4", "Fritz Birnbaum", "Ticket Master","mosbach", editorRole);
 		createUser("customer1", "Edwin Kopf", "IBM","mosbach", customerRole);
-		createUser("customer2", "Jend Weidmann", "Deutsche Bundesbank","mosbach", customerRole);
+		createUser("customer2", "Jens Hadarmad", "Deutsche Bundesbank","mosbach", customerRole);
+		createUser("customer3", "Benno Gut", "Deutsche Bundesbank","mosbach", customerRole);
+		createUser("customer4", "Vanessa Richter", "IBM","mosbach", customerRole);
 	}
 
 	private User createUser(String login, String userName, String companyName, String password, Role... userRoles) {
@@ -91,20 +98,126 @@ public class DemoDataProvider {
 	}
 
 	private void createTickets() {
-		createTicket("The Grinch hated Christmas", Ticket.Status.open,"How the Grinch Stole Christmas!",0, 0, new Date());
-		createTicket("We should take Bikini Bottom and push it somewhere else", Ticket.Status.closed, "SpongeBob SquarePants",0, 0,  new Date());
-		createTicket("Computer is broken", Ticket.Status.closed,"No Content",  0, 0, new Date());
-		createTicket("IE11 is broken", Ticket.Status.inProcess, "What's the difference between snowmen and snowladies? Snowballs", 0, 0, new Date());
-		createTicket("Windows is broken 1", Ticket.Status.inProcess, "I am a nobody, nobody is perfect, therefore I am perfect.",0, 0,  new Date());
-		createTicket("Windows is broken 2", Ticket.Status.open, "I wondered why the frisbee was getting bigger, and then it hit me.",0, 0,  new Date());
-		createTicket("Windows is broken 3", Ticket.Status.open, "If con is the opposite of pro, it must mean Congress is the opposite of progress?", 0, 0, new Date());
-		createTicket("How do you make holy water?", Ticket.Status.open, "You boil the hell out of it.", 0, 0, new Date());
-		createTicket("What do you call a fat psychic?", Ticket.Status.open, "A four chin teller.", 0, 0, new Date());
-		createTicket("Light travels faster than sound", Ticket.Status.open, "This is why some people appear bright until they speak.", 0, 0, new Date());
-		createTicket("I used to like my neighbors", Ticket.Status.open, "Until they put a password on their Wi-Fi.", 0, 0, new Date());
-		createTicket("I once farted in an elevator", Ticket.Status.open, "I once farted in an elevator, it was wrong on so many levels.",0, 0,  new Date());
-		createTicket("What do you call a bear with no teeth?", Ticket.Status.open, "A gummy bear!", 0, 0, new Date());
-		createTicket("Just deleted the internet", Ticket.Status.open, "Please Help", 0, 0, new Date());
+		List<User> editors = userDAOProxy.getAll().stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("editor"))).collect(Collectors.toList());
+		List<User> customers = userDAOProxy.getAll().stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("customer"))).collect(Collectors.toList());
+		Random randomIndex = new Random();
+
+		// Freie Tickets
+		createTicket("The Grinch hated Christmas",
+				Ticket.Status.open,
+				"How the Grinch Stole Christmas!",
+				0,
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		createTicket("We should take Bikini Bottom and push it somewhere else",
+				Ticket.Status.open,
+				"SpongeBob SquarePants",
+				0,
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		createTicket("Computer is broken",
+				Ticket.Status.open,
+				"No Content",
+				0,
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		createTicket("IE11 is broken",
+				Ticket.Status.open,
+				"What's the difference between snowmen and snowladies? Snowballs",
+				0,
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		createTicket(
+				"I used to like my neighbors",
+				Ticket.Status.open,
+				"Until they put a password on their Wi-Fi.",
+				0,
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		createTicket(
+				"I once farted in an elevator",
+				Ticket.Status.open,
+				"I once farted in an elevator, it was wrong on so many levels.",
+				0,
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		// Tickets in Bearbeitung
+		createTicket("Windows is broken 1",
+				Ticket.Status.inProcess,
+				"I am a nobody, nobody is perfect, therefore I am perfect.",
+				editors.get(randomIndex.nextInt(editors.size())).getId(),
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		createTicket("Windows is broken 2",
+				Ticket.Status.inProcess,
+				"I wondered why the frisbee was getting bigger, and then it hit me.",
+				editors.get(randomIndex.nextInt(editors.size())).getId(),
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		createTicket("Windows is broken 3",
+				Ticket.Status.inProcess,
+				"If con is the opposite of pro, it must mean Congress is the opposite of progress?",
+				editors.get(randomIndex.nextInt(editors.size())).getId(),
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		createTicket("How do you make holy water?",
+				Ticket.Status.inProcess, "You boil the hell out of it.",
+				editors.get(randomIndex.nextInt(editors.size())).getId(),
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		createTicket("What do you call a fat psychic?",
+				Ticket.Status.inProcess, "A four chin teller.",
+				editors.get(randomIndex.nextInt(editors.size())).getId(),
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		createTicket("Light travels faster than sound",
+				Ticket.Status.inProcess,
+				"This is why some people appear bright until they speak.",
+				editors.get(randomIndex.nextInt(editors.size())).getId(),
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		// Geschlossene Tickets
+		createTicket(
+				"What do you call a bear with no teeth?",
+				Ticket.Status.closed,
+				"A gummy bear!",
+				0,
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
+
+		createTicket(
+				"Just deleted the internet",
+				Ticket.Status.closed,
+				"Please Help",
+				0,
+				customers.get(randomIndex.nextInt(customers.size())).getId(),
+				new Date()
+		);
 	}
 
 	private Ticket createTicket(String subject, Ticket.Status status, String content, long editorId, long customerId, Date createDate){
