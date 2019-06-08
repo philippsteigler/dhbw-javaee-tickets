@@ -8,6 +8,7 @@ import org.primefaces.model.TreeNode;
 import javax.annotation.PostConstruct;
 import javax.annotation.security.PermitAll;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Named
 @SessionScoped
-public class TicketBean implements Serializable {
+public class TicketBean extends AbstractBean {
     private static final long serialVersionUID = -1843025922631961397L;
 
     @Inject
@@ -89,5 +90,34 @@ public class TicketBean implements Serializable {
 
     public void ticketDetailView() {
 
+    }
+
+    public void save(Ticket ticket)
+    {
+        ticketDAO.persistOrMerge(ticket);
+        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gespeichert.");
+    }
+
+    public void create()
+    {
+        tickets.add(new Ticket());
+    }
+
+    public void delete(Ticket ticket)
+    {
+        ticketDAO.removeDetached(ticket);
+        init();
+
+        this.addFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gelöscht.");
+    }
+
+    public void setTickets(List<Ticket> tickets)
+    {
+        this.tickets = tickets;
+    }
+
+    public void setCurrentTicket(Ticket currentSelection)
+    {
+        this.currentTicket = currentSelection;
     }
 }
