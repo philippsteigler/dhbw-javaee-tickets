@@ -18,6 +18,16 @@
                 width: 5%
             }
 
+            .delegate {
+                width: 33%;
+                padding-left: 1%;
+            }
+
+            .delegateButtons {
+                width: 33%;
+                padding-right: 1%;
+            }
+
             .detail {
                 width: 95%;
                 padding-left: 25px;
@@ -39,14 +49,14 @@
             <p:commandButton value="Eintrag Hinzufühen" action="#{ticketBean.addEntry()}"/>
         </p:dialog>
 
-        <p:dialog header="#{msgs['entry.delegate']}" widgetVar="dlgDelegate" modal="true" height="200" width="500">
-            <p:dataScroller id="editors" value="#{return}" var="user" chunkSize="10">
+        <p:dialog header="#{msgs['ticket.delegate']}" widgetVar="dlgDelegate" modal="true" height="600" width="500">
+            <p:dataScroller id="editors" value="#{userBean.users}" var="user" chunkSize="10">
                 <f:facet name="header">
                     Scroll Down to Load More Uers
                 </f:facet>
 
-                <h:panelGrid columns="2" style="width:100%">
-                    <h:outputText value="#{return}" />
+                <h:panelGrid columns="2" style="width:100%" columnClasses="delegate,delegateButtons">
+                    <h:outputText value="#{user.name}" />
                     <p:commandButton value="Delegieren" action="#{ticketBean.delegate(user.id)}"/>
                 </h:panelGrid>
             </p:dataScroller>
