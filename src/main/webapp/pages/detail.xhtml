@@ -21,13 +21,27 @@
 
         <p:growl id="msgs" showDetail="true" />
 
-        <p:fieldset legend="Entri Date oder so" toggleable="true" toggleSpeed="500">
-            <p:ajax event="toggle" />
-            <h:panelGrid columns="2" cellpadding="5">
-                <p:graphicImage library="images" name="#{ticketBean.currentTicket.status}.png" alt="#{ticketBean.currentTicket.status}" />
-                <h:outputText value="ENTRIES" />
+        <p:dataScroller id="searchResult" value="#{ticketBean.currentEntries}" var="entry" chunkSize="10">
+            <f:facet name="header">
+                Scroll Down to Load More Entries
+            </f:facet>
+
+            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
+
+                <p:outputPanel>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Date:" />
+                        <h:outputText value="#{entry.createDate}" style="font-weight: bold"/>
+
+                        <h:outputText value="Creator:" />
+                        <h:outputText value="#{entry.customerID}" style="font-weight: bold"/>
+
+                        <h:outputText value="Content:" />
+                        <h:outputText value="#{entry.content}" style="font-weight: bold"/>
+                    </h:panelGrid>
+                </p:outputPanel>
             </h:panelGrid>
-        </p:fieldset>
+        </p:dataScroller>
 
     </h:form>
 </ui:define>
