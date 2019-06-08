@@ -59,7 +59,7 @@ public class TicketBean extends AbstractBean {
     }
 
     public void refresh(){
-        init(); //???
+        init();
 
         doEditorSearchHome();
     }
@@ -155,10 +155,11 @@ public class TicketBean extends AbstractBean {
         return rendered;
     }
 
-    private void saveTicket(Ticket ticket)
+    private String saveTicket(Ticket ticket)
     {
         ticketDAO.persistOrMerge(ticket);
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gespeichert.");
+        return "tickets";
     }
 
     private void saveEntry(Entry entry)
@@ -190,38 +191,42 @@ public class TicketBean extends AbstractBean {
         this.currentTicket = currentSelection;
     }
 
-    public void delegateTicket(long editorId){
+    public String delegateTicket(long editorId){
         currentTicket.setEditorId(editorId);
         currentTicket.setStatusToInProcess();
         saveTicket(currentTicket);
 
         //load new tickets from database
         refresh();
+
+        return saveTicket(currentTicket);
     }
 
-    public void addEntryToTicket(long creatorId, String content) {
+    public String addEntryToTicket(long creatorId, String content) {
         Entry newEntry = new Entry(creatorId, content, new Date());
         currentTicket.addEntry(newEntry);
         saveTicket(currentTicket);
         saveEntry(newEntry);
 
         //load new tickets from database
-       refresh();
+        refresh();
+
+        return saveTicket(currentTicket);
     }
 
     public String releaseTicket() {
         currentTicket.setStatusToOpen();
         currentTicket.setEditorId(0);
-        saveTicket(currentTicket);
+
 
         //load new tickets from database
+        refresh();
 
-
-        return "home?faces-redirect=true";
+        return saveTicket(currentTicket);
     }
 
     public void setEntryContent(String entryContent){ this.entryContent = entryContent; }
 
     public String getEntryContent(){ return entryContent; }
 
-}
+}//onclick="location.reload();"
