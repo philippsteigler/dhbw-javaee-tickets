@@ -46,7 +46,7 @@ public class TicketBean extends AbstractBean {
 
     private List<Ticket> ticketSearchResult;
 
-    private static final String DETAIL = "detail";
+    private static final String DETAIL_VIEW = "detail";
 
     private boolean rendered = false;
 
