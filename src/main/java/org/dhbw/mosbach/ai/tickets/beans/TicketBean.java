@@ -68,6 +68,10 @@ public class TicketBean extends AbstractBean {
         this.currentList = new ArrayList<>();
     }
 
+    public void refresh(){
+
+    }
+
     private void doSearch(List<Ticket> searchThis)
     {
         List<Ticket> disposableList = new ArrayList<>();
@@ -203,6 +207,9 @@ public class TicketBean extends AbstractBean {
         currentTicket.setEditorId(editorId);
         currentTicket.setStatusToInProcess();
         saveTicket(currentTicket);
+
+        //load new tickets from database
+        init();
     }
 
     public void addEntryToTicket(long creatorId, String content) {
@@ -210,11 +217,17 @@ public class TicketBean extends AbstractBean {
         currentTicket.addEntry(newEntry);
         saveTicket(currentTicket);
         saveEntry(newEntry);
+
+        //load new tickets from database
+       init();
     }
 
     public void releaseTicket() {
         currentTicket.setStatusToOpen();
         saveTicket(currentTicket);
+
+        //load new tickets from database
+        init();
     }
 
     public void setEntryContent(String entryContent){ this.entryContent = entryContent; }
