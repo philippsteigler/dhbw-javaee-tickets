@@ -10,22 +10,25 @@
 		<b:navBar brand="#{msgs['nav.bar.brand']}" brand-href="#" fixed="top" inverse="true">
 			<b:navbarLinks>
 
-				<ui:define name="Admin" rendered="#{securityBean.isUserInRole('admin')}">
-				</ui:define>
+				<b:dropMenu value="Admin" rendered="#{securityBean.isUserInRole('admin')}">
 
-				<ui:define name="Editor" rendered="#{securityBean.isUserInRole('editor')}">
+				</b:dropMenu>
+
+				<b:dropMenu value="Editor" rendered="#{securityBean.isUserInRole('editor')}">
 					<b:navCommandLink value="Home" action="/pages/editor/home.xhtml?faces-redirect=true" immediate="true" />
 					<b:navCommandLink value="Tickets" action="/pages/editor/tickets.xhtml?faces-redirect=true" immediate="true" />
-				</ui:define>
+				</b:dropMenu>
 
-				<ui:define name="Customer" rendered="#{securityBean.isUserInRole('customer')}">
+				<!--
+				<b:dropMenu value="Customer" rendered="#{securityBean.isUserInRole('customer')}">
 					<b:navCommandLink value="Home" action="/pages/customer/home.xhtml?faces-redirect=true" immediate="true" />
 					<b:navCommandLink value="Tickets" action="/pages/customer/tickets.xhtml?faces-redirect=true" immediate="true" />
-				</ui:define>
+				</b:dropMenu>
+				-->
 
 				<b:navCommandLink value="Login" action="#{securityBean.login()}" rendered="#{not securityBean.authenticated}" />
 
-				<b:dropMenu value="User: #{securityBean.user.name}" rendered="#{securityBean.authenticated}">
+				<b:dropMenu value=" User: #{securityBean.user.name}" rendered="#{securityBean.authenticated}">
 					<b:navCommandLink value="Logout" action="#{securityBean.logout()}" ajax="false" />
 				</b:dropMenu>
 

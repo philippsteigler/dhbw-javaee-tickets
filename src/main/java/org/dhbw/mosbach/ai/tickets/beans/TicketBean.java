@@ -43,7 +43,7 @@ public class TicketBean implements Serializable {
 
     private static final String DETAIL = "detail";
 
-    private boolean rendered = false;
+    private boolean rendered = true;
 
     /**
      * Initializes data structures. This method will be called after the instance
@@ -73,7 +73,9 @@ public class TicketBean implements Serializable {
     private void checkRender(int size) {
         if (size < 1) {
             rendered = false;
-        } else rendered = true;
+        } else {
+            rendered = true;
+        }
     }
 
     public void doEditorSearchHome()
