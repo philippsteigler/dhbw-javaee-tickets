@@ -57,7 +57,9 @@ public class TicketBean extends AbstractBean {
     }
 
     public void refresh(){
+        init(); //???
 
+        doEditorSearchHome();
     }
 
     private void doSearch(List<Ticket> searchThis)
@@ -197,7 +199,7 @@ public class TicketBean extends AbstractBean {
         saveTicket(currentTicket);
 
         //load new tickets from database
-        init();
+        refresh();
     }
 
     public void addEntryToTicket(long creatorId, String content) {
@@ -207,15 +209,18 @@ public class TicketBean extends AbstractBean {
         saveEntry(newEntry);
 
         //load new tickets from database
-       init();
+       refresh();
     }
 
-    public void releaseTicket() {
+    public String releaseTicket() {
         currentTicket.setStatusToOpen();
+        currentTicket.setEditorId(0);
         saveTicket(currentTicket);
 
         //load new tickets from database
-        init();
+
+
+        return "home?faces-redirect=true";
     }
 
     public void setEntryContent(String entryContent){ this.entryContent = entryContent; }
