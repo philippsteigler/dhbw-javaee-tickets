@@ -57,7 +57,7 @@
 
                 <h:panelGrid columns="2" style="width:100%" columnClasses="delegate,delegateButtons">
                     <h:outputText value="#{user.name}" />
-                    <p:commandButton value="Delegieren" action="#{ticketBean.delegateTicket(user.id)}" onclick="location.reload();"/>
+                    <h:commandButton value="Delegieren" action="#{ticketBean.delegateTicket(user.id)}" id="delegateTicket" onclick="location.reload();"/>
                 </h:panelGrid>
             </p:dataScroller>
         </p:dialog>
@@ -65,9 +65,9 @@
         <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
             <h:outputText />
             <h:panelGrid columns="3" class="buttons">
-                <p:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" />
-                <p:commandButton value="#{msgs['button.delegate']}" type="button" onclick="PF('dlgDelegate').show();" />
-                <p:commandButton action="#{ticketBean.releaseTicket()}" value="#{msgs['button.release']}"  onclick="location.reload();"/>
+                <h:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" />
+                <h:commandButton value="#{msgs['button.delegate']}" type="button" onclick="PF('dlgDelegate').show();" />
+                <h:commandButton action="#{ticketBean.releaseTicket()}" value="#{msgs['button.release']}"  onclick="location.reload();"/>
             </h:panelGrid>
 
             <p:graphicImage library="images" name="#{ticketBean.currentTicket.status}.png" alt="#{ticketBean.currentTicket.status}" />
