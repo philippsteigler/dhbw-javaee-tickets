@@ -30,9 +30,7 @@ public class UserBean extends AbstractBean {
     }
 
     public List<User> getUsers(String requestedRole) {
-        return users.stream().filter(user -> user.getRoles().stream().allMatch(
-                role -> role.getName().equals(requestedRole))
-        ).collect(Collectors.toList());
+        return users.stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals(requestedRole))).collect(Collectors.toList());
     }
 
     public String getUserName(long id) {
