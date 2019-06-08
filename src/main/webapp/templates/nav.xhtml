@@ -8,31 +8,44 @@
 <ui:composition>
 	<h:form>
 		<b:navBar brand="#{msgs['nav.bar.brand']}" brand-href="#" fixed="top" inverse="true">
-			<b:navbarLinks>
 
-				<b:dropMenu value="Admin" rendered="#{securityBean.isUserInRole('admin')}">
-					<b:navCommandLink value="Users" action="/pages/admin/users.xhtml?faces-redirect=true" immediate="true" />
-					<b:navCommandLink value="Tickets" action="/pages/admin/tickets.xhtml?faces-redirect=true" immediate="true" />
+			<b:navbarLinks rendered="#{not securityBean.isUserInRole('admin')}">
+				<b:navCommandLink value="Home" action="/pages/editor/home.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}" />
+				<b:navCommandLink value="Tickets" action="/pages/editor/tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}" />
+
+				<b:navCommandLink value="Home" action="/pages/customer/home.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />
+				<b:navCommandLink value="Tickets" action="/pages/customer/tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />
+				<b:navCommandLink value="Ticket anlegen" action="/pages/customer/create.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />
+
+				<b:navCommandLink value="Login" action="#{securityBean.login()}" rendered="#{not securityBean.authenticated}" />
+
+				<b:dropMenu value="Benutzer: #{securityBean.user.name}" rendered="#{securityBean.authenticated}">
+					<b:navCommandLink value="Logout" action="#{securityBean.logout()}" ajax="false" />
 				</b:dropMenu>
+			</b:navbarLinks>
 
-				<b:dropMenu value="Editor" rendered="#{securityBean.isUserInRole('editor')}">
+			<b:navbarLinks rendered="#{securityBean.isUserInRole('admin')}">
+				<b:navCommandLink value="Benutzer verwalten" action="/pages/admin/users.xhtml?faces-redirect=true" immediate="true" />
+				<b:navCommandLink value="Tickets verwalten" action="/pages/admin/tickets.xhtml?faces-redirect=true" immediate="true" />
+
+				<b:dropMenu value="Bearbeiter" rendered="#{securityBean.isUserInRole('editor')}" >
 					<b:navCommandLink value="Home" action="/pages/editor/home.xhtml?faces-redirect=true" immediate="true" />
 					<b:navCommandLink value="Tickets" action="/pages/editor/tickets.xhtml?faces-redirect=true" immediate="true" />
 				</b:dropMenu>
 
-				<b:dropMenu value="Customer" rendered="#{securityBean.isUserInRole('customer')}">
+				<b:dropMenu value="Kunden" rendered="#{securityBean.isUserInRole('customer')}" >
 					<b:navCommandLink value="Home" action="/pages/customer/home.xhtml?faces-redirect=true" immediate="true" />
 					<b:navCommandLink value="Tickets" action="/pages/customer/tickets.xhtml?faces-redirect=true" immediate="true" />
-					<b:navCommandLink value="Create Ticket" action="/pages/customer/create.xhtml?faces-redirect=true" immediate="true" />
+					<b:navCommandLink value="Ticket anlegen" action="/pages/customer/create.xhtml?faces-redirect=true" immediate="true"  />
 				</b:dropMenu>
 
 				<b:navCommandLink value="Login" action="#{securityBean.login()}" rendered="#{not securityBean.authenticated}" />
 
-				<b:dropMenu value=" User: #{securityBean.user.name}" rendered="#{securityBean.authenticated}">
+				<b:dropMenu value="Benutzer: #{securityBean.user.name}" rendered="#{securityBean.authenticated}">
 					<b:navCommandLink value="Logout" action="#{securityBean.logout()}" ajax="false" />
 				</b:dropMenu>
-
 			</b:navbarLinks>
+
 		</b:navBar>
 	</h:form>
 </ui:composition>

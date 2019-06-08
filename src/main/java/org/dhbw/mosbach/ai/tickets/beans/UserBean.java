@@ -42,6 +42,10 @@ public class UserBean extends AbstractBean {
         return users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getName();
     }
 
+    public String getUserCompany(long id) {
+        return users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getCompany();
+    }
+
     public String userDetail(long id) {
         this.currentUser = users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0);
         return USER_DETAIL_VIEW;
