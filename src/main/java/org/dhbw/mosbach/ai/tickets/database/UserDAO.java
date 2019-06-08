@@ -15,10 +15,8 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-@Named
+@Named("userDAO")
 @Dependent
-@CDIRoleCheck
-@RolesAllowed(value = { Roles.ADMIN })
 public class UserDAO extends BaseDAO<User, Long> {
     private static final long serialVersionUID = -6308185751264138344L;
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
