@@ -63,6 +63,22 @@ public class Ticket {
         return status;
     }
 
+    public void setStatusToOpen() {
+        status = Status.open;
+    }
+
+    public void setStatusToClose() {
+        status = Status.closed;
+    }
+
+    public void setStatusToInProcess() {
+        status = Status.inProcess;
+    }
+
+    public void setEditorId(long editorId){
+        this.editorId = editorId;
+    }
+
     public String getContent() { return content; }
 
     public long getEditorId() {

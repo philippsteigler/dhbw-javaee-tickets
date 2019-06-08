@@ -10,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,9 @@ public class TicketBean extends AbstractBean {
     private TicketDAO ticketDAO;
 
     @Inject
+    private EntryDAO entryDAO;
+
+    @Inject
     private SecurityBean securityBean;
 
     private List<Ticket> tickets;
@@ -31,6 +35,8 @@ public class TicketBean extends AbstractBean {
     private List<Entry> currentEntries;
 
     private String ticketSearchString = "";
+
+    private String entryContent;
 
     private List<Ticket> ticketSearchResult;
 
@@ -120,7 +126,6 @@ public class TicketBean extends AbstractBean {
         this.currentEntries = currentTicket.getEntries();
     }
 
-
     public void setTicketSearchString(String ticketSearchString) {
         this.ticketSearchString = ticketSearchString;
     }
@@ -146,10 +151,16 @@ public class TicketBean extends AbstractBean {
         return rendered;
     }
 
-    public void save(Ticket ticket)
+    private void saveTicket(Ticket ticket)
     {
         ticketDAO.persistOrMerge(ticket);
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gespeichert.");
+    }
+
+    private void saveEntry(Entry entry)
+    {
+        entryDAO.persistOrMerge(entry);
+        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Eintrag erfolgreich gespeichert.");
     }
 
     public void create()
@@ -165,14 +176,6 @@ public class TicketBean extends AbstractBean {
         this.addFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gelöscht.");
     }
 
-    public void addEntry() {
-        //TODO schreiben
-    }
-
-    public void delegate(long ID) {
-
-    }
-
     public void setTickets(List<Ticket> tickets)
     {
         this.tickets = tickets;
@@ -182,4 +185,27 @@ public class TicketBean extends AbstractBean {
     {
         this.currentTicket = currentSelection;
     }
+
+    public void delegateTicket(long editorId){
+        currentTicket.setEditorId(editorId);
+        currentTicket.setStatusToInProcess();
+        saveTicket(currentTicket);
+    }
+
+    public void addEntryToTicket(long creatorId, String content) {
+        Entry newEntry = new Entry(creatorId, content, new Date());
+        currentTicket.addEntry(newEntry);
+        saveTicket(currentTicket);
+        saveEntry(newEntry);
+    }
+
+    public void releaseTicket() {
+        currentTicket.setStatusToOpen();
+        saveTicket(currentTicket);
+    }
+
+    public void setEntryContent(String entryContent){ this.entryContent = entryContent; }
+
+    public String getEntryContent(){ return entryContent; }
+
 }
