@@ -1,6 +1,8 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
+import org.dhbw.mosbach.ai.tickets.database.EntryDAO;
 import org.dhbw.mosbach.ai.tickets.database.TicketDAO;
+import org.dhbw.mosbach.ai.tickets.model.Entry;
 import org.dhbw.mosbach.ai.tickets.model.Role;
 import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.Ticket;
@@ -37,6 +39,8 @@ public class TicketBean extends AbstractBean {
     private List<Ticket> currentList;
 
     private Ticket currentTicket;
+
+    private List<Entry> currentEntries;
 
     private String ticketSearchString = "";
 
@@ -121,8 +125,14 @@ public class TicketBean extends AbstractBean {
 
     public String detail(long id) {
         this.currentTicket = tickets.stream().filter(ticket -> ticket.getId() == id).collect(Collectors.toList()).get(0);
+        getTicketEntries(id);
         return DETAIL;
     }
+
+    private void getTicketEntries(long id) {
+        this.currentEntries = currentTicket.getEntries();
+    }
+
 
     public void setTicketSearchString(String ticketSearchString) {
         this.ticketSearchString = ticketSearchString;
@@ -139,6 +149,11 @@ public class TicketBean extends AbstractBean {
     public Ticket getCurrentTicket() {
         return currentTicket;
     }
+
+    public List<Entry> getCurrentEntries() {
+        return currentEntries;
+    }
+
 
     public boolean isRendered() {
         return rendered;
