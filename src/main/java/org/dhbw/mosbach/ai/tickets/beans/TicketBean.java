@@ -187,4 +187,10 @@ public class TicketBean extends AbstractBean {
     {
         this.currentTicket = currentSelection;
     }
+
+    public void delegateTicket(){}
+
+    public void addEntry() {}
+
+    public void freeTicket() {}
 }
