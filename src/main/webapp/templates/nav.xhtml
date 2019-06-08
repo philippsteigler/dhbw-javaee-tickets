@@ -23,6 +23,7 @@
 				<b:dropMenu value="Customer" rendered="#{securityBean.isUserInRole('customer')}">
 					<b:navCommandLink value="Home" action="/pages/customer/home.xhtml?faces-redirect=true" immediate="true" />
 					<b:navCommandLink value="Tickets" action="/pages/customer/tickets.xhtml?faces-redirect=true" immediate="true" />
+					<b:navCommandLink value="Create Ticket" action="/pages/customer/create.xhtml?faces-redirect=true" immediate="true" />
 				</b:dropMenu>
 
 				<b:navCommandLink value="Login" action="#{securityBean.login()}" rendered="#{not securityBean.authenticated}" />

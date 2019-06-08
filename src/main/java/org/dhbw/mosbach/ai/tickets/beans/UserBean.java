@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class UserBean extends AbstractBean {
     private static final long serialVersionUID = -7105806000082771152L;
 
@@ -20,6 +20,11 @@ public class UserBean extends AbstractBean {
     private UserDAO userDAO;
 
     private List<User> users;
+
+    private User currentUser;
+
+    private static final String USER_DETAIL_VIEW = "userDetail";
+
 
     @PostConstruct
     public void init() {
@@ -32,5 +37,14 @@ public class UserBean extends AbstractBean {
 
     public String getUserName(long id) {
         return users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getName();
+    }
+
+    public String userDetail(long id) {
+        this.currentUser = users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0);
+        return USER_DETAIL_VIEW;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 }
