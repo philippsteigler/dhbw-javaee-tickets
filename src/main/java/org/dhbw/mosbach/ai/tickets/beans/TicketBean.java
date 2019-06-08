@@ -178,6 +178,14 @@ public class TicketBean extends AbstractBean {
         this.addFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gelöscht.");
     }
 
+    public void addEntry() {
+        //TODO schreiben
+    }
+
+    public void delegate(long ID) {
+
+    }
+
     public void setTickets(List<Ticket> tickets)
     {
         this.tickets = tickets;
