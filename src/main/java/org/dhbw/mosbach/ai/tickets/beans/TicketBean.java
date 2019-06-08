@@ -93,13 +93,7 @@ public class TicketBean implements Serializable {
 
     public void doCustomerSearchHome()
     {
-        currentList = getCustomersTicketsHome();
-        ticketSearchResult = currentList;
-        for (Ticket ticket: currentList) {
-            if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
-                ticketSearchResult.add(ticket);
-            }
-        }
+       doSearch(getCustomersTicketsHome());
     }
 
     private List<Ticket> getCustomersTicketsHome() {
@@ -109,13 +103,7 @@ public class TicketBean implements Serializable {
 
     public void doCustomerSearchTickets()
     {
-        currentList = getCustomersTicketsTickets();
-        ticketSearchResult = currentList;
-        for (Ticket ticket: currentList) {
-            if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
-                ticketSearchResult.add(ticket);
-            }
-        }
+        doSearch(getCustomersTicketsTickets());
     }
 
     private List<Ticket> getCustomersTicketsTickets() {
