@@ -15,8 +15,6 @@
 					<b:navCommandLink value="Tickets" action="/pages/editor/tickets.xhtml?faces-redirect=true" immediate="true" />
 				</b:dropMenu>
 
-				<b:navCommandLink value="Dashboard Ajax" action="/pages/dashboardAjax.xhtml?faces-redirect=true" immediate="true" />
-
 				<b:navCommandLink value="Login" action="#{securityBean.login()}" rendered="#{not securityBean.authenticated}" />
 
 				<b:dropMenu value="User: #{securityBean.user.name}" rendered="#{securityBean.authenticated}">

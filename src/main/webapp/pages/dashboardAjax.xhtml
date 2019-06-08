@@ -14,7 +14,6 @@
 
 <h:form id="form">
 
-
     <style type="text/css">
         .logo {
             width: 5%
@@ -35,9 +34,11 @@
         }
     </style>
 
+    #{ticketBean.doSearch()}
+
     <p:inputText value="#{ticketBean.ticketSearchString}">
         <p:ajax event="keyup" delay="100" update="searchResult"
-                listener="#{ticketBean.doSearch}" />
+                listener="#{ticketBean.doSearch()}" />
     </p:inputText>
 
     <p:dataScroller id="searchResult" value="#{ticketBean.ticketSearchResult}" var="ticket" chunkSize="10">
@@ -46,7 +47,7 @@
         </f:facet>
 
         <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
-            <h:commandButton action="#{ticketBean.detail(ticket.id)}" value="Details" id="detailsButton"/>
+            <h:commandButton action="#{ticketBean.detail(ticket.id)}" value="Details" />
 
             <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}"/>
 

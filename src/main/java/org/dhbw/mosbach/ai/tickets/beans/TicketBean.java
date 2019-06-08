@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 
 @Named
 @SessionScoped
-@CDIRoleCheck
 public class TicketBean implements Serializable {
     private static final long serialVersionUID = -1843025922631961397L;
 
@@ -44,6 +43,8 @@ public class TicketBean implements Serializable {
 
     private static final String DETAIL = "detail";
 
+    private boolean rendered = false;
+
     /**
      * Initializes data structures. This method will be called after the instance
      * has been created.
@@ -53,28 +54,31 @@ public class TicketBean implements Serializable {
     {
         this.tickets = ticketDAO.getAllFullyLoaded();
         this.currentTicket = null;
-        this.currentList = null;
+        this.currentList = new ArrayList<>();
     }
 
-    public void doSearch()
+    private void doSearch(List<Ticket> searchThis)
     {
-        ticketSearchResult = tickets;
-        for (Ticket ticket: tickets) {
+        List<Ticket> disposableList = new ArrayList<>();
+        for (Ticket ticket: searchThis) {
             if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
-                ticketSearchResult.add(ticket);
+                disposableList.add(ticket);
             }
         }
+
+        checkRender(disposableList.size());
+        ticketSearchResult = disposableList;
+    }
+
+    private void checkRender(int size) {
+        if (size < 1) {
+            rendered = false;
+        } else rendered = true;
     }
 
     public void doEditorSearchHome()
     {
-        currentList = getEditorsTicketsHome();
-        ticketSearchResult = currentList;
-        for (Ticket ticket: currentList) {
-            if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
-                ticketSearchResult.add(ticket);
-            }
-        }
+        doSearch(getEditorsTicketsHome());
     }
 
     private List<Ticket> getEditorsTicketsHome() {
@@ -84,13 +88,7 @@ public class TicketBean implements Serializable {
 
     public void doEditorSearchTickets()
     {
-        currentList = tickets;
-        ticketSearchResult = currentList;
-        for (Ticket ticket: currentList) {
-            if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
-                ticketSearchResult.add(ticket);
-            }
-        }
+        doSearch(tickets);
     }
 
     public void doCustomerSearchHome()
@@ -149,5 +147,9 @@ public class TicketBean implements Serializable {
 
     public Ticket getCurrentTicket() {
         return currentTicket;
+    }
+
+    public boolean isRendered() {
+        return rendered;
     }
 }

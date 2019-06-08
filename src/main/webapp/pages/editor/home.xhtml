@@ -14,7 +14,6 @@
 
 <h:form id="form">
 
-
     <style type="text/css">
         .logo {
             width: 5%
@@ -35,32 +34,41 @@
         }
     </style>
 
-    <p:inputText value="#{ticketBean.ticketSearchString}">
-        <p:ajax event="keyup" delay="100" update="searchResult"
-                listener="#{ticketBean.doEditorSearchHome}" />
-    </p:inputText>
+    #{ticketBean.doEditorSearchHome()}
 
-    <p:dataScroller id="searchResult" value="#{ticketBean.ticketSearchResult}" var="ticket" chunkSize="10">
-        <f:facet name="header">
-            Scroll Down to Load More Tickets
-        </f:facet>
+    <h:outputText rendered="#{!ticketBean.rendered}" value="Keine Tickets gefunden" />
 
-        <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
-            <h:commandButton action="#{ticketBean.detail(ticket.id)}" value="Details" id="detailsButton"/>
+    <ui:define name="list" rendered="#{ticketBean.rendered}">
 
-            <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}"/>
+        <h:outputText value="Search: " />
+        <p:inputText value="#{ticketBean.ticketSearchString}" >
+            <p:ajax event="keyup" delay="100" update="searchResult"
+                    listener="#{ticketBean.doEditorSearchHome()}" />
+        </p:inputText>
 
-            <p:outputPanel>
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputText value="Editor:" />
-                    <h:outputText value="#{ticket.editorId}" style="font-weight: bold"/>
+        <p:dataScroller id="searchResult" value="#{ticketBean.ticketSearchResult}" var="ticket" chunkSize="10" rendered="#{ticketBean.rendered}">
+            <f:facet name="header">
+                Scroll Down to Load More Tickets
+            </f:facet>
 
-                    <h:outputText value="Subject:" />
-                    <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
-                </h:panelGrid>
-            </p:outputPanel>
-        </h:panelGrid>
-    </p:dataScroller>
+            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
+                <h:commandButton action="#{ticketBean.detail(ticket.id)}" value="Details" />
+
+                <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}"/>
+
+                <p:outputPanel>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Editor:" />
+                        <h:outputText value="#{ticket.editorId}" style="font-weight: bold"/>
+
+                        <h:outputText value="Subject:" />
+                        <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+            </h:panelGrid>
+        </p:dataScroller>
+
+    </ui:define>
 </h:form>
 </ui:define>
 </ui:composition>
