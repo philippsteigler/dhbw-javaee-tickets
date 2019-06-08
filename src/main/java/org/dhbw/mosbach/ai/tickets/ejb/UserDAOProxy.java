@@ -6,6 +6,8 @@ import javax.ejb.Stateless;
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
 import org.dhbw.mosbach.ai.tickets.model.User;
 
+import java.util.List;
+
 @Stateless(name = "userDAOProxy")
 @SpecialUserDAO
 @PermitAll
@@ -28,6 +30,12 @@ public class UserDAOProxy extends UserDAO {
     @Override
     public void persist(User... entities) {
         super.persist(entities);
+    }
+
+    @PermitAll
+    @Override
+    public List<User> getAll() {
+        return super.getAll();
     }
 
     @PermitAll

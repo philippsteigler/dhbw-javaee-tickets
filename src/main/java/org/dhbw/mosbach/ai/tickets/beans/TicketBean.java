@@ -52,7 +52,7 @@ public class TicketBean extends AbstractBean {
 
     private List<Ticket> ticketSearchResult;
 
-    private static final String DETAIL = "detail";
+    private static final String DETAIL_VIEW = "detail";
 
     private boolean rendered = false;
 
@@ -132,7 +132,7 @@ public class TicketBean extends AbstractBean {
     public String detail(long id) {
         this.currentTicket = tickets.stream().filter(ticket -> ticket.getId() == id).collect(Collectors.toList()).get(0);
         getTicketEntries(id);
-        return DETAIL;
+        return DETAIL_VIEW;
     }
 
     private void getTicketEntries(long id) {

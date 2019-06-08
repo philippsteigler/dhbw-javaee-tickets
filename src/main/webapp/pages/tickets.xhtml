@@ -17,7 +17,7 @@
         <h:form id="mainForm">
 
 
-            <h:dataTable value="#{ticketBean.allArticles}" var="ticket" styleClass="borderedTable" id="articleTable" binding="#{artTabBinding}">
+            <h:dataTable value="#{ticketBean.tickets}" var="ticket" styleClass="borderedTable" id="articleTable">
                 <h:column>
                     <f:facet name="header">Status</f:facet>
                     #{ticket.status}
@@ -31,7 +31,7 @@
                     #{ticket.subject}
                 </h:column>
                 <h:column>
-                    <h:commandButton action="#{personBean.test()}" value="Anzeigen"/>
+                    <h:commandButton value="Anzeigen"/>
                 </h:column>
             </h:dataTable>
 
