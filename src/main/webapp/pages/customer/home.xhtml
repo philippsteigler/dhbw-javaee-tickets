@@ -8,11 +8,12 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-<ui:define name="title">#{msgs['dashboard2.title']}</ui:define>
-<ui:define name="header">#{msgs['dashboard2.header']}</ui:define>
+<ui:define name="title">#{msgs['customer.home.title']}</ui:define>
+<ui:define name="header">#{msgs['customer.home.header']}</ui:define>
 <ui:define name="content">
 
 <h:form id="form">
+
 
     <style type="text/css">
         .logo {
@@ -34,20 +35,23 @@
         }
     </style>
 
-    #{ticketBean.doSearch()}
+    #{ticketBean.doCustomerSearchHome()}
 
+    <h:outputText value="Search: " />
     <p:inputText value="#{ticketBean.ticketSearchString}">
         <p:ajax event="keyup" delay="100" update="searchResult"
-                listener="#{ticketBean.doSearch()}" />
+                listener="#{ticketBean.doCustomerSearchHome()}" />
     </p:inputText>
 
-    <p:dataScroller id="searchResult" value="#{ticketBean.ticketSearchResult}" var="ticket" chunkSize="10">
+    <h:outputText rendered="#{!ticketBean.rendered}" value=" Keine Tickets gefunden" />
+
+    <p:dataScroller id="searchResult" value="#{ticketBean.ticketSearchResult}" var="ticket" chunkSize="10" rendered="#{ticketBean.rendered}">
         <f:facet name="header">
             Scroll Down to Load More Tickets
         </f:facet>
 
         <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
-            <h:commandButton action="#{ticketBean.detail(ticket.id)}" value="Details" />
+            <h:commandButton action="#{ticketBean.detail(ticket.id)}" value="Details" id="detailsButton"/>
 
             <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}"/>
 
@@ -62,6 +66,7 @@
             </p:outputPanel>
         </h:panelGrid>
     </p:dataScroller>
+
 </h:form>
 </ui:define>
 </ui:composition>
