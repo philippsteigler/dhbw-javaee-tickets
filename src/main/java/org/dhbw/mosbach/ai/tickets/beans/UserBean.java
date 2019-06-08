@@ -4,10 +4,12 @@ import org.dhbw.mosbach.ai.tickets.database.UserDAO;
 import org.dhbw.mosbach.ai.tickets.model.User;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
@@ -26,5 +28,9 @@ public class UserBean extends AbstractBean {
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public String getUserName(long id) {
+        return users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getName();
     }
 }
