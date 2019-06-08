@@ -154,7 +154,6 @@ public class TicketBean extends AbstractBean {
         return currentEntries;
     }
 
-    public void ticketDetailView() {
 
     public boolean isRendered() {
         return rendered;
