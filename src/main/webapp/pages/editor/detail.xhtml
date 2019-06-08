@@ -41,8 +41,8 @@
             <h:outputText />
             <h:panelGrid columns="3" class="buttons">
                 <p:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" />
-                <p:commandButton value="#{msgs['button.delegate']}" />
-                <p:commandButton value="#{msgs['button.release']}" />
+                <p:commandButton value="#{msgs['button.delegate']}" action="#{ticketBean.delegateTicket(5)}" />
+                <p:commandButton value="#{msgs['button.release']}" action="#{ticketBean.releaseTicket()}" />
             </h:panelGrid>
 
             <p:graphicImage library="images" name="#{ticketBean.currentTicket.status}.png" alt="#{ticketBean.currentTicket.status}" />

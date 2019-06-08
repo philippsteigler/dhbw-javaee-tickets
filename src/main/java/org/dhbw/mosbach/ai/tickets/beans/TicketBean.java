@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -31,6 +32,9 @@ public class TicketBean extends AbstractBean {
 
     @Inject
     private TicketDAO ticketDAO;
+
+    @Inject
+    private EntryDAO entryDAO;
 
     @Inject
     private SecurityBean securityBean;
@@ -159,10 +163,16 @@ public class TicketBean extends AbstractBean {
         return rendered;
     }
 
-    public void save(Ticket ticket)
+    public void saveTicket(Ticket ticket)
     {
         ticketDAO.persistOrMerge(ticket);
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gespeichert.");
+    }
+
+    public void saveEntry(Entry entry)
+    {
+        entryDAO.persistOrMerge(entry);
+        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Eintrag erfolgreich gespeichert.");
     }
 
     public void create()
@@ -188,9 +198,21 @@ public class TicketBean extends AbstractBean {
         this.currentTicket = currentSelection;
     }
 
-    public void delegateTicket(){}
+    public void delegateTicket(long editorId){
+        currentTicket.setEditorId(editorId);
+        currentTicket.setStatusToInProcess();
+        saveTicket(currentTicket);
+    }
 
-    public void addEntry() {}
+    public void addEntryToTicket(long creatorId, String content) {
+        Entry newEntry = new Entry(creatorId, content, new Date());
+        currentTicket.addEntry(newEntry);
+        saveTicket(currentTicket);
+        saveEntry(newEntry);
+    }
 
-    public void freeTicket() {}
+    public void releaseTicket() {
+        currentTicket.setStatusToOpen();
+        saveTicket(currentTicket);
+    }
 }
