@@ -19,16 +19,6 @@
         <h3 style="margin-top:0">Ticet ID: #{ticketBean.currentTicket.id}</h3>
         <h3 style="margin-top:0">Editor ID: #{ticketBean.currentTicket.editorId}</h3>
 
-        <p:growl id="msgs" showDetail="true" />
-
-        <p:fieldset legend="Entry Date oder so" toggleable="true" toggleSpeed="500">
-            <p:ajax event="toggle" />
-            <h:panelGrid columns="2" cellpadding="5">
-                <p:graphicImage library="images" name="#{ticketBean.currentTicket.status}.png" alt="#{ticketBean.currentTicket.status}" />
-                <h:outputText value="ENTRIES" />
-            </h:panelGrid>
-        </p:fieldset>
-
     </h:form>
 </ui:define>
 </ui:composition>
