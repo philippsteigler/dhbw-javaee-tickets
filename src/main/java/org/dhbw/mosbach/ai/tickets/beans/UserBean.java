@@ -5,13 +5,12 @@ import org.dhbw.mosbach.ai.tickets.model.User;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Named
+@Named("userBean")
 @SessionScoped
 public class UserBean extends AbstractBean {
     private static final long serialVersionUID = -7105806000082771152L;
