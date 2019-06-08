@@ -52,24 +52,24 @@
 
             <h3 style="margin-top:0">Editor ID: </h3>
             <h:outputText value="#{ticketBean.currentTicket.editorId}" />
+
+            <h3>#{msgs['entries']}: </h3>
         </h:panelGrid>
 
-        <p:dataScroller id="searchResult" value="#{ticketBean.ticketSearchResult}" var="ticket" chunkSize="10" rendered="#{ticketBean.rendered}">
+        <p:dataScroller id="searchResult" value="#{ticketBean.currentEntries}" var="entry" chunkSize="10">
             <f:facet name="header">
                 Scroll Down to Load More Entries
             </f:facet>
 
             <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                <h:outputText value="#{msgs['date']}" />
-                <h:outputText value="4.20.0420" />
+                <h:outputText value="#{msgs['date']}: " />
+                <h:outputText value="#{entry.createDate}" />
 
-                <h:outputText value="#{msgs['editor']}" />
-                <h:outputText value="#{ticket.editorId}" />
+                <h:outputText value="#{msgs['editor']}: " />
+                <h:outputText value="#{entry.creatorID}" />
 
-                <h:outputText value="#{msgs['entry']}" />
-                <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
-
-                <h:outputText value="#{msgs['entries']}" />
+                <h:outputText value="#{msgs['entry']}: " />
+                <h:outputText value="#{entry.content}" />
             </h:panelGrid>
         </p:dataScroller>
 
