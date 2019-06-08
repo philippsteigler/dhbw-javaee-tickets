@@ -8,14 +8,14 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-<ui:define name="title">#{msgs['dashboard2.title']}</ui:define>
-<ui:define name="header">#{msgs['dashboard2.header']}</ui:define>
+<ui:define name="title">#{msgs['admin.details.title']}</ui:define>
+<ui:define name="header">#{msgs['admin.details.header']}</ui:define>
 <ui:define name="content">
     <h:form id="form">
 
-        <h1 style="margin-top:0">Subject: #{ticketBean.currentTicket.subject}</h1>
-        <h3 style="margin-top:0">Status: #{ticketBean.currentTicket.status}</h3>
         <p:graphicImage library="images" name="#{ticketBean.currentTicket.status}.png" alt="#{ticketBean.currentTicket.status}" />
+        <h2 style="margin-top:0">Subject: #{ticketBean.currentTicket.subject}</h2>
+        <h3 style="margin-top:0">Status: #{ticketBean.currentTicket.status}</h3>
         <h3 style="margin-top:0">Ticet ID: #{ticketBean.currentTicket.id}</h3>
         <h3 style="margin-top:0">Editor ID: #{ticketBean.currentTicket.editorId}</h3>
 

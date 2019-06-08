@@ -3,12 +3,16 @@ package org.dhbw.mosbach.ai.tickets.beans;
 import org.dhbw.mosbach.ai.tickets.database.EntryDAO;
 import org.dhbw.mosbach.ai.tickets.database.TicketDAO;
 import org.dhbw.mosbach.ai.tickets.model.Entry;
+import org.dhbw.mosbach.ai.tickets.model.Role;
+import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.Ticket;
+import org.dhbw.mosbach.ai.tickets.security.CDIRoleCheck;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -28,7 +32,11 @@ public class TicketBean extends AbstractBean {
     @Inject
     private TicketDAO ticketDAO;
 
+    @Inject
+    private SecurityBean securityBean;
+
     private List<Ticket> tickets;
+    private List<Ticket> currentList;
 
     private Ticket currentTicket;
 
@@ -40,6 +48,8 @@ public class TicketBean extends AbstractBean {
 
     private static final String DETAIL = "detail";
 
+    private boolean rendered = false;
+
     /**
      * Initializes data structures. This method will be called after the instance
      * has been created.
@@ -49,21 +59,63 @@ public class TicketBean extends AbstractBean {
     {
         this.tickets = ticketDAO.getAllFullyLoaded();
         this.currentTicket = null;
-        this.ticketSearchResult = tickets;
+        this.currentList = new ArrayList<>();
     }
 
-    public void doSearch()
+    private void doSearch(List<Ticket> searchThis)
     {
-        //TODO
-        // final List<Ticket> ticketSearchResultList = getMatchingTickets(ticketSearchString);
-        // ticketSearchResult = ticketSearchResultList.isEmpty() ? null : ticketSearchResultList.get(0);
-
-        ticketSearchResult = new ArrayList<>();
-        for (Ticket ticket: tickets) {
+        List<Ticket> disposableList = new ArrayList<>();
+        for (Ticket ticket: searchThis) {
             if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
-                ticketSearchResult.add(ticket);
+                disposableList.add(ticket);
             }
         }
+
+        checkRender(disposableList.size());
+        ticketSearchResult = disposableList;
+    }
+
+    private void checkRender(int size) {
+        if (size < 1) {
+            rendered = false;
+        } else {
+            rendered = true;
+        }
+    }
+
+    public void doEditorSearchHome()
+    {
+        doSearch(getEditorsTicketsHome());
+    }
+
+    private List<Ticket> getEditorsTicketsHome() {
+        //TODO Entries durchsuchen
+        return tickets.stream().filter(ticket -> ticket.getEditorId() == securityBean.getUser().getId()).collect(Collectors.toList());
+    }
+
+    public void doEditorSearchTickets()
+    {
+        doSearch(tickets);
+    }
+
+    public void doCustomerSearchHome()
+    {
+       doSearch(getCustomersTicketsHome());
+    }
+
+    private List<Ticket> getCustomersTicketsHome() {
+        //TODO Load all tickets Customer has created
+        return tickets.stream().filter(ticket -> ticket.getCustomerId() == securityBean.getUser().getId()).collect(Collectors.toList());
+    }
+
+    public void doCustomerSearchTickets()
+    {
+        doSearch(getCustomersTicketsTickets());
+    }
+
+    private List<Ticket> getCustomersTicketsTickets() {
+        //TODO Load all tickets Customer can see
+        return null;
     }
 
     public List<Ticket> getTickets()
@@ -104,12 +156,14 @@ public class TicketBean extends AbstractBean {
 
     public void ticketDetailView() {
 
+    public boolean isRendered() {
+        return rendered;
     }
 
     public void save(Ticket ticket)
     {
         ticketDAO.persistOrMerge(ticket);
-        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket saved.");
+        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gespeichert.");
     }
 
     public void create()
@@ -122,7 +176,7 @@ public class TicketBean extends AbstractBean {
         ticketDAO.removeDetached(ticket);
         init();
 
-        this.addFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket deleted.");
+        this.addFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gelöscht.");
     }
 
     public void setTickets(List<Ticket> tickets)

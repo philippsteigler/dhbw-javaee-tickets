@@ -11,9 +11,6 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 
 public class AbstractBean implements Serializable {
-    /**
-     *
-     */
     private static final long serialVersionUID = 5791757036321568029L;
 
     @Inject
