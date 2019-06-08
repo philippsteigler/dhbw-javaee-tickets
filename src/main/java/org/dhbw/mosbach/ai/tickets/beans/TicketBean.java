@@ -43,7 +43,7 @@ public class TicketBean extends AbstractBean {
 
     private List<Ticket> ticketSearchResult;
 
-    private static final String DETAIL_VIEW = "detail";
+    private static final String VIEW_DETAIL = "detail";
 
     private boolean rendered = false;
 
@@ -123,7 +123,7 @@ public class TicketBean extends AbstractBean {
     public String detail(long id) {
         this.currentTicket = tickets.stream().filter(ticket -> ticket.getId() == id).collect(Collectors.toList()).get(0);
         getTicketEntries(id);
-        return DETAIL_VIEW;
+        return VIEW_DETAIL;
     }
 
     private void getTicketEntries(long id) {
@@ -155,11 +155,10 @@ public class TicketBean extends AbstractBean {
         return rendered;
     }
 
-    private String saveTicket(Ticket ticket)
+    private void saveTicket(Ticket ticket)
     {
         ticketDAO.persistOrMerge(ticket);
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gespeichert.");
-        return "tickets";
     }
 
     private void saveEntry(Entry entry)
@@ -199,10 +198,10 @@ public class TicketBean extends AbstractBean {
         //load new tickets from database
         refresh();
 
-        return saveTicket(currentTicket);
+        return "tickets";
     }
 
-    public String addEntryToTicket(long creatorId, String content) {
+    public void addEntryToTicket(long creatorId, String content) {
         Entry newEntry = new Entry(creatorId, content, new Date());
         currentTicket.addEntry(newEntry);
         saveTicket(currentTicket);
@@ -210,19 +209,16 @@ public class TicketBean extends AbstractBean {
 
         //load new tickets from database
         refresh();
-
-        return saveTicket(currentTicket);
     }
 
     public String releaseTicket() {
         currentTicket.setStatusToOpen();
         currentTicket.setEditorId(0);
 
-
         //load new tickets from database
         refresh();
 
-        return saveTicket(currentTicket);
+        return "tickets";
     }
 
     public void setEntryContent(String entryContent){ this.entryContent = entryContent; }
