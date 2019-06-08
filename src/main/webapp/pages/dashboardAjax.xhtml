@@ -53,7 +53,7 @@
             <p:outputPanel>
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputText value="Editor:" />
-                    <h:outputText value="#{ticket.editorId}" style="font-weight: bold"/>
+                    <h:outputText value="#{userBean.getUserName(ticket.editorId)}" style="font-weight: bold"/>
 
                     <h:outputText value="Subject:" />
                     <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
