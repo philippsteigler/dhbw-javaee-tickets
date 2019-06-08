@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Named
 @SessionScoped
-public class TicketBean implements Serializable {
+public class TicketBean extends AbstractBean {
     private static final long serialVersionUID = -1843025922631961397L;
 
     @Inject
@@ -116,13 +116,8 @@ public class TicketBean implements Serializable {
         this.tickets = tickets;
     }
 
-    public Ticket getCurrentSelection()
+    public void setCurrentTicket(Ticket currentSelection)
     {
-        return currentSelection;
-    }
-
-    public void setCurrentSelection(Ticket currentSelection)
-    {
-        this.currentSelection = currentSelection;
+        this.currentTicket = currentSelection;
     }
 }
