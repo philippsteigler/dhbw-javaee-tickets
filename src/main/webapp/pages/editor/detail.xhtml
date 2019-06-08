@@ -33,10 +33,14 @@
             }
         </style>
 
+        <p:dialog header="Modal Dialog" widgetVar="dlgEntry" modal="true" height="100">
+            <h:outputText value="This is a Dialog." />
+        </p:dialog>
+
         <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
             <h:outputText />
             <h:panelGrid columns="3" class="buttons">
-                <p:commandButton value="#{msgs['button.add.entry']}" />
+                <p:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" />
                 <p:commandButton value="#{msgs['button.delegate']}" />
                 <p:commandButton value="#{msgs['button.release']}" />
             </h:panelGrid>
