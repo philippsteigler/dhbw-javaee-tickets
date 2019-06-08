@@ -44,13 +44,13 @@
 
         </style>
 
-        <p:dialog header="#{msgs['entry.edit']}" widgetVar="dlgEntry" modal="true" height="200" width="500">
+        <p:dialog header="#{msgs['entry.edit']}" widgetVar="dlgEntry" modal="true" height="200" width="500" resizable="false">
             <p:inputTextarea style="margin: 0 auto" rows="8" cols="70" id="entryText"/>
             <p:commandButton value="Eintrag Hinzufühen" action="#{ticketBean.addEntry()}"/>
         </p:dialog>
 
-        <p:dialog header="#{msgs['ticket.delegate']}" widgetVar="dlgDelegate" modal="true" height="600" width="500">
-            <p:dataScroller id="editors" value="#{userBean.users}" var="user" chunkSize="10">
+        <p:dialog header="#{msgs['ticket.delegate']}" widgetVar="dlgDelegate" modal="true" height="600" width="500" resizable="false">
+            <p:dataScroller id="editors" value="#{userBean.getEditors()}" var="user" chunkSize="10">
                 <f:facet name="header">
                     Scroll Down to Load More Uers
                 </f:facet>

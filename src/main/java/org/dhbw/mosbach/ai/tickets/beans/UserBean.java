@@ -20,6 +20,11 @@ public class UserBean extends AbstractBean {
 
     private List<User> users;
 
+    private User currentUser;
+
+    private static final String USER_DETAIL_VIEW = "userDetail";
+
+
     @PostConstruct
     public void init() {
         this.users = userDAO.getAllFullyLoaded();
@@ -29,11 +34,20 @@ public class UserBean extends AbstractBean {
         return users;
     }
 
-    public List<User> getUsers(String requestedRole) {
-        return users.stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals(requestedRole))).collect(Collectors.toList());
+    public List<User> getEditors() {
+        return users.stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("editor"))).collect(Collectors.toList());
     }
 
     public String getUserName(long id) {
         return users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getName();
+    }
+
+    public String userDetail(long id) {
+        this.currentUser = users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0);
+        return USER_DETAIL_VIEW;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 }

@@ -4,14 +4,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://java.sun.com/jsf/html">
 
 <ui:composition template="/templates/basic.xhtml">
 <ui:define name="title">#{msgs['customer.create.title']}</ui:define>
 <ui:define name="header">#{msgs['customer.create.header']}</ui:define>
 <ui:define name="content">
 <h:form id="form">
-        Hallo Welt
+        <h3>Subject</h3>
+        <p:inputTextarea id="inputSubject"/>
+
+        <h3>Entry</h3>
+        <p:inputTextarea id="inputEntry"/>
+        <br></br>
+        <h:commandButton value="Ticket Erstellen" />
 </h:form>
 </ui:define>
 </ui:composition>
