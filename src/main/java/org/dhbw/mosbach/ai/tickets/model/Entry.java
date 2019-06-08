@@ -33,7 +33,7 @@ public class Entry {
     }
 
     //Accessor Methods:
-    public long getCustomerID() {
+    public long getCreatorID() {
         return creatorId;
     }
 
