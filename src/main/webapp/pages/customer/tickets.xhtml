@@ -8,8 +8,8 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-<ui:define name="title">#{msgs['dashboard2.title']}</ui:define>
-<ui:define name="header">#{msgs['dashboard2.header']}</ui:define>
+<ui:define name="title">#{msgs['customer.tickets.title']}</ui:define>
+<ui:define name="header">#{msgs['customer.tickets.header']}</ui:define>
 <ui:define name="content">
 
 <h:form id="form">
@@ -37,40 +37,36 @@
 
     #{ticketBean.doCustomerSearchTickets()}
 
-    <h:outputText rendered="#{!ticketBean.rendered}" value="Keine Tickets gefunden" />
+    <h:outputText value="Search: " />
+    <p:inputText value="#{ticketBean.ticketSearchString}">
+        <p:ajax event="keyup" delay="100" update="searchResult"
+                listener="#{ticketBean.doCustomerSearchTickets()}" />
+    </p:inputText>
 
-    <ui:define name="list" rendered="#{ticketBean.rendered}">
+    <h:outputText rendered="#{!ticketBean.rendered}" value=" Keine Tickets gefunden" />
 
-        <h:form id="search">
-            <h:outputText value="Search" />
-            <p:inputText value="#{ticketBean.ticketSearchString}">
-            <p:ajax event="keyup" delay="100" update="searchResult"
-                    listener="#{ticketBean.doCustomerSearchTickets()}" />
-        </p:inputText>
-        </h:form>
+    <p:dataScroller id="searchResult" value="#{ticketBean.ticketSearchResult}" var="ticket" chunkSize="10" rendered="#{ticketBean.rendered}">
+        <f:facet name="header">
+            Scroll Down to Load More Tickets
+        </f:facet>
 
-        <p:dataScroller id="searchResult" value="#{ticketBean.ticketSearchResult}" var="ticket" chunkSize="10">
-            <f:facet name="header">
-                Scroll Down to Load More Tickets
-            </f:facet>
+        <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
+            <h:commandButton action="#{ticketBean.detail(ticket.id)}" value="Details" id="detailsButton"/>
 
-            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
-                <h:commandButton action="#{ticketBean.detail(ticket.id)}" value="Details" id="detailsButton"/>
+            <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}"/>
 
-                <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}"/>
+            <p:outputPanel>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputText value="Editor:" />
+                    <h:outputText value="#{ticket.editorId}" style="font-weight: bold"/>
 
-                <p:outputPanel>
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputText value="Editor:" />
-                        <h:outputText value="#{ticket.editorId}" style="font-weight: bold"/>
+                    <h:outputText value="Subject:" />
+                    <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
+                </h:panelGrid>
+            </p:outputPanel>
+        </h:panelGrid>
+    </p:dataScroller>
 
-                        <h:outputText value="Subject:" />
-                        <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
-                    </h:panelGrid>
-                </p:outputPanel>
-            </h:panelGrid>
-        </p:dataScroller>
-    </ui:define>
 </h:form>
 </ui:define>
 </ui:composition>
