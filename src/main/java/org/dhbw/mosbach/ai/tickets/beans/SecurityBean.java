@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
+import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,8 @@ public class SecurityBean {
     @Inject
     private HttpServletRequest request;
     private User loggedInUser;
+
+    private static final String HOME = "detail";
 
     private HttpServletRequest getRequest() {
         if (request != null) {
@@ -84,6 +87,6 @@ public class SecurityBean {
             logger.warn("Exception during logout", e);
         }
 
-        return "home";
+        return HOME;
     }
 }
