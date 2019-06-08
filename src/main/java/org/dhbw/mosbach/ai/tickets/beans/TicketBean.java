@@ -95,7 +95,7 @@ public class TicketBean extends AbstractBean {
     public void save(Ticket ticket)
     {
         ticketDAO.persistOrMerge(ticket);
-        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket saved.");
+        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gespeichert.");
     }
 
     public void create()
@@ -108,7 +108,7 @@ public class TicketBean extends AbstractBean {
         ticketDAO.removeDetached(ticket);
         init();
 
-        this.addFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket deleted.");
+        this.addFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gelöscht.");
     }
 
     public void setTickets(List<Ticket> tickets)
