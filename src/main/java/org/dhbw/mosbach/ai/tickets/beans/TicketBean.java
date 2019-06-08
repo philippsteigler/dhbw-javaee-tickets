@@ -43,7 +43,7 @@ public class TicketBean implements Serializable {
 
     private static final String DETAIL = "detail";
 
-    private boolean rendered = true;
+    private boolean rendered = false;
 
     /**
      * Initializes data structures. This method will be called after the instance
