@@ -1,5 +1,6 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
+import org.dhbw.mosbach.ai.tickets.database.EntryDAO;
 import org.dhbw.mosbach.ai.tickets.database.TicketDAO;
 import org.dhbw.mosbach.ai.tickets.model.Entry;
 import org.dhbw.mosbach.ai.tickets.model.Ticket;
