@@ -29,7 +29,7 @@ public class SecurityBean {
     private HttpServletRequest request;
     private User loggedInUser;
 
-    private static final String HOME = "detail";
+    private static final String HOME = "home";
 
     private HttpServletRequest getRequest() {
         if (request != null) {
