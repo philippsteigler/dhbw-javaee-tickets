@@ -11,24 +11,24 @@
 
 			<!-- Index -->
 			<b:navbarLinks>
-				<b:navCommandLink value="Startseite" action="/pages/index.xhtml?faces-redirect=true" immediate="true"/>
+				<b:navCommandLink value="Startseite" action="/pages/index.xhtml?faces-redirect=true" immediate="true" />
 			</b:navbarLinks>
 
 			<!-- Navbar for logges out Users -->
 			<b:navbarLinks rendered="#{not securityBean.authenticated}">
-				<b:navCommandLink value="Login" action="#{securityBean.login()}" immediate="true"/>
+				<b:navCommandLink value="Login" action="#{securityBean.login()}" immediate="true" />
 			</b:navbarLinks>
 
 			<!-- Navbar for logged in Users -->
 			<b:navbarLinks rendered="#{securityBean.authenticated}">
 				<!-- Navbar for Editors and Customers -->
 				<b:navbarLinks rendered="#{not securityBean.isUserInRole('admin')}">
-					<b:navCommandLink value="Meine Liste" action="/pages/editor/my-tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}"/>
+					<b:navCommandLink value="Meine Liste" action="/pages/editor/my-tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}" />
 					<b:navCommandLink value="Alle Tickets" action="/pages/editor/all-tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}" />
 
-					<b:navCommandLink value="Home" action="/pages/customer/home.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />
-					<b:navCommandLink value="Tickets" action="/pages/customer/tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />
-					<b:navCommandLink value="Ticket anlegen" action="/pages/customer/create.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />
+					<b:navCommandLink value="Meine Liste" action="/pages/customer/my-tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />
+					<b:navCommandLink value="Mein Unternehmen" action="/pages/customer/company-tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />
+					<b:navCommandLink value="Neues Ticket" action="/pages/customer/new-ticket.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />
 				</b:navbarLinks>
 
 				<!-- Navbar for Admin and SuperAdmin -->
@@ -42,9 +42,9 @@
 					</b:dropMenu>
 
 					<b:dropMenu value="Kunden" rendered="#{securityBean.isUserInRole('customer')}" >
-						<b:navCommandLink value="Home" action="/pages/customer/home.xhtml?faces-redirect=true" immediate="true" />
-						<b:navCommandLink value="Tickets" action="/pages/customer/tickets.xhtml?faces-redirect=true" immediate="true" />
-						<b:navCommandLink value="Ticket anlegen" action="/pages/customer/create.xhtml?faces-redirect=true" immediate="true"  />
+						<b:navCommandLink value="Meine Liste" action="/pages/customer/my-tickets.xhtml?faces-redirect=true" immediate="true" />
+						<b:navCommandLink value="Mein Unternehmen" action="/pages/customer/company-tickets.xhtml?faces-redirect=true" immediate="true" />
+						<b:navCommandLink value="Neues Ticket" action="/pages/customer/new-ticket.xhtml?faces-redirect=true" immediate="true" />
 					</b:dropMenu>
 				</b:navbarLinks>
 

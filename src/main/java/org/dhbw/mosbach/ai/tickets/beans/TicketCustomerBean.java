@@ -15,7 +15,7 @@ import java.util.List;
 
 @Named
 @SessionScoped
-public class TicketEditorBean extends AbstractBean {
+public class TicketCustomerBean extends AbstractBean {
 
     @Inject
     private TicketDAO ticketDAO;
@@ -26,8 +26,8 @@ public class TicketEditorBean extends AbstractBean {
     @Inject
     private SecurityBean securityBean;
 
-    private static final String VIEW_DETAILS = "editor-ticket-details";
-    private String REDIRECT = "";
+    private static final String VIEW_DETAILS = "customer-ticket-details";
+    private static final String VIEW_NEW_TICKET = "customer-new-ticket";
 
     private Ticket currentTicket;
     private List<Entry> currentEntries;
@@ -77,34 +77,30 @@ public class TicketEditorBean extends AbstractBean {
         return currentEntries;
     }
 
-    public String viewTicketDetails(Ticket ticket, String redirect) {
+    public String viewTicketDetails(Ticket ticket) {
         currentTicket = ticket;
         currentEntries = currentTicket.getEntries();
-        REDIRECT = redirect;
 
         return VIEW_DETAILS;
     }
 
     public void fetchMyTickets() {
         if (searchString.isEmpty()) {
-            searchResult = ImmutableList.copyOf(ticketDAO.getAllTicketsForEditorID(securityBean.getUser().getId()));
+            searchResult = ImmutableList.copyOf(ticketDAO.getAllTicketsForCustomerID(securityBean.getUser().getId()));
         } else {
-            searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForEditorID(searchString, securityBean.getUser().getId()));
+            searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForCustomerID(searchString, securityBean.getUser().getId()));
         }
-
-        checkRender(searchResult.size());
     }
 
     public void fetchAllTickets() {
         if (searchString.isEmpty()) {
-            searchResult = ImmutableList.copyOf(ticketDAO.getAll());
+            searchResult = ImmutableList.copyOf(ticketDAO.getAllTicketsForCompany(securityBean.getUser().getCompany()));
         } else {
-            searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubject(searchString));
+            searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForCompany(searchString, securityBean.getUser().getCompany()));
         }
-
-        checkRender(searchResult.size());
     }
 
+    // TODO: Check if ticket owner
     public void addEntryToTicket(String content) {
         Entry newEntry = new Entry(securityBean.getUser().getId(), content, new Date());
         currentTicket.addEntry(newEntry);
@@ -120,24 +116,4 @@ public class TicketEditorBean extends AbstractBean {
     public String getEntryContent() {
         return entryContent;
     }
-
-    public String delegateTicket(long editorId){
-        currentTicket.setEditorId(editorId);
-        currentTicket.setStatusToInProcess();
-        saveTicket(currentTicket);
-
-        currentTicket = null;
-        return REDIRECT;
-    }
-
-    public String releaseTicket() {
-        // TODO: Only release MY tickets
-        currentTicket.setStatusToOpen();
-        currentTicket.setEditorId(0);
-        saveTicket(currentTicket);
-
-        currentTicket = null;
-        return REDIRECT;
-    }
-
 }

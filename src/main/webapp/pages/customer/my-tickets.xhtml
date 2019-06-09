@@ -8,11 +8,12 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-<ui:define name="title">#{msgs['editor.home.title']}</ui:define>
-<ui:define name="header">#{msgs['editor.home.header']}</ui:define>
+<ui:define name="title">#{msgs['customer.home.title']}</ui:define>
+<ui:define name="header">#{msgs['customer.home.header']}</ui:define>
 <ui:define name="content">
 
 <h:form id="form">
+
 
     <style type="text/css">
         .logo {
@@ -35,27 +36,27 @@
     </style>
 
     <!--
-    #{ticketEditorBean.fetchMyTickets()}
+    #{ticketCustomerBean.fetchMyTickets()}
     -->
 
     <h:outputText value="Search: " />
-    <p:inputText value="#{ticketEditorBean.searchString}">
+    <p:inputText value="#{ticketCustomerBean.searchString}">
         <p:ajax event="keyup" delay="100" update="searchResult"
-                listener="#{ticketEditorBean.fetchMyTickets()}" />
+                listener="#{ticketCustomerBean.fetchMyTickets()}" />
     </p:inputText>
 
     <!--
-    <h:outputText rendered="#{!ticketEditorBean.rendered}" value="Keine Tickets gefunden" />
+    <h:outputText rendered="#{empty ticketCustomerBean.searchResult}" value="Keine Tickets gefunden" />
     -->
 
-    <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10">
-        <h:panelGrid rendered="#{not empty ticketEditorBean.searchResult}">
+    <p:dataScroller id="searchResult" value="#{ticketCustomerBean.searchResult}" var="ticket" chunkSize="10">
+        <h:panelGrid rendered="#{not empty ticketCustomerBean.searchResult}">
             <f:facet name="header">
                 Scroll Down to Load More Tickets
             </f:facet>
 
             <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
-                <p:commandButton action="#{ticketEditorBean.viewTicketDetails(ticket, 'editor-my-tickets')}" value="Details" />
+                <h:commandButton action="#{ticketCustomerBean.viewTicketDetails(ticket)}" value="Details" id="detailsButton" />
 
                 <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}" />
 
@@ -71,6 +72,7 @@
             </h:panelGrid>
         </h:panelGrid>
     </p:dataScroller>
+
 </h:form>
 </ui:define>
 </ui:composition>
