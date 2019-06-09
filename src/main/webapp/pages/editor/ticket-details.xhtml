@@ -65,10 +65,10 @@
         <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
             <h:outputText />
             <h:panelGrid columns="3" class="buttons">
-                <p:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" />
-                <p:commandButton value="#{msgs['button.delegate']}" type="button" onclick="PF('dlgDelegate').show();" />
-                <p:commandButton value="#{msgs['button.release']}" action="#{ticketEditorBean.releaseTicket()}" />
-                <p:commandButton value="#{msgs['button.take']}" action="#{ticketEditorBean.takeTicket(securityBean.getUser().getId())}" />
+                <p:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" rendered="#{editorView.renderButton('addEntry')}"/>
+                <p:commandButton value="#{msgs['button.delegate']}" type="button" onclick="PF('dlgDelegate').show();" rendered="#{editorView.renderButton('delegate')}"/>
+                <p:commandButton value="#{msgs['button.release']}" action="#{ticketEditorBean.releaseTicket()}" rendered="#{editorView.renderButton('release')}"/>
+                <p:commandButton value="#{msgs['button.take']}" action="#{ticketEditorBean.takeTicket(securityBean.getUser().getId())}" rendered="#{editorView.renderButton('take')}"/>
             </h:panelGrid>
 
             <p:graphicImage library="images" name="#{ticketEditorBean.currentTicket.status}.png" alt="#{ticketEditorBean.currentTicket.status}" />
