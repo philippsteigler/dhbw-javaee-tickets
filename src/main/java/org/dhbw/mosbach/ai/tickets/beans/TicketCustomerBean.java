@@ -1,5 +1,6 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
+import com.fasterxml.jackson.databind.util.CompactStringObjectMap;
 import com.google.common.collect.ImmutableList;
 import org.dhbw.mosbach.ai.tickets.database.EntryDAO;
 import org.dhbw.mosbach.ai.tickets.database.TicketDAO;
@@ -39,6 +40,10 @@ public class TicketCustomerBean extends AbstractBean {
     private String searchString = "";
 
     private String entryContent = "";
+
+    private String ticketContent = "";
+
+    private String ticketSubject = "";
 
     private void saveTicket(Ticket ticket) {
         ticketDAO.persistOrMerge(ticket);
@@ -102,6 +107,18 @@ public class TicketCustomerBean extends AbstractBean {
         entryContent = "";
     }
 
+    public String newTicket(String content, String subject) {
+        Ticket newTicket = new Ticket(subject, Ticket.Status.open, content, 0, securityBean.getUser().getId());
+        Entry newEntry = new Entry(securityBean.getUser().getId(), content, new Date());
+        newTicket.addEntry(newEntry);
+        saveEntry(newEntry);
+        saveTicket(newTicket);
+        ticketContent = "";
+        ticketSubject = "";
+
+        return "customer-my-tickets";
+    }
+
     public void setEntryContent(String entryContent) {
         this.entryContent = entryContent;
     }
@@ -109,4 +126,12 @@ public class TicketCustomerBean extends AbstractBean {
     public String getEntryContent() {
         return entryContent;
     }
+
+    public void setTicketContent(String ticketContent) { this.ticketContent = ticketContent; }
+
+    public String getTicketContent() { return ticketContent; }
+
+    public void setTicketSubject(String ticketSubject) {this.ticketSubject = ticketSubject; }
+
+    public String getTicketSubject() { return ticketSubject; }
 }

@@ -11,13 +11,12 @@
 <ui:define name="header">#{msgs['customer.create.header']}</ui:define>
 <ui:define name="content">
 <h:form id="form">
-        <h3>Subject</h3>
-        <p:inputTextarea id="inputSubject" />
-
-        <h3>Entry</h3>
-        <p:inputTextarea id="inputEntry" />
+        <h3>#{msgs['label.subject']}: </h3>
+        <p:inputTextarea style="margin: 0 auto" rows="1" cols="70" id="inputSubject" value="#{ticketCustomerBean.ticketSubject}" />
+        <h3>#{msgs['label.content']}: </h3>
+        <p:inputTextarea style="margin: 0 auto" rows="8" cols="70" id="inputEntry" value="#{ticketCustomerBean.ticketContent}" />
         <br></br>
-        <h:commandButton value="Ticket Erstellen" />
+        <h:commandButton value="Ticket Erstellen" action="#{ticketCustomerBean.newTicket(ticketCustomerBean.ticketContent, ticketCustomerBean.ticketSubject)}"/>
 </h:form>
 </ui:define>
 </ui:composition>
