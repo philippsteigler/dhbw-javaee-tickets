@@ -39,7 +39,8 @@ public class UserBean extends AbstractBean {
     }
 
     public String getUserName(long id) {
-        return users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getName();
+        if (id == 0) { return "None";}
+        else return users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getName();
     }
 
     public String getUserCompany(long id) {
