@@ -151,10 +151,9 @@ public class TicketEditorBean extends AbstractBean {
     public void addEntryToTicket(String content) {
         Entry newEntry = new Entry(securityBean.getUser().getId(), content, new Date());
         currentTicket.addEntry(newEntry);
-        saveTicket(currentTicket);
         saveEntry(newEntry);
-
-        //viewTicketDetails(currentTicket.getId(), RETURN_ADDRESS);
+        saveTicket(currentTicket);
+        entryContent = "";
     }
 
     public String delegateTicket(long editorId){

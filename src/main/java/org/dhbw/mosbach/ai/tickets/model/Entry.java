@@ -44,5 +44,9 @@ public class Entry {
     public Date getCreateDate() {
         return createDate;
     }
+
+    public long getId() {
+        return id;
+    }
 }
 
