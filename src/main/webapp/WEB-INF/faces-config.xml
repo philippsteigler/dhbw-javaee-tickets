@@ -4,36 +4,41 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
- <navigation-rule>
-  <display-name>Global Navigation Rules</display-name>
-  <from-view-id>*</from-view-id>
+    <navigation-rule>
+        <display-name>Global Navigation Rules</display-name>
+        <from-view-id>*</from-view-id>
 
-  <navigation-case>
-   <from-outcome>home</from-outcome>
-   <to-view-id>/pages/editor/home.xhtml</to-view-id>
-   <redirect />
-  </navigation-case>
-  <navigation-case>
-   <from-outcome>tickets</from-outcome>
-   <to-view-id>/pages/editor/tickets.xhtml</to-view-id>
-   <redirect />
-  </navigation-case>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/pages/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editor-my-tickets</from-outcome>
+            <to-view-id>/pages/editor/my-tickets.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editor-all-tickets</from-outcome>
+            <to-view-id>/pages/editor/all-tickets.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editor-ticket-details</from-outcome>
+            <to-view-id>/pages/editor/ticket-details.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
 
-
-
- </navigation-rule>
-
-
- <application>
-  <locale-config>
-   <default-locale>de</default-locale>
-   <supported-locale>de</supported-locale>
-   <supported-locale>en</supported-locale>
-  </locale-config>
-  <resource-bundle>
-   <base-name>mls.messages</base-name>
-   <var>msgs</var>
-  </resource-bundle>
- </application>
+    <application>
+        <locale-config>
+            <default-locale>de</default-locale>
+            <supported-locale>de</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>mls.messages</base-name>
+            <var>msgs</var>
+        </resource-bundle>
+    </application>
 
 </faces-config>

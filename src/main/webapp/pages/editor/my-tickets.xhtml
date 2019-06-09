@@ -8,8 +8,8 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-<ui:define name="title">#{msgs['editor.tickets.title']}</ui:define>
-<ui:define name="header">#{msgs['editor.tickets.header']}</ui:define>
+<ui:define name="title">#{msgs['editor.home.title']}</ui:define>
+<ui:define name="header">#{msgs['editor.home.header']}</ui:define>
 <ui:define name="content">
 
 <h:form id="form">
@@ -34,23 +34,23 @@
         }
     </style>
 
-    #{ticketBean.doEditorSearchTickets()}
+    #{ticketEditorBean.fetchMyTickets()}
 
     <h:outputText value="Search: " />
-    <p:inputText value="#{ticketBean.ticketSearchString}">
+    <p:inputText value="#{ticketEditorBean.searchString}">
         <p:ajax event="keyup" delay="100" update="searchResult"
-                listener="#{ticketBean.doEditorSearchTickets()}" />
+                listener="#{ticketEditorBean.fetchMyTickets()}" />
     </p:inputText>
 
-    <h:outputText rendered="#{!ticketBean.rendered}" value=" Keine Tickets gefunden" />
+    <h:outputText rendered="#{!ticketEditorBean.rendered}" value="Keine Tickets gefunden" />
 
-    <p:dataScroller id="searchResult" value="#{ticketBean.ticketSearchResult}" var="ticket" chunkSize="10" rendered="#{ticketBean.rendered}">
+    <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10" rendered="#{ticketEditorBean.rendered}">
         <f:facet name="header">
             Scroll Down to Load More Tickets
         </f:facet>
 
         <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
-            <h:commandButton action="#{ticketBean.detail(ticket.id)}" value="Details" />
+            <p:commandButton action="#{ticketEditorBean.viewTicketDetails(ticket.id, 'editor-my-tickets')}" value="Details" />
 
             <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}"/>
 
