@@ -32,7 +32,7 @@ public class UserBean extends AbstractBean {
     private static final String VIEW_DETAILS = "admin-user-details";
     private static final String VIEW_USERS = "admin-user-details";
 
-    private String createUser(String login, String userName, String companyName, String email, String password, Role... userRoles) {
+    private String newUser(String login, String userName, String companyName, String email, String password, Role... userRoles) {
         final User user = new User(login, userName, companyName, email);
         user.getRoles().addAll(Arrays.asList(userRoles));
         userDAO.changePassword(user, password);
