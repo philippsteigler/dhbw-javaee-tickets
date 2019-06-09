@@ -34,7 +34,6 @@
 				<!-- Navbar for Admin and SuperAdmin -->
 				<b:navbarLinks rendered="#{securityBean.isUserInRole('admin')}">
 					<b:navCommandLink value="Benutzer verwalten" action="/pages/admin/users.xhtml?faces-redirect=true" immediate="true" />
-					<b:navCommandLink value="Tickets verwalten" action="/pages/admin/tickets.xhtml?faces-redirect=true" immediate="true" />
 
 					<b:dropMenu value="Bearbeiter" rendered="#{securityBean.isUserInRole('editor')}" >
 						<b:navCommandLink value="Meine Liste" action="/pages/editor/my-tickets.xhtml?faces-redirect=true" immediate="true" />
