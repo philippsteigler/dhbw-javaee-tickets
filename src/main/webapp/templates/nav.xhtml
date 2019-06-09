@@ -14,7 +14,7 @@
 				<b:navCommandLink value="Startseite" action="/pages/index.xhtml?faces-redirect=true" immediate="true" />
 			</b:navbarLinks>
 
-			<!-- Navbar for logges out Users -->
+			<!-- Navbar for logged out Users -->
 			<b:navbarLinks rendered="#{not securityBean.authenticated}">
 				<b:navCommandLink value="Login" action="#{securityBean.login()}" immediate="true" />
 			</b:navbarLinks>
@@ -33,7 +33,10 @@
 
 				<!-- Navbar for Admin and SuperAdmin -->
 				<b:navbarLinks rendered="#{securityBean.isUserInRole('admin')}">
-					<b:navCommandLink value="Benutzer verwalten" action="/pages/admin/users.xhtml?faces-redirect=true" immediate="true" />
+					<b:dropMenu value="Administrator" rendered="#{securityBean.isUserInRole('admin')}" >
+						<b:navCommandLink value="Benutzer verwalten" action="/pages/admin/all-users?faces-redirect=true" immediate="true" />
+						<b:navCommandLink value="Neuer Benutzer" action="/pages/admin/new-user.xhtml?faces-redirect=true" immediate="true" />
+					</b:dropMenu>
 
 					<b:dropMenu value="Bearbeiter" rendered="#{securityBean.isUserInRole('editor')}" >
 						<b:navCommandLink value="Meine Liste" action="/pages/editor/my-tickets.xhtml?faces-redirect=true" immediate="true" />

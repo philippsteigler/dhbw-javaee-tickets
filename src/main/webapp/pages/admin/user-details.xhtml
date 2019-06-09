@@ -8,22 +8,22 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-<ui:define name="title">#{msgs['admin.user.title']}</ui:define>
-<ui:define name="header">#{msgs['admin.details.title']}</ui:define>
-<ui:define name="content">
+    <ui:define name="title">#{msgs['admin.user.title']}</ui:define>
+    <ui:define name="header">#{msgs['admin.details.title']}</ui:define>
+    <ui:define name="content">
         <h:form id="form">
-        <style type="text/css">
+            <style type="text/css">
                 .description {
-                        width: 15%;
+                    width: 15%;
                 }
 
                 .detail {
-                        width: 80%;
-                        padding-left: 25px;
+                    width: 80%;
+                    padding-left: 25px;
                 }
-        </style>
+            </style>
 
-        <h:panelGrid style="width:100%" columns="2" cellpadding="2" columnClasses="description, detail">
+            <h:panelGrid style="width:100%" columns="2" cellpadding="2" columnClasses="description, detail">
                 <h3>Username:</h3>
                 <h:outputText value="#{userBean.currentUser.name}" />
 
@@ -35,14 +35,14 @@
 
                 <h3>User Roles: </h3>
                 <p:outputPanel>
-                        <h:dataTable value="#{userBean.currentUser.roles}" var="role"><f:facet name="Role">Status</f:facet>
-                                <h:column>
-                                        #{role.name}
-                                </h:column>
-                        </h:dataTable>
+                    <h:dataTable value="#{userBean.currentUser.roles}" var="role"><f:facet name="Role">Status</f:facet>
+                        <h:column>
+                            #{role.name}
+                        </h:column>
+                    </h:dataTable>
                 </p:outputPanel>
-        </h:panelGrid>
+            </h:panelGrid>
         </h:form>
-</ui:define>
+    </ui:define>
 </ui:composition>
 </html>

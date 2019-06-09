@@ -1,6 +1,5 @@
 package org.dhbw.mosbach.ai.tickets.database;
 
-import org.dhbw.mosbach.ai.tickets.security.CDIRoleCheck;
 import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.User;
 import org.jboss.security.Base64Encoder;
@@ -14,6 +13,8 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
+import java.util.List;
 
 @Named("userDAO")
 @Dependent
@@ -47,5 +48,17 @@ public class UserDAO extends BaseDAO<User, Long> {
     @PermitAll
     public User findByUnique(String fieldName, Object key) {
         return super.findByUnique(fieldName, key);
+    }
+
+    public List<User> getUsersContainingSubject(String substring) {
+        if ((substring != null) && (substring.length() >= 2)) {
+            final String query = String.format("FROM %s u WHERE UPPER(u.name) LIKE :name", User.class.getName());
+
+            return em.createQuery(query, User.class)
+                    .setParameter("name", "%" + substring.toUpperCase() + "%")
+                    .getResultList();
+        }
+
+        return Collections.emptyList();
     }
 }
