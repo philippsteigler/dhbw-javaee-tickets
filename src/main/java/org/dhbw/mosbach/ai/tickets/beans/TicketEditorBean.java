@@ -32,7 +32,6 @@ public class TicketEditorBean extends AbstractBean {
     private Ticket currentTicket;
     private List<Entry> currentEntries;
 
-    private boolean rendered = false;
     private List<Ticket> searchResult;
     private String searchString = "";
 
@@ -46,15 +45,6 @@ public class TicketEditorBean extends AbstractBean {
     private void saveEntry(Entry entry) {
         entryDAO.persistOrMerge(entry);
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "entry.saveSuccess");
-    }
-
-    // Search in Editors tickets
-    private void checkRender(int size) {
-        rendered = size >= 1;
-    }
-
-    public boolean isRendered() {
-        return rendered;
     }
 
     public void setSearchString(String searchString) {
@@ -91,8 +81,6 @@ public class TicketEditorBean extends AbstractBean {
         } else {
             searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForEditorID(searchString, securityBean.getUser().getId()));
         }
-
-        checkRender(searchResult.size());
     }
 
     public void fetchAllTickets() {
@@ -101,8 +89,6 @@ public class TicketEditorBean extends AbstractBean {
         } else {
             searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubject(searchString));
         }
-
-        checkRender(searchResult.size());
     }
 
     public void addEntryToTicket(String content) {

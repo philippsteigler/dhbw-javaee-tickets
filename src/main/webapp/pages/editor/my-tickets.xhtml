@@ -44,10 +44,6 @@
                 listener="#{ticketEditorBean.fetchMyTickets()}" />
     </p:inputText>
 
-    <!--
-    <h:outputText rendered="#{!ticketEditorBean.rendered}" value="Keine Tickets gefunden" />
-    -->
-
     <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10">
         <h:panelGrid rendered="#{not empty ticketEditorBean.searchResult}">
             <f:facet name="header">
@@ -59,15 +55,16 @@
 
                 <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}" />
 
-            <p:outputPanel>
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputText value="#{msgs['editor']}: " />
-                    <h:outputText value="#{userBean.getUserName(ticket.editorId)}" style="font-weight: bold"/>
+                <p:outputPanel>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="#{msgs['editor']}: " />
+                        <h:outputText value="#{userBean.getUserName(ticket.editorId)}" style="font-weight: bold"/>
 
-                    <h:outputText value="#{msgs['label.subject']}: " />
-                    <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
-                </h:panelGrid>
-            </p:outputPanel>
+                        <h:outputText value="#{msgs['label.subject']}: " />
+                        <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+            </h:panelGrid>
         </h:panelGrid>
     </p:dataScroller>
 </h:form>
