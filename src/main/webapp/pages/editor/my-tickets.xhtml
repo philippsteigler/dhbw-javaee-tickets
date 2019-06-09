@@ -34,7 +34,9 @@
         }
     </style>
 
+    <!--
     #{ticketEditorBean.fetchMyTickets()}
+    -->
 
     <h:outputText value="Search: " />
     <p:inputText value="#{ticketEditorBean.searchString}">
@@ -42,27 +44,27 @@
                 listener="#{ticketEditorBean.fetchMyTickets()}" />
     </p:inputText>
 
-    <h:outputText rendered="#{!ticketEditorBean.rendered}" value="Keine Tickets gefunden" />
+    <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10">
+        <h:panelGrid rendered="#{not empty ticketEditorBean.searchResult}">
+            <f:facet name="header">
+                Scroll Down to Load More Tickets
+            </f:facet>
 
-    <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10" rendered="#{ticketEditorBean.rendered}">
-        <f:facet name="header">
-            Scroll Down to Load More Tickets
-        </f:facet>
+            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
+                <p:commandButton action="#{ticketEditorBean.viewTicketDetails(ticket, 'editor-my-tickets')}" value="Details" />
 
-        <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
-            <p:commandButton action="#{ticketEditorBean.viewTicketDetails(ticket, 'editor-my-tickets')}" value="Details" />
+                <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}" />
 
-            <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}"/>
+                <p:outputPanel>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="#{msgs['editor']}: " />
+                        <h:outputText value="#{userBean.getUserName(ticket.editorId)}" style="font-weight: bold"/>
 
-            <p:outputPanel>
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputText value="#{msgs['editor']}: " />
-                    <h:outputText value="#{userBean.getUserName(ticket.editorId)}" style="font-weight: bold"/>
-
-                    <h:outputText value="#{msgs['label.subject']}: " />
-                    <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
-                </h:panelGrid>
-            </p:outputPanel>
+                        <h:outputText value="#{msgs['label.subject']}: " />
+                        <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+            </h:panelGrid>
         </h:panelGrid>
     </p:dataScroller>
 </h:form>

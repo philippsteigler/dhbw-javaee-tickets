@@ -35,36 +35,39 @@
 
         </style>
 
+        <p:dialog header="#{msgs['entry.edit']}" widgetVar="dlgEntry" modal="true" height="200" width="500">
+            <p:inputTextarea style="margin: 0 auto" rows="8" cols="70" id="entryText" value="#{ticketCustomerBean.entryContent}" />
+            <h:commandButton value="Eintrag Hinzufügen" action="#{ticketCustomerBean.addEntryToTicket(ticketCustomerBean.entryContent)}" />
+        </p:dialog>
+
         <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
             <h:outputText />
             <h:panelGrid columns="3" class="buttons">
                 <p:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" />
-                <p:commandButton value="#{msgs['button.delegate']}" type="button" onclick="PF('dlgDelegate').show();" />
-                <p:commandButton value="#{msgs['button.release']}" />
             </h:panelGrid>
 
-            <p:graphicImage library="images" name="#{ticketBean.currentTicket.status}.png" alt="#{ticketBean.currentTicket.status}" />
-            <h:outputText value="#{ticketBean.currentTicket.status}" />
+            <p:graphicImage library="images" name="#{ticketCustomerBean.currentTicket.status}.png" alt="#{ticketCustomerBean.currentTicket.status}" />
+            <h:outputText value="#{ticketCustomerBean.currentTicket.status}" />
 
             <h2 style="margin-top:0">Subject: </h2>
-            <h:outputText value="#{ticketBean.currentTicket.subject}" />
+            <h:outputText value="#{ticketCustomerBean.currentTicket.subject}" />
 
             <h3 style="margin-top:0">Ticket ID: </h3>
-            <h:outputText value="#{ticketBean.currentTicket.id}" />
+            <h:outputText value="#{ticketCustomerBean.currentTicket.id}" />
 
             <h3 style="margin-top:0">Editor ID: </h3>
-            <h:outputText value="#{ticketBean.currentTicket.editorId}" />
+            <h:outputText value="#{ticketCustomerBean.currentTicket.editorId}" />
 
             <h3 style="margin-top:0">Customer: </h3>
-            <h:outputText value="#{userBean.getUserName(ticketBean.currentTicket.customerId)}" />
+            <h:outputText value="#{userBean.getUserName(ticketCustomerBean.currentTicket.customerId)}" />
 
             <h3 style="margin-top:0">Company: </h3>
-            <h:outputText value="#{userBean.getUserCompany(ticketBean.currentTicket.customerId)}" />
+            <h:outputText value="#{userBean.getUserCompany(ticketCustomerBean.currentTicket.customerId)}" />
 
             <h3>#{msgs['entries']}: </h3>
         </h:panelGrid>
 
-        <p:dataScroller id="searchResult" value="#{ticketBean.currentEntries}" var="entry" chunkSize="10">
+        <p:dataScroller id="searchResult" value="#{ticketCustomerBean.currentEntries}" var="entry" chunkSize="10">
             <f:facet name="header">
                 Scroll Down to Load More Entries
             </f:facet>
