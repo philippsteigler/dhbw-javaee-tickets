@@ -20,30 +20,29 @@ public class EditorView implements Serializable {
     private TicketEditorBean ticketEditorBean;
 
 
-    private long currentEditorId() {
-        return securityBean.getUser().getId();
-    }
-
-    private Ticket currentTicket() {
-        return ticketEditorBean.getCurrentTicket();
-    }
-
     public boolean renderButton(String button) {
 
-        Ticket currentTicket = currentTicket();
+        //Get current Ticket and EditorId
+        Ticket currentTicket = ticketEditorBean.getCurrentTicket();
+        long currentEditorId = securityBean.getUser().getId();
+
 
         switch(button){
+
+            case "reopen":
+                return currentTicket.getStatus() == Ticket.Status.closed;
 
             case "take":
                 return currentTicket.getEditorId() == 0 && currentTicket.getStatus() == Ticket.Status.open;
 
             case "delegate":
                 return (currentTicket.getEditorId() == 0 && currentTicket.getStatus() == Ticket.Status.open)
-                        || (currentEditorId() == currentTicket().getEditorId());
+                        || (currentEditorId == currentTicket.getEditorId());
 
             case "addEntry":
             case "release":
-                return currentEditorId() == currentTicket().getEditorId();
+            case "close":
+                return currentEditorId == currentTicket.getEditorId();
 
             default:
                 return false;
