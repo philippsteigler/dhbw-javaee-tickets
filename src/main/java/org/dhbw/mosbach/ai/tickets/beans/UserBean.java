@@ -2,12 +2,14 @@ package org.dhbw.mosbach.ai.tickets.beans;
 
 import com.google.common.collect.ImmutableList;
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
+import org.dhbw.mosbach.ai.tickets.model.Role;
 import org.dhbw.mosbach.ai.tickets.model.User;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,10 +30,25 @@ public class UserBean extends AbstractBean {
     private String searchString = "";
 
     private static final String VIEW_DETAILS = "admin-user-details";
+    private static final String VIEW_USERS = "admin-all-users";
+
+    private String newUser(String login, String userName, String companyName, String email, String password, Role... userRoles) {
+        final User user = new User(login, userName, companyName, email);
+        user.getRoles().addAll(Arrays.asList(userRoles));
+        userDAO.changePassword(user, password);
+        saveUser(user);
+
+        return VIEW_USERS;
+    }
 
     private void saveUser(User user) {
         userDAO.persistOrMerge(user);
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.saveSuccess");
+    }
+
+    public void deleteUser(User user) {
+        userDAO.removeDetached(user);
+        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.deleteSuccess");
     }
 
     public void setSearchString(String searchString) {

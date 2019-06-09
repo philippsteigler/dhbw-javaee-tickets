@@ -76,20 +76,20 @@ public class DemoDataProvider {
 		em.persist(editorRole);
 		em.persist(customerRole);
 
-		createUser("root", "Root", "Ticket Master", "toor", adminRole, editorRole, customerRole);
-		createUser("admin", "The Admin", "Ticket Master","admin", adminRole);
-		createUser("editor1", "Rolf Meyer", "Ticket Master","mosbach", editorRole);
-		createUser("editor2", "Alex Löwen", "Ticket Master","mosbach", editorRole);
-		createUser("editor3", "Mike Pfeffer", "Ticket Master","mosbach", editorRole);
-		createUser("editor4", "Fritz Birnbaum", "Ticket Master","mosbach", editorRole);
-		createUser("customer1", "Edwin Kopf", "IBM","mosbach", customerRole);
-		createUser("customer2", "Jens Hadarmad", "Deutsche Bundesbank","mosbach", customerRole);
-		createUser("customer3", "Benno Gut", "Deutsche Bundesbank","mosbach", customerRole);
-		createUser("customer4", "Vanessa Richter", "IBM","mosbach", customerRole);
+		createUser("root", "Root", "Ticket Master", "root@ticket.master", "toor", adminRole, editorRole, customerRole);
+		createUser("admin", "The Admin", "Ticket Master", "admin@ticket.master", "admin", adminRole);
+		createUser("editor1", "Rolf Meyer", "Ticket Master", "rolf@ticket.master", "mosbach", editorRole);
+		createUser("editor2", "Alex Löwen", "Ticket Master", "alex@ticket.master", "mosbach", editorRole);
+		createUser("editor3", "Mike Pfeffer", "Ticket Master", "mike@ticket.master", "mosbach", editorRole);
+		createUser("editor4", "Fritz Birnbaum", "Ticket Master", "fritz@ticket.master", "mosbach", editorRole);
+		createUser("customer1", "Edwin Kopf", "IBM", "edwin@ibm.com", "mosbach", customerRole);
+		createUser("customer2", "Jens Hadarmad", "Deutsche Bundesbank", "jend@bundesbank.de", "mosbach", customerRole);
+		createUser("customer3", "Benno Gut", "Deutsche Bundesbank", "benno@bundesbank.de", "mosbach", customerRole);
+		createUser("customer4", "Vanessa Richter", "IBM", "vanessa@ibm.com", "mosbach", customerRole);
 	}
 
-	private User createUser(String login, String userName, String companyName, String password, Role... userRoles) {
-		final User user = new User(login, userName, companyName);
+	private User createUser(String login, String userName, String companyName, String email, String password, Role... userRoles) {
+		final User user = new User(login, userName, companyName, email);
 		user.getRoles().addAll(Arrays.asList(userRoles));
 		userDAOProxy.changePassword(user, password);
 		userDAOProxy.persist(user);

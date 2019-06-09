@@ -28,7 +28,6 @@ public class TicketCustomerBean extends AbstractBean {
     private SecurityBean securityBean;
 
     private static final String VIEW_DETAILS = "customer-ticket-details";
-    private static final String VIEW_NEW_TICKET = "customer-new-ticket";
 
     private String REDIRECT = "";
 
