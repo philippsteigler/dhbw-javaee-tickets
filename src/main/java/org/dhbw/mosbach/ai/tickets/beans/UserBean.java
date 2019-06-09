@@ -2,18 +2,14 @@ package org.dhbw.mosbach.ai.tickets.beans;
 
 import com.google.common.collect.ImmutableList;
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
-import org.dhbw.mosbach.ai.tickets.model.Entry;
-import org.dhbw.mosbach.ai.tickets.model.Ticket;
 import org.dhbw.mosbach.ai.tickets.model.User;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Named
 @SessionScoped
@@ -26,9 +22,6 @@ public class UserBean extends AbstractBean {
     @Inject
     private SecurityBean securityBean;
 
-    // TODO: REMOVE AFTER SQL
-    private List<User> users;
-
     private User currentUser;
 
     private List<User> searchResult;
@@ -36,13 +29,7 @@ public class UserBean extends AbstractBean {
 
     private static final String VIEW_DETAILS = "admin-user-details";
 
-    // TODO: REMOVE AFTER SQL
-    @PostConstruct
-    public void init() {
-        this.users = userDAO.getAll();
-    }
-
-    private void suveUser(User user) {
+    private void saveUser(User user) {
         userDAO.persistOrMerge(user);
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.saveSuccess");
     }
@@ -77,17 +64,20 @@ public class UserBean extends AbstractBean {
         }
     }
 
-    // TODO: SQL fetchAllEditors
     public List<User> getEditors() {
-        return users.stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("editor") && user.getId() != securityBean.getUser().getId())).collect(Collectors.toList());
+        return userDAO.getAll().stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("editor")
+                && user.getId() != securityBean.getUser().getId())).collect(Collectors.toList());
     }
 
     public String getUserName(long id) {
-        if (id == 0) { return "None";}
-        else return users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getName();
+        if (id == 0) {
+            return "None";
+        } else {
+            return userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getName();
+        }
     }
 
     public String getUserCompany(long id) {
-        return users.stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getCompany();
+        return userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getCompany();
     }
 }
