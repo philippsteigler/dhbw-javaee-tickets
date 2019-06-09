@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Named("userBean")
 @SessionScoped
@@ -17,6 +18,9 @@ public class UserBean extends AbstractBean {
 
     @Inject
     private UserDAO userDAO;
+
+    @Inject
+    private SecurityBean securityBean;
 
     private List<User> users;
 
@@ -35,7 +39,9 @@ public class UserBean extends AbstractBean {
     }
 
     public List<User> getEditors() {
-        return users.stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("editor"))).collect(Collectors.toList());
+
+        return users.stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("editor") && user.getId() != securityBean.getUser().getId())).collect(Collectors.toList());
+
     }
 
     public String getUserName(long id) {
