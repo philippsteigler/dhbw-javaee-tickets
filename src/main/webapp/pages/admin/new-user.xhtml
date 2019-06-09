@@ -4,14 +4,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://java.sun.com/jsf/html">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
 <ui:define name="title">#{msgs['customer.create.title']}</ui:define>
 <ui:define name="header">#{msgs['customer.create.header']}</ui:define>
 <ui:define name="content">
 <h:form id="form">
+        <h4>#{msgs['label.name']}</h4>
+        <p:inputText value=""/>
 
+        <h4>#{msgs['label.email']}</h4>
+        <p:inputText value=""/>
+
+        <h4>#{msgs['label.role']}</h4>
+        <p:selectOneMenu id="role" value="" style="width:125px">
+            <f:selectItem itemLabel="Customer" itemValue="Customer" />
+            <f:selectItem itemLabel="Editor" itemValue="Editor" />
+            <f:selectItem itemLabel="Admin" itemValue="Admin" />
+        </p:selectOneMenu>
+
+        <h4>#{msgs['label.company']}</h4>
+        <p:selectOneMenu id="city" value="" effect="fold" editable="true">
+            <f:selectItem itemLabel="Deutsche Bundesbank" itemValue="Deutsche Bundesbank" />
+            <f:selectItem itemLabel="IBM" itemValue="IBM" />
+        </p:selectOneMenu>
+
+        <h4>#{msgs['label.password']}</h4>
+        <p:password id="feedback" value="" feedback="true" />
+
+        <br></br>
+        <h:commandButton value="Benutzer anlegen" />
 </h:form>
 </ui:define>
 </ui:composition>
