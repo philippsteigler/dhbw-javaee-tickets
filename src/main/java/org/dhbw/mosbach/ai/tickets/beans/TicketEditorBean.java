@@ -10,7 +10,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +25,13 @@ public class TicketEditorBean extends AbstractBean {
     private EntryDAO entryDAO;
 
     @Inject
+    private TicketBean ticketBean;
+
+    @Inject
     private SecurityBean securityBean;
+
+    private static final String VIEW_DETAILS = "editor-ticket-details";
+    private String RETURN_ADDRESS = "";
 
     private List<Ticket> tickets;
     private Ticket currentTicket;
@@ -37,16 +42,12 @@ public class TicketEditorBean extends AbstractBean {
     private String searchString = "";
     private String entryContent = "";
 
-    private static final String VIEW_DETAILS = "editor-ticket-details";
-    private String RETURN_ADDRESS = "";
-
     @PostConstruct
     public void init() {
         this.tickets = ticketDAO.getAllFullyLoaded();
         this.currentTicket = null;
     }
 
-    // Tickets erzeugen und löschen
     private void saveTicket(Ticket ticket) {
         ticketDAO.persistOrMerge(ticket);
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "ticket.saveSuccess");
@@ -68,9 +69,6 @@ public class TicketEditorBean extends AbstractBean {
     }
      */
 
-
-
-
     // Search in Editors tickets
     private void checkRender(int size) {
         rendered = size >= 1;
@@ -78,18 +76,6 @@ public class TicketEditorBean extends AbstractBean {
 
     public boolean isRendered() {
         return rendered;
-    }
-
-    private void doSearch(List<Ticket> searchThis) {
-        List<Ticket> disposableList = new ArrayList<>();
-        for (Ticket ticket: searchThis) {
-            if (ticket.getSubject().matches("(.*)" + searchString + "(.*)")) {
-                disposableList.add(ticket);
-            }
-        }
-
-        checkRender(disposableList.size());
-        searchResult = disposableList;
     }
 
     public void setSearchString(String searchString) {
@@ -104,24 +90,23 @@ public class TicketEditorBean extends AbstractBean {
         return searchResult;
     }
 
-    // Filter tickets currently owned by the current editor
+    // Get tickets currently owned by the logged in editor
     public void fetchMyTickets() {
-        doSearch(tickets.stream().filter(ticket -> ticket.getEditorId() == securityBean.getUser().getId()).collect(Collectors.toList()));
+        searchResult = ticketBean.doSearch(tickets.stream().filter(ticket -> ticket.getEditorId() == securityBean.getUser().getId()).collect(Collectors.toList()), searchString);
+        checkRender(searchResult.size());
     }
 
     // Get all tickets
     public void fetchAllTickets() {
-        doSearch(tickets);
+        searchResult = ticketBean.doSearch(tickets, searchString);
+        checkRender(searchResult.size());
     }
 
-
-
-
-
-
-
-
     // View ticket details
+    private void fetchTicketEntries() {
+        this.currentEntries = currentTicket.getEntries();
+    }
+
     public Ticket getCurrentTicket() {
         return currentTicket;
     }
@@ -130,22 +115,21 @@ public class TicketEditorBean extends AbstractBean {
         return currentEntries;
     }
 
-    private void fetchTicketEntries() {
-        this.currentEntries = currentTicket.getEntries();
-    }
-
     public String viewTicketDetails(long id, String returnAddress) {
-        this.currentTicket = tickets.stream().filter(ticket -> ticket.getId() == id).collect(Collectors.toList()).get(0);
+        currentTicket = tickets.stream().filter(ticket -> ticket.getId() == id).collect(Collectors.toList()).get(0);
         RETURN_ADDRESS = returnAddress;
         fetchTicketEntries();
 
         return VIEW_DETAILS;
     }
 
-    public void setEntryContent(String entryContent){ this.entryContent = entryContent; }
+    public void setEntryContent(String entryContent) {
+        this.entryContent = entryContent;
+    }
 
-    public String getEntryContent(){ return entryContent; }
-
+    public String getEntryContent() {
+        return entryContent;
+    }
 
     // Edit ticket details
     public void addEntryToTicket(String content) {
