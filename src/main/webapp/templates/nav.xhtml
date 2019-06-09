@@ -23,8 +23,8 @@
 			<b:navbarLinks rendered="#{securityBean.authenticated}">
 				<!-- Navbar for Editors and Customers -->
 				<b:navbarLinks rendered="#{not securityBean.isUserInRole('admin')}">
-					<b:navCommandLink value="Home" action="/pages/editor/home.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}" />
-					<b:navCommandLink value="Tickets" action="/pages/editor/tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}" />
+					<b:navCommandLink value="Meine Liste" action="/pages/editor/my-tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}" />
+					<b:navCommandLink value="Alle Tickets" action="/pages/editor/all-tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}" />
 
 					<b:navCommandLink value="Home" action="/pages/customer/home.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />
 					<b:navCommandLink value="Tickets" action="/pages/customer/tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />
@@ -37,8 +37,8 @@
 					<b:navCommandLink value="Tickets verwalten" action="/pages/admin/tickets.xhtml?faces-redirect=true" immediate="true" />
 
 					<b:dropMenu value="Bearbeiter" rendered="#{securityBean.isUserInRole('editor')}" >
-						<b:navCommandLink value="Home" action="/pages/editor/home.xhtml?faces-redirect=true" immediate="true" />
-						<b:navCommandLink value="Tickets" action="/pages/editor/tickets.xhtml?faces-redirect=true" immediate="true" />
+						<b:navCommandLink value="Meine Liste" action="/pages/editor/my-tickets.xhtml?faces-redirect=true" immediate="true" />
+						<b:navCommandLink value="Alle Tickets" action="/pages/editor/all-tickets.xhtml?faces-redirect=true" immediate="true" />
 					</b:dropMenu>
 
 					<b:dropMenu value="Kunden" rendered="#{securityBean.isUserInRole('customer')}" >

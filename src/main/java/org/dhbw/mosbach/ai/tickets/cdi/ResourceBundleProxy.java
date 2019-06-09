@@ -36,4 +36,3 @@ public class ResourceBundleProxy
         return bundle.getKeys();
     }
 }
-

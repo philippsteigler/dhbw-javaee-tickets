@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Named
+@Named("ticketBean")
 @SessionScoped
 public class TicketBean extends AbstractBean {
     private static final long serialVersionUID = -1843025922631961397L;
@@ -43,7 +43,7 @@ public class TicketBean extends AbstractBean {
 
     private List<Ticket> ticketSearchResult;
 
-    private static final String DETAIL_VIEW = "detail";
+    private static final String VIEW_DETAIL = "detail";
 
     private boolean rendered = false;
 
@@ -52,51 +52,25 @@ public class TicketBean extends AbstractBean {
      * has been created.
      */
     @PostConstruct
-    public void init()
-    {
+    public void init() {
         this.tickets = ticketDAO.getAllFullyLoaded();
         this.currentTicket = null;
     }
 
-    private void doSearch(List<Ticket> searchThis)
-    {
+    List<Ticket> doSearch(List<Ticket> searchThis, String searchString) {
         List<Ticket> disposableList = new ArrayList<>();
         for (Ticket ticket: searchThis) {
-            if (ticket.getSubject().matches("(.*)" + ticketSearchString + "(.*)")) {
+            if (ticket.getSubject().matches("(.*)" + searchString + "(.*)")) {
                 disposableList.add(ticket);
             }
         }
 
-        checkRender(disposableList.size());
-        ticketSearchResult = disposableList;
+        return disposableList;
     }
-
-    private void checkRender(int size) {
-        if (size < 1) {
-            rendered = false;
-        } else {
-            rendered = true;
-        }
-    }
-
-    public void doEditorSearchHome()
-    {
-        doSearch(getEditorsTicketsHome());
-    }
-
-    private List<Ticket> getEditorsTicketsHome() {
-        //TODO Entries durchsuchen
-        return tickets.stream().filter(ticket -> ticket.getEditorId() == securityBean.getUser().getId()).collect(Collectors.toList());
-    }
-
-    public void doEditorSearchTickets()
-    {
-        doSearch(tickets);
-    }
-
+    /*
     public void doCustomerSearchHome()
     {
-       doSearch(getCustomersTicketsHome());
+       ticketSearchResult = doSearch(getCustomersTicketsHome(), ticketSearchString);
     }
 
     private List<Ticket> getCustomersTicketsHome() {
@@ -106,8 +80,9 @@ public class TicketBean extends AbstractBean {
 
     public void doCustomerSearchTickets()
     {
-        doSearch(tickets.stream().filter(ticket -> userBean.getUserCompany(ticket.getCustomerId()).equals(securityBean.getUser().getCompany())).collect(Collectors.toList()));
+        ticketSearchResult = doSearch(tickets.stream().filter(ticket -> userBean.getUserCompany(ticket.getCustomerId()).equals(securityBean.getUser().getCompany())).collect(Collectors.toList()), ticketSearchString);
     }
+    */
 
     public List<Ticket> getTickets()
     {
@@ -117,7 +92,7 @@ public class TicketBean extends AbstractBean {
     public String detail(long id) {
         this.currentTicket = tickets.stream().filter(ticket -> ticket.getId() == id).collect(Collectors.toList()).get(0);
         getTicketEntries(id);
-        return DETAIL_VIEW;
+        return VIEW_DETAIL;
     }
 
     private void getTicketEntries(long id) {
@@ -152,26 +127,13 @@ public class TicketBean extends AbstractBean {
     private void saveTicket(Ticket ticket)
     {
         ticketDAO.persistOrMerge(ticket);
-        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gespeichert.");
+        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "ticket.saveSuccess");
     }
 
     private void saveEntry(Entry entry)
     {
         entryDAO.persistOrMerge(entry);
-        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "Eintrag erfolgreich gespeichert.");
-    }
-
-    public void create()
-    {
-        tickets.add(new Ticket());
-    }
-
-    public void delete(Ticket ticket)
-    {
-        ticketDAO.removeDetached(ticket);
-        init();
-
-        this.addFacesMessage(FacesMessage.SEVERITY_INFO, "Ticket erfolgreich gelöscht.");
+        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "entry.saveSuccess");
     }
 
     public void setTickets(List<Ticket> tickets)
@@ -183,27 +145,5 @@ public class TicketBean extends AbstractBean {
     {
         this.currentTicket = currentSelection;
     }
-
-    public void delegateTicket(long editorId){
-        currentTicket.setEditorId(editorId);
-        currentTicket.setStatusToInProcess();
-        saveTicket(currentTicket);
-    }
-
-    public void addEntryToTicket(long creatorId, String content) {
-        Entry newEntry = new Entry(creatorId, content, new Date());
-        currentTicket.addEntry(newEntry);
-        saveTicket(currentTicket);
-        saveEntry(newEntry);
-    }
-
-    public void releaseTicket() {
-        currentTicket.setStatusToOpen();
-        saveTicket(currentTicket);
-    }
-
-    public void setEntryContent(String entryContent){ this.entryContent = entryContent; }
-
-    public String getEntryContent(){ return entryContent; }
 
 }
