@@ -48,7 +48,7 @@
         </f:facet>
 
         <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
-            <p:commandButton action="#{ticketEditorBean.viewTicketDetails(ticket, 'editor-my-tickets')}" value="Details" />
+            <h:commandButton action="#{ticketEditorBean.viewTicketDetails(ticket, 'editor-my-tickets')}" value="Details" />
 
             <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}" />
 
