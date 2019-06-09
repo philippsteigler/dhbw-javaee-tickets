@@ -37,13 +37,13 @@
 
         <p:dialog header="#{msgs['entry.edit']}" widgetVar="dlgEntry" modal="true" height="200" width="500">
             <p:inputTextarea style="margin: 0 auto" rows="8" cols="70" id="entryText" value="#{ticketCustomerBean.entryContent}" />
-            <h:commandButton value="Eintrag Hinzufügen" action="#{ticketCustomerBean.addEntryToTicket(ticketCustomerBean.entryContent)}" />
+            <h:commandButton value="Eintrag Hinzufügen" action="#{ticketCustomerBean.addEntryToTicket(ticketCustomerBean.entryContent)}"/>
         </p:dialog>
 
         <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
             <h:outputText />
             <h:panelGrid columns="3" class="buttons">
-                <p:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" />
+                <h:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" rendered="#{customerView.renderButton()}"/>
             </h:panelGrid>
 
             <p:graphicImage library="images" name="#{ticketCustomerBean.currentTicket.status}.png" alt="#{ticketCustomerBean.currentTicket.status}" />
@@ -74,7 +74,7 @@
 
             <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                 <h:outputText value="#{msgs['date']}: " />
-                <h:outputText value="#{entry.createDate}" />
+                <h:outputText value="#{generalView.formatDate(entry.createDate)}" />
 
                 <h:outputText value="#{msgs['editor']}: " />
                 <h:outputText value="#{userBean.getUserName(entry.creatorID)}" />
