@@ -14,6 +14,22 @@
             <to-view-id>/pages/index.xhtml</to-view-id>
         </navigation-case>
 
+        <!-- Admin Pages-->
+        <navigation-case>
+            <from-outcome>admin-all-users</from-outcome>
+            <to-view-id>/pages/admin/all-users.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admin-user-details</from-outcome>
+            <to-view-id>/pages/admin/user-details.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admin-new-user</from-outcome>
+            <to-view-id>/pages/admin/new-user.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
         <!-- Editor Pages -->
         <navigation-case>
             <from-outcome>editor-my-tickets</from-outcome>
