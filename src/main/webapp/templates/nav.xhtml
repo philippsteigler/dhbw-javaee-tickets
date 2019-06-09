@@ -23,7 +23,7 @@
 			<b:navbarLinks rendered="#{securityBean.authenticated}">
 				<!-- Navbar for Editors and Customers -->
 				<b:navbarLinks rendered="#{not securityBean.isUserInRole('admin')}">
-					<b:navCommandLink value="Meine Liste" action="/pages/editor/my-tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}" />
+					<b:navCommandLink value="Meine Liste" action="/pages/editor/my-tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}"/>
 					<b:navCommandLink value="Alle Tickets" action="/pages/editor/all-tickets.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('editor')}" />
 
 					<b:navCommandLink value="Home" action="/pages/customer/home.xhtml?faces-redirect=true" immediate="true" rendered="#{securityBean.isUserInRole('customer')}" />

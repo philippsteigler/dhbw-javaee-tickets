@@ -91,14 +91,14 @@
             <h3>#{msgs['entries']}: </h3>
         </h:panelGrid>
 
-        <p:dataScroller id="searchResult" value="#{ticketEditorBean.currentEntries}" var="entry" chunkSize="10">
+            <p:dataScroller id="searchResult" value="#{ticketEditorBean.currentEntries}" var="entry" chunkSize="10">
             <f:facet name="header">
                 Scroll Down to Load More Entries
             </f:facet>
 
             <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                 <h:outputText value="#{msgs['date']}: " />
-                <h:outputText value="#{entry.createDate}" />
+                <h:outputText value="#{generalView.formatDate(entry.createDate)}" />
 
                 <h:outputText value="#{msgs['editor']}: " />
                 <h:outputText value="#{userBean.getUserName(entry.creatorID)}" />
