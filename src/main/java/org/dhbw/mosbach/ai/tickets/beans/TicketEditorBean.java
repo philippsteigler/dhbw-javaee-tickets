@@ -140,4 +140,27 @@ public class TicketEditorBean extends AbstractBean {
         return REDIRECT;
     }
 
+    public String takeTicket(long id) {
+        currentTicket.setStatusToInProcess();
+        currentTicket.setEditorId(id);
+        saveTicket(currentTicket);
+
+        currentTicket = null;
+        return REDIRECT;
+    }
+
+    public String closeTicket() {
+        currentTicket.setStatusToClose();
+        currentTicket.setEditorId(0);
+        saveTicket(currentTicket);
+
+        currentTicket = null;
+        return REDIRECT;
+    }
+
+    public void reopenTicket() {
+        currentTicket.setStatusToOpen();
+        saveTicket(currentTicket);
+    }
+
 }

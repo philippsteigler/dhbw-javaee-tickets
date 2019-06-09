@@ -46,7 +46,7 @@
 
         <p:dialog header="#{msgs['entry.edit']}" widgetVar="dlgEntry" modal="true" height="200" width="500">
             <p:inputTextarea style="margin: 0 auto" rows="8" cols="70" id="entryText" value="#{ticketEditorBean.entryContent}" />
-            <h:commandButton value="Eintrag Hinzufügen" action="#{ticketEditorBean.addEntryToTicket(ticketEditorBean.entryContent)}" />
+            <h:commandButton value="Eintrag Hinzufügen" action="#{ticketEditorBean.addEntryToTicket(ticketEditorBean.entryContent)}"/>
         </p:dialog>
 
         <p:dialog header="#{msgs['ticket.delegate']}" widgetVar="dlgDelegate" modal="true" height="600" width="500" resizable="false">
@@ -65,27 +65,30 @@
         <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
             <h:outputText />
             <h:panelGrid columns="3" class="buttons">
-                <h:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" />
-                <h:commandButton value="#{msgs['button.delegate']}" type="button" onclick="PF('dlgDelegate').show();" />
-                <h:commandButton value="#{msgs['button.release']}" action="#{ticketEditorBean.releaseTicket()}" />
+                <h:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" rendered="#{editorView.renderButton('addEntry')}"/>
+                <h:commandButton value="#{msgs['button.delegate']}" type="button" onclick="PF('dlgDelegate').show();" rendered="#{editorView.renderButton('delegate')}"/>
+                <h:commandButton value="#{msgs['button.release']}" action="#{ticketEditorBean.releaseTicket()}" rendered="#{editorView.renderButton('release')}"/>
+                <h:commandButton value="#{msgs['button.take']}" action="#{ticketEditorBean.takeTicket(securityBean.getUser().getId())}" rendered="#{editorView.renderButton('take')}"/>
+                <h:commandButton value="#{msgs['button.close']}" action="#{ticketEditorBean.closeTicket()}" rendered="#{editorView.renderButton('close')}"/>
+                <h:commandButton value="#{msgs['button.reopen']}" action="#{ticketEditorBean.reopenTicket()}" rendered="#{editorView.renderButton('reopen')}"/>
             </h:panelGrid>
 
+            <h3 style="margin-top:0">#{msgs['label.status']}: </h3>
             <p:graphicImage library="images" name="#{ticketEditorBean.currentTicket.status}.png" alt="#{ticketEditorBean.currentTicket.status}" />
-            <h:outputText value="#{ticketEditorBean.currentTicket.status}" />
 
-            <h2 style="margin-top:0">Subject: </h2>
+            <h2 style="margin-top:0">#{msgs['label.subject']}: </h2>
             <h:outputText value="#{ticketEditorBean.currentTicket.subject}" />
 
-            <h3 style="margin-top:0">Ticket ID: </h3>
+            <h3 style="margin-top:0">#{msgs['label.ticketId']}: </h3>
             <h:outputText value="#{ticketEditorBean.currentTicket.id}" />
 
-            <h3 style="margin-top:0">Editor ID: </h3>
-            <h:outputText value="#{ticketEditorBean.currentTicket.editorId}" />
+            <h3 style="margin-top:0">#{msgs['editor']}: </h3>
+            <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.editorId)}" />
 
-            <h3 style="margin-top:0">Customer: </h3>
+            <h3 style="margin-top:0">#{msgs['label.customer']}: </h3>
             <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.customerId)}" />
 
-            <h3 style="margin-top:0">Customer Company: </h3>
+            <h3 style="margin-top:0">#{msgs['label.company']}: </h3>
             <h:outputText value="#{userBean.getUserCompany(ticketEditorBean.currentTicket.customerId)}" />
 
             <h3>#{msgs['entries']}: </h3>
@@ -93,14 +96,14 @@
 
             <p:dataScroller id="searchResult" value="#{ticketEditorBean.currentEntries}" var="entry" chunkSize="10">
             <f:facet name="header">
-                Scroll Down to Load More Entries
+                #{msgs['label.scrollDownEntries']}
             </f:facet>
 
             <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                 <h:outputText value="#{msgs['date']}: " />
                 <h:outputText value="#{generalView.formatDate(entry.createDate)}" />
 
-                <h:outputText value="#{msgs['editor']}: " />
+                <h:outputText value="#{msgs['label.creator']}: " />
                 <h:outputText value="#{userBean.getUserName(entry.creatorID)}" />
 
                 <h:outputText value="#{msgs['entry']}: " />
