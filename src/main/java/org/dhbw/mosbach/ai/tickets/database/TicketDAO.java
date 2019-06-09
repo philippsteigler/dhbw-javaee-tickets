@@ -1,6 +1,8 @@
 package org.dhbw.mosbach.ai.tickets.database;
 
 import org.dhbw.mosbach.ai.tickets.model.Ticket;
+import org.dhbw.mosbach.ai.tickets.model.User;
+
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import java.util.Collections;
@@ -15,37 +17,87 @@ public class TicketDAO extends BaseDAO<Ticket, Long>{
         super();
     }
 
-    public List<Ticket> getAllTicketsForID(long id) {
-        if (id >= 0) {
-            final String query = String.format("FROM %s e WHERE e.%s = :editorId", Ticket.class.getName(), "editorId");
-
-            return em.createQuery(query, Ticket.class)
-                    .setParameter("editorId", id)
-                    .getResultList();
-        }
-
-        return Collections.emptyList();
-    }
-
-    public List<Ticket> getTicketsContainingSubjectForID(String substring, long id) {
-        if ((substring != null) && (substring.length() >= 2) && (id >= 0)) {
-            final String query = String.format("FROM %s e WHERE UPPER(e.%s) LIKE :subject AND e.%s = :editorId", Ticket.class.getName(), "subject", "editorId");
-
-            return em.createQuery(query, Ticket.class)
-                    .setParameter("subject", "%" + substring.toUpperCase() + "%")
-                    .setParameter("editorId", id)
-                    .getResultList();
-        }
-
-        return Collections.emptyList();
-    }
-
     public List<Ticket> getTicketsContainingSubject(String substring) {
         if ((substring != null) && (substring.length() >= 2)) {
-            final String query = String.format("FROM %s e WHERE UPPER(e.%s) LIKE :subject", Ticket.class.getName(), "subject");
+            final String query = String.format("FROM %s t WHERE UPPER(t.subject) LIKE :subject", Ticket.class.getName());
 
             return em.createQuery(query, Ticket.class)
                     .setParameter("subject", "%" + substring.toUpperCase() + "%")
+                    .getResultList();
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<Ticket> getAllTicketsForEditorID(long id) {
+        if (id >= 0) {
+            final String query = String.format("FROM %s t WHERE t.editorId = :editorId", Ticket.class.getName());
+
+            return em.createQuery(query, Ticket.class)
+                    .setParameter("editorId", id)
+                    .getResultList();
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<Ticket> getTicketsContainingSubjectForEditorID(String substring, long id) {
+        if ((substring != null) && (substring.length() >= 2) && (id >= 0)) {
+            final String query = String.format("FROM %s t WHERE UPPER(t.subject) LIKE :subject AND t.editorId = :editorId", Ticket.class.getName());
+
+            return em.createQuery(query, Ticket.class)
+                    .setParameter("subject", "%" + substring.toUpperCase() + "%")
+                    .setParameter("editorId", id)
+                    .getResultList();
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<Ticket> getAllTicketsForCustomerID(long id) {
+        if (id >= 0) {
+            final String query = String.format("FROM %s t WHERE t.customerId = :customerId", Ticket.class.getName());
+
+            return em.createQuery(query, Ticket.class)
+                    .setParameter("customerId", id)
+                    .getResultList();
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<Ticket> getTicketsContainingSubjectForCustomerID(String substring, long id) {
+        if ((substring != null) && (substring.length() >= 2) && (id >= 0)) {
+            final String query = String.format("FROM %s t WHERE UPPER(t.subject) LIKE :subject AND t.customerId = :customerId", Ticket.class.getName());
+
+            return em.createQuery(query, Ticket.class)
+                    .setParameter("subject", "%" + substring.toUpperCase() + "%")
+                    .setParameter("customerId", id)
+                    .getResultList();
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<Ticket> getAllTicketsForCompany(String company) {
+        if (company != null) {
+            final String query = String.format("FROM %s t WHERE t.customerId IN (SELECT u.id FROM %s u WHERE u.company LIKE :company)", Ticket.class.getName(), User.class.getName());
+
+            return em.createQuery(query, Ticket.class)
+                    .setParameter("company", company)
+                    .getResultList();
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<Ticket> getTicketsContainingSubjectForCompany(String substring, String company) {
+        if ((substring != null) && (substring.length() >= 2) && (company != null)) {
+            final String query = String.format("FROM %s t WHERE UPPER(t.subject) LIKE :subject AND t.customerId IN (SELECT u.id FROM %s u WHERE u.company LIKE :company)", Ticket.class.getName(), User.class.getName());
+
+            return em.createQuery(query, Ticket.class)
+                    .setParameter("subject", "%" + substring.toUpperCase() + "%")
+                    .setParameter("company", company)
                     .getResultList();
         }
 
