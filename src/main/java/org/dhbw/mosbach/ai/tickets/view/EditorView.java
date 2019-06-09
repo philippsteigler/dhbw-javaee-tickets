@@ -19,52 +19,34 @@ public class EditorView implements Serializable {
     @Inject
     private TicketEditorBean ticketEditorBean;
 
-    private boolean renderTakeButton;
-    private boolean renderReleaseButton;
-    private boolean renderAddEntryButton;
-    private boolean renderDelegateButton;
-    private boolean renderCloseTicket;
 
-    public boolean isRenderAddEntryButton() {
-        return renderAddEntryButton;
+    private long currentEditorId() {
+        return securityBean.getUser().getId();
     }
 
-    public boolean isRenderReleaseButton() {
-        return renderReleaseButton;
+    private Ticket currentTicket() {
+        return ticketEditorBean.getCurrentTicket();
     }
 
-    public boolean isRenderTakeButton() {
-        return renderTakeButton;
-    }
+    public boolean renderButton(String button) {
 
-    public boolean isRenderCloseTicket() {
-        return renderCloseTicket;
-    }
+        Ticket currentTicket = currentTicket();
 
-    public boolean isRenderDelegateButton() {
-        return renderDelegateButton;
-    }
+        switch(button){
 
-    //called in .xhtml to
-    public void renderButton(){
+            case "take":
+                return currentTicket.getEditorId() == 0 && currentTicket.getStatus() == Ticket.Status.open;
 
-        long editorId = securityBean.getUser().getId();
-        Ticket currentTicket = ticketEditorBean.getCurrentTicket();
+            case "delegate":
+                return (currentTicket.getEditorId() == 0 && currentTicket.getStatus() == Ticket.Status.open)
+                        || (currentEditorId() == currentTicket().getEditorId());
 
+            case "addEntry":
+            case "release":
+                return currentEditorId() == currentTicket().getEditorId();
 
-        //guarantees that all booleans are set to false
-        renderTakeButton = false;
-        renderReleaseButton = false;
-        renderAddEntryButton = false;
-        renderDelegateButton = false;
-        renderCloseTicket = false;
-
-        //ticket of logged in editor
-        if (editorId == currentTicket.getId() && currentTicket.getStatus() == Ticket.Status.inProcess) {
-            renderAddEntryButton = true;
-
+            default:
+                return false;
         }
-
-
     }
 }
