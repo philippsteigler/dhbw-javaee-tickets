@@ -8,49 +8,51 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-<ui:define name="title">#{msgs['customer.create.title']}</ui:define>
-<ui:define name="header">#{msgs['customer.create.header']}</ui:define>
-<ui:define name="content">
-<h:form id="form">
+    <ui:define name="title">#{msgs['admin.create.title']}</ui:define>
+    <ui:define name="header">#{msgs['admin.create.header']}</ui:define>
+    <ui:define name="content">
+        <h:form id="form" prependId="false">
+            <f:facet name="last">
+                <h:outputStylesheet name="new-user.css" library="styles" />
+            </f:facet>
 
-    #{userBean.fetchAllRoles()}
-    #{userBean.fetchAllCompanies()}
+            #{userBean.fetchAllRoles()}
+            #{userBean.fetchAllCompanies()}
 
-        <h:panelGrid id="grid" columns="3" cellpadding="5">
-            <h:outputLabel for="name" value="#{msgs['label.name']}: " style="font-weight:bold"/>
-            <p:inputText id="name" value="#{userBean.name}" required="true"/>
-            <p:message for="name" />
+            <p:panel id="newUserPanel" header="Neuer Benutzer" styleClass="center" >
+                <p:panelGrid id="newUserPanelGridInfo" columns="1">
+                    <h:outputText value="Bitte füllen Sie alle benötigten Daten aus."/>
+                </p:panelGrid>
 
-            <h:outputLabel for="login_id" value="#{msgs['label.login_id']}: " style="font-weight:bold"/>
-            <p:inputText id="login_id" value="#{userBean.login_id}" required="true"/>
-            <p:message for="login_id" />
+                <p:panelGrid id="newUserPanelGridInput" columns="1">
+                    <h:outputLabel for="name" value="#{msgs['label.name']}" style="font-weight:bold"/>
+                    <p:inputText id="name" value="#{userBean.name}" required="true" requiredMessage="Name darf nicht leer sein!"/>
 
-            <h:outputLabel for="email" value="#{msgs['label.email']}: " style="font-weight:bold"/>
-            <p:inputText id="email" value="#{userBean.email}" required="true"/>
-            <p:message for="email" />
+                    <h:outputLabel for="login_id" value="#{msgs['label.login_id']}" style="font-weight:bold"/>
+                    <p:inputText id="login_id" value="#{userBean.login_id}" required="true" requiredMessage="Login-ID darf nicht leer sein!"/>
 
-            <h:outputLabel for="role" value="#{msgs['label.role']}: " style="font-weight:bold"/>
-            <h:selectOneMenu id="role" value="#{userBean.role}" style="width:125px">
-                <f:selectItem itemLabel="Customer" itemValue="customer" />
-                <f:selectItem itemLabel="Editor" itemValue="editor"/>
-                <f:selectItem itemLabel="Admin" itemValue="admin" />
-            </h:selectOneMenu>
-            <p:message for="role" />
+                    <h:outputLabel for="email" value="#{msgs['label.email']}" style="font-weight:bold"/>
+                    <p:inputText id="email" value="#{userBean.email}" required="true" requiredMessage="E-Mail-Adresse darf nicht leer sein!"/>
 
-            <h:outputLabel for="company" value="#{msgs['label.company']}: " style="font-weight:bold"/>
-            <p:selectOneMenu id="company" value="#{userBean.companyName}" effect="fold" editable="true" required="true">
-                <f:selectItems value="#{userBean.companies}"/>
-            </p:selectOneMenu>
-            <p:message for="company" />
+                    <h:outputLabel for="role" value="#{msgs['label.role']}" style="font-weight:bold"/>
+                    <h:selectOneMenu id="role" value="#{userBean.role}" style="width:125px" required="true" requiredMessage="Rolle darf nicht leer sein!">
+                        <f:selectItem itemLabel="Customer" itemValue="customer" />
+                        <f:selectItem itemLabel="Editor" itemValue="editor"/>
+                        <f:selectItem itemLabel="Admin" itemValue="admin" />
+                    </h:selectOneMenu>
 
-            <h:outputLabel for="password" value="#{msgs['label.password']}: " style="font-weight:bold"/>
-            <p:password id="password" value="#{userBean.password}" feedback="true" required="true"/>
-            <p:message for="password" />
+                    <h:outputLabel for="company" value="#{msgs['label.company']}" style="font-weight:bold"/>
+                    <p:selectOneMenu id="company" value="#{userBean.companyName}" effect="fold" editable="true" required="true" requiredMessage="Unternehmen darf nicht leer sein!">
+                        <f:selectItems value="#{userBean.companies}"/>
+                    </p:selectOneMenu>
 
-        </h:panelGrid>
-        <br></br>
-        <h:commandButton value="Benutzer anlegen" action="#{userBean.newUser(userBean.login_id, userBean.name, userBean.companyName, userBean.email, userBean.password,  userBean.role)}" style="margin-right:10px"/>
-</h:form>
-</ui:define>
+                    <h:outputLabel for="password" value="#{msgs['label.password']}" style="font-weight:bold"/>
+                    <p:password id="password" value="#{userBean.password}" feedback="true" required="true" requiredMessage="Passwort darf nicht leer sein!"/>
+
+                    <h:commandButton value="Benutzer anlegen" action="#{userBean.newUser(userBean.login_id, userBean.name, userBean.companyName, userBean.email, userBean.password,  userBean.role)}" />
+                </p:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
 </ui:composition>
 </html>

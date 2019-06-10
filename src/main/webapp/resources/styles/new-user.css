@@ -1,0 +1,17 @@
+#form {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.ui-panelgrid tr, .ui-panelgrid td {
+    border:none !important;
+}
+
+#newUserPanel {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+#newUserPanelGridInput, #name, #login_id, #email, #company, #password {
+    width: 100%;
+}
