@@ -15,8 +15,10 @@
             <h:outputStylesheet name="login.css" library="styles" />
         </f:facet>
 
-        <p:panel id="loginPanel" header="Willkommen zurück, #{securityBean.user.name}!" styleClass="center" >
-            <h:outputText value="Login erfolgreich." />
+        <p:panel id="loginPanel" header="Login erfolgreich" styleClass="center" >
+            <p:panelGrid columns="1">
+                <h:outputText value="Willkommen zurück, #{securityBean.user.name}!" />
+            </p:panelGrid>
         </p:panel>
 
     </ui:define>
