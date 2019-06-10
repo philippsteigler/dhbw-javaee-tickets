@@ -33,6 +33,9 @@ public class User {
     @Column(length = 64)
     private String company;
 
+    @Column(length = 64)
+    private String email;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = Sets.newHashSet();
 
@@ -40,11 +43,12 @@ public class User {
         super();
     }
 
-    public User(String login_id, String name, String company) {
+    public User(String login_id, String name, String company, String email) {
         super();
         this.login_id = login_id;
         this.name = name;
         this.company = company;
+        this.email = email;
     }
 
     @XmlTransient
@@ -87,6 +91,14 @@ public class User {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<Role> getRoles() {
