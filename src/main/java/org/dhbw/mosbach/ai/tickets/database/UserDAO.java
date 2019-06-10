@@ -51,7 +51,7 @@ public class UserDAO extends BaseDAO<User, Long> {
         return super.findByUnique(fieldName, key);
     }
 
-    public List<User> getUsersContainingSubject(String substring) {
+    public List<User> getUsersContainingName(String substring) {
         if ((substring != null) && (substring.length() >= 2)) {
             final String query = String.format("FROM %s u WHERE UPPER(u.name) LIKE :name", User.class.getName());
 
@@ -69,5 +69,13 @@ public class UserDAO extends BaseDAO<User, Long> {
         final String query = String.format("FROM %s", Role.class.getName());
 
         return em.createQuery(query, Role.class).getResultList();
+    }
+
+    @RolesAllowed(value = { Roles.ADMIN })
+    public List<String> getCompanies() {
+
+        final String query = String.format("SELECT DISTINCT u.company FROM %s u", User.class.getName());
+
+        return em.createQuery(query, String.class).getResultList();
     }
 }

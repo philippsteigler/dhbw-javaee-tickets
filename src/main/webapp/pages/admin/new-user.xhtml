@@ -14,6 +14,7 @@
 <h:form id="form">
 
     #{userBean.fetchAllRoles()}
+    #{userBean.fetchAllCompanies()}
 
         <h:panelGrid id="grid" columns="3" cellpadding="5">
             <h:outputLabel for="name" value="#{msgs['label.name']}: " style="font-weight:bold"/>
@@ -38,8 +39,7 @@
 
             <h:outputLabel for="company" value="#{msgs['label.company']}: " style="font-weight:bold"/>
             <p:selectOneMenu id="company" value="#{userBean.companyName}" effect="fold" editable="true" required="true">
-                <f:selectItem itemLabel="Deutsche Bundesbank" itemValue="Deutsche Bundesbank" />
-                <f:selectItem itemLabel="IBM" itemValue="IBM" />
+                <f:selectItems value="#{userBean.companies}"/>
             </p:selectOneMenu>
             <p:message for="company" />
 

@@ -1,21 +1,23 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
 import com.google.common.collect.ImmutableList;
+import com.sun.istack.Nullable;
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
 import org.dhbw.mosbach.ai.tickets.model.Role;
-import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.User;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-@Named
+@Named("userBean")
 @SessionScoped
 public class UserBean extends AbstractBean {
     private static final long serialVersionUID = -7105806000082771152L;
@@ -39,6 +41,8 @@ public class UserBean extends AbstractBean {
     private String role;
 
     private List<Role> roles;
+
+    private List<String> companies;
 
     private static final String VIEW_DETAILS = "admin-user-details";
     private static final String VIEW_USERS = "admin-all-users";
@@ -101,12 +105,17 @@ public class UserBean extends AbstractBean {
         if (searchString.isEmpty()) {
             searchResult = ImmutableList.copyOf(userDAO.getAll());
         } else {
-            searchResult = ImmutableList.copyOf(userDAO.getUsersContainingSubject(searchString));
+            searchResult = ImmutableList.copyOf(userDAO.getUsersContainingName(searchString));
         }
     }
 
     public void fetchAllRoles() {
         roles = userDAO.getRoles();
+    }
+
+    public void fetchAllCompanies() {
+        companies = new ArrayList<>();
+        companies = userDAO.getCompanies();
     }
 
     public List<User> getEditors() {
@@ -115,11 +124,11 @@ public class UserBean extends AbstractBean {
     }
 
     public String getUserName(long id) {
-        if (id == 0) {
-            return "None";
-        } else {
-            return userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getName();
-        }
+        List<User> findUser = userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList());
+        if (!findUser.isEmpty()) {
+            return findUser.get(0).getName();
+        } else return "None";
+
     }
 
     public String getUserCompany(long id) {
@@ -177,4 +186,10 @@ public class UserBean extends AbstractBean {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public List<String> getCompanies() {
+
+        return companies;
+    }
+
 }

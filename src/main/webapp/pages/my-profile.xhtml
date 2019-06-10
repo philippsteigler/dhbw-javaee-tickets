@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/basic.xhtml">
+    <ui:define name="title">#{msgs['user.myprifle']}</ui:define>
+    <ui:define name="header">#{msgs['user.myprifle']}</ui:define>
+    <ui:define name="content">
+        <h:form id="form">
+            <style type="text/css">
+                .description {
+                    width: 15%;
+                }
+
+                .detail {
+                    width: 80%;
+                    padding-left: 25px;
+                }
+            </style>
+
+            #{generalView.getUserToDisplay()}
+
+            <h:panelGrid style="width:100%" columns="2" cellpadding="2" columnClasses="description, detail">
+                <h3>#{msgs['label.name']}</h3>
+                <h:outputText value="#{generalView.name}" />
+
+                <h3>#{msgs['label.login_id']}</h3>
+                <h:outputText value="#{generalView.userName}" />
+
+                <h3>#{msgs['label.email']}</h3>
+                <h:outputText value="#{generalView.email}" />
+
+                <h3>#{msgs['label.company']}</h3>
+                <h:outputText value="#{generalView.company}" />
+
+                <h3>#{msgs['label.role']}</h3>
+                <p:outputPanel>
+                    <h:dataTable value="#{generalView.roles}" var="role"><f:facet name="Role">Status</f:facet>
+                        <h:column>
+                            #{role.name}
+                        </h:column>
+                    </h:dataTable>
+                </p:outputPanel>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>
