@@ -27,7 +27,9 @@
 
                     <h:outputLabel value="Passwort:" />
                     <p:password id="j_password" required="true" requiredMessage="Passwort darf nicht leer sein!"/>
+                </p:panelGrid>
 
+                <p:panelGrid id="loginPanelGridSubmit" columns="1">
                     <h:commandButton id="submit" value="Anmelden" ajax="false"/>
                 </p:panelGrid>
             </h:form>

@@ -11,10 +11,15 @@
     margin-top: 50px;
 }
 
-#loginPanelGridInfo {
+#loginPanelGridInfo, #loginPanelGridInput {
     margin-bottom: 10px;
 }
 
-#loginPanelGridInput, #j_username, #j_password {
+#loginPanelGridInput, #j_username, #j_password, #loginPanelGridSubmit {
     width: 100%;
+}
+
+#submit {
+    float: right;
+    margin: auto;
 }

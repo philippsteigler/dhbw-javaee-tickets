@@ -12,6 +12,10 @@
     margin-bottom: 50px;
 }
 
-#newTicketPanelGrid, #inputSubject, #inputEntry {
+#newTicketPanelGridInfo, #inputSubject, #inputEntry {
+    margin-top: 10px;
+}
+
+#newTicketPanelGridInput, #inputSubject, #inputEntry {
     width: 100%;
 }

@@ -18,9 +18,11 @@
 
         <p:panel id="newTicketPanel" header="Neues Ticket" styleClass="center" >
             <h:form prependId="false">
-                <h:outputText value="Bitte füllen Sie alle benötigten Daten aus."/>
+                <p:panelGrid id="newTicketPanelGridInfo" columns="1">
+                    <h:outputText value="Bitte füllen Sie alle benötigten Daten aus."/>
+                </p:panelGrid>
 
-                <p:panelGrid id="newTicketPanelGrid" columns="1">
+                <p:panelGrid id="newTicketPanelGridInput" columns="1">
 
                     <h:outputLabel value="#{msgs['label.subject']}" />
                     <p:inputTextarea rows="1" maxlength="256" id="inputSubject" value="#{ticketCustomerBean.ticketSubject}" required="true" requiredMessage="Betreff darf nicht leer sein!" />

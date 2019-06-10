@@ -9,78 +9,59 @@
 
 <ui:composition template="/templates/basic.xhtml">
     <ui:define name="title">#{msgs['admin.user.title']}</ui:define>
-    <ui:define name="header">#{msgs['admin.details.title']}</ui:define>
+    <ui:define name="header">#{msgs['admin.user.header']}</ui:define>
     <ui:define name="content">
-        <h:form id="form">
+        <f:facet name="last">
+            <h:outputStylesheet name="user.css" library="styles" />
+        </f:facet>
 
-            <style type="text/css">
-                .button {
-                    width: 5%
-                }
+        #{userBean.fetchAllUsers()}
 
-                .detail {
-                    width: 95%;
-                    padding-left: 25px;
-                }
-
-                .infos {
-                    width: 6%;
-                }
-
-                .userName {
-                    width: 10%;
-                }
-
-                .userID {
-                    width: 3%;
-                }
-
-                .detail td {
-                    font-size: 24px;
-                }
-
-                .ui-datascroller .ui-datascroller-item {
-                    border-bottom: 1px solid #A8A8A8;
-                    padding: 25px 10px;
-                }
-
-            </style>
-
-            #{userBean.fetchAllUsers()}
-
-            <h:outputText value="Suche:" />
-            <p:inputText value="#{userBean.searchString}">
-                <p:ajax event="keyup" delay="100" update="searchResult"
-                        listener="#{userBean.fetchAllUsers()}" />
-            </p:inputText>
-
-            <p:dataScroller id="searchResult" value="#{userBean.searchResult}" var="user" chunkSize="10" rendered="#{not empty userBean.searchResult}">
-                <f:facet name="header">
-                    Scroll Down to Load More Tickets
-                </f:facet>
-
-                <h:panelGrid columns="2" style="width:100%" columnClasses="button,detail">
-                    <h:commandButton action="#{userBean.viewUserDetails(user)}" value="Details" id="detailsButton" />
-
-                    <p:outputPanel>
-                        <h:panelGrid style="width:100%" columns="6" cellpadding="5" columnClasses="infos, userID, infos, userName, infos">
-                            <h:outputText value="UserID:" style="font-weight: bold"/>
-                            <h:outputText value="#{user.id}" />
-
-                            <h:outputText value="Name:" style="font-weight: bold"/>
-                            <h:outputText value="#{user.name}" />
-
-                            <h:outputText value="Role:" style="font-weight: bold"/>
-                            <h:dataTable value="#{user.roles}" var="role"><f:facet name="Role">Status</f:facet>
-                                <h:column>
-                                    #{role.name}
-                                </h:column>
-                            </h:dataTable>
-                        </h:panelGrid>
-                    </p:outputPanel>
-                </h:panelGrid>
-            </p:dataScroller>
+        <h:form id="Form" prependId="false">
+            <p:panel id="searchPanel" >
+                    <p:panelGrid id="searchPanelGrid" columns="2">
+                        <h:outputLabel id="searchLabel" value="Suche:" />
+                        <p:inputText id="searchInput" value="#{userBean.searchString}">
+                            <p:ajax event="keyup" delay="100" update="searchResult"
+                                    listener="#{userBean.fetchAllUsers()}" />
+                        </p:inputText>
+                    </p:panelGrid>
+            </p:panel>
         </h:form>
+
+        <h:form id="Form2" prependId="false">
+            <p:panel id="resultPanel" >
+                <p:dataScroller id="searchResult" value="#{userBean.searchResult}" var="user" chunkSize="10" rendered="#{not empty userBean.searchResult}">
+                    <f:facet name="header">Benutzer</f:facet>
+
+                    <h:panelGrid columns="3" style="width:100%" columnClasses="button,detail,detail">
+                        <h:commandButton action="#{userBean.viewUserDetails(user)}" value="Details" id="detailsButton" />
+
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" >
+                                <h:outputText value="ID:" />
+                                <h:outputText value="#{user.id}" style="font-weight: bold"/>
+
+                                <h:outputText value="Name:" />
+                                <h:outputText value="#{user.name}" style="font-weight: bold"/>
+                            </h:panelGrid>
+                        </p:outputPanel>
+
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" >
+                                <h:outputText value="Rolle:" />
+                                <h:dataTable value="#{user.roles}" var="role">
+                                    <h:column>
+                                        #{role.name}
+                                    </h:column>
+                                </h:dataTable>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:panelGrid>
+                </p:dataScroller>
+            </p:panel>
+        </h:form>
+
     </ui:define>
 </ui:composition>
 </html>
