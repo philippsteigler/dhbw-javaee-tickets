@@ -88,7 +88,7 @@
         <display-name>Login-Constraint</display-name>
         <web-resource-collection>
             <web-resource-name>loginsuccess</web-resource-name>
-            <url-pattern>/loginsuccess.xhtml</url-pattern>
+            <url-pattern>/pages/index.xhtml</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description>all authenticated users</description>
@@ -102,8 +102,8 @@
         <auth-method>FORM</auth-method>
         <realm-name>ticketsDomain</realm-name>
         <form-login-config>
-            <form-login-page>/login.xhtml</form-login-page>
-            <form-error-page>/login.xhtml</form-error-page>
+            <form-login-page>/pages/login.xhtml</form-login-page>
+            <form-error-page>/pages/login.xhtml</form-error-page>
         </form-login-config>
     </login-config>
 </web-app>
