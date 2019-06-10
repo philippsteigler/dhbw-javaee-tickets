@@ -2,6 +2,7 @@ package org.dhbw.mosbach.ai.tickets.view;
 
 import org.dhbw.mosbach.ai.tickets.beans.SecurityBean;
 import org.dhbw.mosbach.ai.tickets.beans.TicketEditorBean;
+import org.dhbw.mosbach.ai.tickets.beans.UserBean;
 import org.dhbw.mosbach.ai.tickets.model.Role;
 import org.dhbw.mosbach.ai.tickets.model.User;
 
@@ -86,4 +87,5 @@ public class GeneralView implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
 }
