@@ -91,14 +91,29 @@ public class TicketEditorBean extends AbstractBean {
         if (searchString.isEmpty() && filterBean.getSelectedOptions().isEmpty()) {
             searchResult = ImmutableList.copyOf(ticketDAO.getAll());
         } else {
-            searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubject(searchString)).stream().filter(ticket -> {
-                for (String option : filterBean.getSelectedOptions()) {
-                    if (option.equals(ticket.getStatus().toString())) {
-                        return true;
-                    }
+            if (filterBean.getSelectedOptions().size() < 1) {
+                searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubject(searchString));
+            } else {
+                if (searchString.isEmpty()) {
+                    searchResult = ImmutableList.copyOf(ticketDAO.getAll()).stream().filter(ticket -> {
+                        for (String option : filterBean.getSelectedOptions()) {
+                            if (option.equals(ticket.getStatus().toString())) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }).collect(Collectors.toList());
+                } else {
+                    searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubject(searchString)).stream().filter(ticket -> {
+                        for (String option : filterBean.getSelectedOptions()) {
+                            if (option.equals(ticket.getStatus().toString())) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }).collect(Collectors.toList());
                 }
-                return false;
-            }).collect(Collectors.toList());
+            }
         }
     }
 
