@@ -8,14 +8,14 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-    <ui:define name="title">#{msgs['user.myProfile']}</ui:define>
-    <ui:define name="header">#{msgs['user.myProfile']}</ui:define>
+    <ui:define name="title">#{msgs['user.title']}</ui:define>
+    <ui:define name="header">#{msgs['user.header']}</ui:define>
     <ui:define name="content">
         <f:facet name="last">
             <h:outputStylesheet name="myProfile.css" library="styles" />
         </f:facet>
 
-        <p:panel id="myProfilePanel" header="#{msgs['user.myProfile']}" styleClass="panelGridCenterAndTop">
+        <p:panel id="myProfilePanel" header="#{msgs['user.details']}" styleClass="panelGridCenterAndTop">
 
             <h:form id="form">
 
