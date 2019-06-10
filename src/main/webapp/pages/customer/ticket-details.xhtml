@@ -21,8 +21,6 @@
             <h:commandButton value="Eintrag Hinzufügen" action="#{ticketCustomerBean.addEntryToTicket(ticketCustomerBean.entryContent)}"/>
         </p:dialog>
 
-
-
         <h:panelGrid style="width: 100%;" id="userDetailsPanelGridInfo" columns="4">
             <h:outputLabel value="#{msgs['label.ticketId']}:"/>
             <h:outputLabel value="#{ticketCustomerBean.currentTicket.id}"/>
