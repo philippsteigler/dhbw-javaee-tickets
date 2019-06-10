@@ -8,65 +8,49 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-<ui:define name="title">#{msgs['customer.home.title']}</ui:define>
-<ui:define name="header">#{msgs['customer.home.header']}</ui:define>
-<ui:define name="content">
+    <ui:define name="title">#{msgs['customer.home.title']}</ui:define>
+    <ui:define name="header">#{msgs['customer.home.header']}</ui:define>
+    <ui:define name="content">
+        <h:form id="form" prependId="false">
+            <f:facet name="last">
+                <h:outputStylesheet name="search-customer.css" library="styles" />
+            </f:facet>
 
-<h:form id="form">
+            #{ticketCustomerBean.fetchMyTickets()}
 
+            <p:panel id="searchPanel" >
+                <p:panelGrid id="searchPanelGrid" columns="2">
+                    <h:outputLabel id="searchLabel" value="Suche:" />
+                    <p:inputText id="searchInput" value="#{ticketCustomerBean.searchString}">
+                        <p:ajax event="keyup" delay="100" update="searchResult"
+                                listener="#{ticketCustomerBean.fetchMyTickets()}" />
+                    </p:inputText>
+                </p:panelGrid>
+            </p:panel>
 
-    <style type="text/css">
-        .logo {
-            width: 5%
-        }
+            <p:panel id="resultPanel" >
+                <p:dataScroller id="searchResult" value="#{ticketCustomerBean.searchResult}" var="ticket" chunkSize="10" rendered="#{not empty ticketCustomerBean.searchResult}">
+                    <f:facet name="header">Tickets</f:facet>
 
-        .detail {
-            width: 95%;
-            padding-left: 25px;
-        }
+                    <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
+                        <h:commandButton action="#{ticketCustomerBean.viewTicketDetails(ticket)}" value="Details" id="detailsButton" />
 
-        .detail td {
-            font-size: 24px;
-        }
+                        <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}"/>
 
-        .ui-datascroller .ui-datascroller-item {
-            border-bottom: 1px solid #A8A8A8;
-            padding: 25px 10px;
-        }
-    </style>
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="Editor:" />
+                                <h:outputText value="#{ticket.editorId}" style="font-weight: bold"/>
 
-    #{ticketCustomerBean.fetchMyTickets()}
-
-    <h:outputText value="Suche:" />
-    <p:inputText value="#{ticketCustomerBean.searchString}">
-        <p:ajax event="keyup" delay="100" update="searchResult"
-                listener="#{ticketCustomerBean.fetchMyTickets()}" />
-    </p:inputText>
-
-    <p:dataScroller id="searchResult" value="#{ticketCustomerBean.searchResult}" var="ticket" chunkSize="10" rendered="#{not empty ticketCustomerBean.searchResult}">
-        <f:facet name="header">
-            #{msgs['label.scrollDownTickets']}
-        </f:facet>
-
-        <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
-            <h:commandButton action="#{ticketCustomerBean.viewTicketDetails(ticket)}" value="Details" id="detailsButton" />
-
-            <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}" />
-
-            <p:outputPanel>
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputText value="Editor:" />
-                    <h:outputText value="#{ticket.editorId}" style="font-weight: bold" />
-
-                    <h:outputText value="Subject:" />
-                    <h:outputText value="#{ticket.subject}" style="font-weight: bold" />
-                </h:panelGrid>
-            </p:outputPanel>
-        </h:panelGrid>
-    </p:dataScroller>
-
-</h:form>
-</ui:define>
+                                <h:outputText value="Subject:" />
+                                <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:panelGrid>
+                </p:dataScroller>
+            </p:panel>
+        </h:form>
+    </ui:define>
 </ui:composition>
 </html>
 
