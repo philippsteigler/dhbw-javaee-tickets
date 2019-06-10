@@ -1,12 +1,25 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
     <ui:define name="title">#{msgs['index.title']}</ui:define>
     <ui:define name="header">#{msgs['index.header']}</ui:define>
     <ui:define name="content">
+
+        <h:panelGrid columns="2" >
+            <h:outputText value="You are not Logged ind." />
+            <h:link value="click here to log in!" outcome="/pages/loginsuccess.xhtml?faces-redirect=true" />
+
+            <h:outputText value="If you just wanna chill?" />
+            <h:commandButton id="chill" value="#{userBean.chillMan}">
+                <p:ajax event="click" delay="100" update="chill"
+                        listener="#{userBean.chill()}" />
+            </h:commandButton>
+        </h:panelGrid>
 
     </ui:define>
 </ui:composition>

@@ -43,6 +43,9 @@ public class    UserBean extends AbstractBean {
     private static final String VIEW_DETAILS = "admin-user-details";
     private static final String VIEW_USERS = "admin-all-users";
 
+    private String chillMan = "Click here!";
+    private int x = 0;
+
     public String newUser(String login_id, String name, String companyName, String email, String password, String role) {
         final User user = new User(login_id, name, companyName, email);
         user.getRoles().add(parseRoles(role));
@@ -195,4 +198,13 @@ public class    UserBean extends AbstractBean {
         return companies;
     }
 
+    public void chill() {
+        x++;
+        String a = new String(new char[x]).replace('\0', 'a');
+        chillMan = "chill m" + a + "n";
+    }
+
+    public String getChillMan() {
+        return chillMan;
+    }
 }
