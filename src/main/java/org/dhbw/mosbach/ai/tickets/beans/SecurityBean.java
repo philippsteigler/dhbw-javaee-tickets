@@ -29,6 +29,8 @@ public class SecurityBean {
     private HttpServletRequest request;
     private User loggedInUser;
 
+    final static String HOME = "home";
+
     private HttpServletRequest getRequest() {
         if (request != null) {
             return request;
@@ -71,7 +73,7 @@ public class SecurityBean {
 
     public String login() {
         loggedInUser = null;
-        return "/pages/login.xhtml";
+        return "/pages/loginsuccess.xhtml?faces-redirect=true";
     }
 
     public String logout() {
@@ -85,6 +87,6 @@ public class SecurityBean {
             logger.warn("Exception during logout", e);
         }
 
-        return "/pages/login.xhtml";
+        return HOME;
     }
 }
