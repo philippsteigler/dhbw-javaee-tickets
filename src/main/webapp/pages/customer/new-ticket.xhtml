@@ -8,17 +8,33 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-<ui:define name="title">#{msgs['customer.create.title']}</ui:define>
-<ui:define name="header">#{msgs['customer.create.header']}</ui:define>
-<ui:define name="content">
-<h:form id="form">
-        <h3>#{msgs['label.subject']}: </h3>
-        <p:inputTextarea style="margin: 0 auto" rows="1" cols="70" id="inputSubject" value="#{ticketCustomerBean.ticketSubject}" />
-        <h3>#{msgs['label.content']}: </h3>
-        <p:inputTextarea style="margin: 0 auto" rows="8" cols="70" id="inputEntry" value="#{ticketCustomerBean.ticketContent}" />
-        <br></br>
-        <h:commandButton value="Ticket Erstellen" action="#{ticketCustomerBean.newTicket(ticketCustomerBean.ticketContent, ticketCustomerBean.ticketSubject)}"/>
-</h:form>
-</ui:define>
+    <ui:define name="title">#{msgs['customer.create.title']}</ui:define>
+    <ui:define name="header">#{msgs['customer.create.header']}</ui:define>
+    <ui:define name="content">
+
+        <f:facet name="last">
+            <h:outputStylesheet name="ticket.css" library="styles" />
+        </f:facet>
+
+        <p:panel id="newTicketPanel" header="Neues Ticket" styleClass="center" >
+            <h:form prependId="false">
+                <p:panelGrid id="newTicketPanelGridInfo" columns="1">
+                    <h:outputText value="Bitte füllen Sie alle benötigten Daten aus."/>
+                </p:panelGrid>
+
+                <p:panelGrid id="newTicketPanelGridInput" columns="1">
+
+                    <h:outputLabel value="#{msgs['label.subject']}" />
+                    <p:inputTextarea rows="1" maxlength="256" id="inputSubject" value="#{ticketCustomerBean.ticketSubject}" required="true" requiredMessage="Betreff darf nicht leer sein!" />
+
+                    <h:outputLabel value="#{msgs['label.content']}" />
+                    <p:inputTextarea rows="8" maxlength="2048" id="inputEntry" value="#{ticketCustomerBean.ticketContent}" required="true" requiredMessage="Inhalt darf nicht leer sein!" />
+
+                    <h:commandButton value="Ticket erstellen" action="#{ticketCustomerBean.newTicket(ticketCustomerBean.ticketContent, ticketCustomerBean.ticketSubject)}"/>
+                </p:panelGrid>
+            </h:form>
+        </p:panel>
+
+    </ui:define>
 </ui:composition>
 </html>
