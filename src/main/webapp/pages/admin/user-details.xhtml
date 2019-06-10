@@ -22,6 +22,7 @@
                     padding-left: 25px;
                 }
             </style>
+            <h:commandButton value="#{msgs['button.delete']}" action="#{userBean.deleteUser(userBean.currentUser)}"/>
 
             <h:panelGrid style="width:100%" columns="2" cellpadding="2" columnClasses="description, detail">
                 <h3>Username:</h3>

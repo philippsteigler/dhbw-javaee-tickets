@@ -68,9 +68,11 @@ public class UserBean extends AbstractBean {
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.saveSuccess");
     }
 
-    public void deleteUser(User user) {
+    public String deleteUser(User user) {
         userDAO.removeDetached(user);
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.deleteSuccess");
+
+        return VIEW_USERS;
     }
 
     public void setSearchString(String searchString) {
