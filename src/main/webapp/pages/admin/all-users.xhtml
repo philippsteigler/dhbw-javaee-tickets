@@ -11,25 +11,23 @@
     <ui:define name="title">#{msgs['admin.user.title']}</ui:define>
     <ui:define name="header">#{msgs['admin.user.header']}</ui:define>
     <ui:define name="content">
-        <f:facet name="last">
-            <h:outputStylesheet name="user.css" library="styles" />
-        </f:facet>
+        <h:form id="form" prependId="false">
+            <f:facet name="last">
+                <h:outputStylesheet name="search-user.css" library="styles" />
+            </f:facet>
 
-        #{userBean.fetchAllUsers()}
+            #{userBean.fetchAllUsers()}
 
-        <h:form id="Form" prependId="false">
             <p:panel id="searchPanel" >
-                    <p:panelGrid id="searchPanelGrid" columns="2">
-                        <h:outputLabel id="searchLabel" value="Suche:" />
-                        <p:inputText id="searchInput" value="#{userBean.searchString}">
-                            <p:ajax event="keyup" delay="100" update="searchResult"
-                                    listener="#{userBean.fetchAllUsers()}" />
-                        </p:inputText>
-                    </p:panelGrid>
+                <p:panelGrid id="searchPanelGrid" columns="2">
+                    <h:outputLabel id="searchLabel" value="Suche:" />
+                    <p:inputText id="searchInput" value="#{userBean.searchString}">
+                        <p:ajax event="keyup" delay="100" update="searchResult"
+                                listener="#{userBean.fetchAllUsers()}" />
+                    </p:inputText>
+                </p:panelGrid>
             </p:panel>
-        </h:form>
 
-        <h:form id="Form2" prependId="false">
             <p:panel id="resultPanel" >
                 <p:dataScroller id="searchResult" value="#{userBean.searchResult}" var="user" chunkSize="10" rendered="#{not empty userBean.searchResult}">
                     <f:facet name="header">Benutzer</f:facet>
@@ -61,7 +59,6 @@
                 </p:dataScroller>
             </p:panel>
         </h:form>
-
     </ui:define>
 </ui:composition>
 </html>
