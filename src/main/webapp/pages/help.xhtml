@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/basic.xhtml">
+    <ui:define name="title">#{msgs['user.help']}</ui:define>
+    <ui:define name="header">#{msgs['user.help']}</ui:define>
+    <ui:define name="content">
+
+        <f:facet name="last">
+            <h:outputStylesheet name="help.css" library="styles" />
+        </f:facet>
+
+    <p:panel id="loginPanel" header="#{msgs['user.help.message']}" styleClass="center" >
+
+        <h:form id="form">
+            <p:accordionPanel multiple="true">
+                <p:tab title="Frage: Wo kann Ich meine Tickets einsehen?">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText
+                                value="Antwort: Wenn Sie als Kunde angemeldet sind, können Sie über 'Meine Liste' in der Navigationsleiste Ihre erstellten Tickets einsehen." />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Frage: Kann Ich die Tickets meines Unternehmens einsehen?">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText value="Antwort: Ja, über 'Mein Unternehmen' in der Navigationsleiste können Sie die Tickets Ihres Unternehmens einsehen." />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Frage: Wie kann ich ein neues Ticket erstellen?">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText value="Antwort: Wenn Sie als Kunde angemeldet sind, können Sie über 'Neues Ticket' ein neues Ticket erstellen." />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Frage: Wieso wird mein Ticket nicht bearbeitet?">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText value="Antwort: Wenn sich Ihr Ticket im Status offen bedindet, hatte bisher noch kein Sachbearbeiter die Möglichkeit es zu bearbeiten.
+                        Sollte das Ticket schon eine längere Zeit unbearbeitet sein, füllen Sie bitte ein Beschwerdeformular aus. Dieses wird von uns zwar ignoriert,
+                        aber Sie werden sich besser fühlen." />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Frage: Kann Ich ein Ticket nachträglich bearbeiten oder löschen?">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText value="Antwort: Computer sagt Nein." />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Frage: Wie kann Ich einem Ticket einen neuen Eintrag hinzufügen?">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText value="Antwort: In der Detailansicht zu einem Ticket können Sie, sofern das Ticket von Ihnen erstellt wurde, einen neuen Eintrag hinzufügen." />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Frage: Wie werde ich über den Status des Tickets informiert?">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText value="Antwort: Sie werden per E-Mail über neue Einträge zu Ihrem Ticket informiert." />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Frage: Können Kühe sprechen?">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText value="Antwort:" />
+                        <pre>
+| YES |
+-----
+\   ^__^
+ \  (oo)\_______
+    (__)\       )\/\
+        ||----w |
+        ||     ||
+
+</pre>
+                    </h:panelGrid>
+                </p:tab>
+            </p:accordionPanel>
+        </h:form>
+    </p:panel>
+    </ui:define>
+</ui:composition>
+</html>
