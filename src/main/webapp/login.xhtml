@@ -1,18 +1,26 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-    <ui:define name="title">Login</ui:define>
-    <ui:define name="header">Login</ui:define>
+    <ui:define name="title">#{msgs['login.title']}</ui:define>
+    <ui:define name="header">#{msgs['login.header']}</ui:define>
     <ui:define name="content">
 
-        <form name="loginForm" method="POST" action="j_security_check">
-            <p><strong>Enter your user name: </strong><label><input name="j_username" size="15" /></label></p>
-            <p><strong>Enter your password: </strong><label><input type="password" size="15" name="j_password" /></label></p>
-            <p><input type="submit" value="Submit" /><input type="reset" value="Reset" /></p>
-        </form>
+        <p:panel id="basic" header="Login" style="margin-bottom:20px">
+            <h:form id="login" onsubmit="action='j_security_check';" prependId="false">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="j_username" value="Benutzername:" />
+                    <p:inputText id="j_username" />
+                    <p:outputLabel for="j_password" value="Passwort:" />
+                    <p:password id="j_password" />
+                    <h:commandButton id="submit" value="Anmelden" ajax="false"/>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
 
     </ui:define>
 </ui:composition>
