@@ -17,10 +17,6 @@
     padding-left: 25px;
 }
 
-.detail td {
-    font-size: 24px;
-}
-
-#userDetailsPanelGridButtons {
+#ticketDetailsPanelGridButtons {
     margin-bottom: 10px;
 }
