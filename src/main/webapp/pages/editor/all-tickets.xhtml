@@ -31,7 +31,16 @@
     </style>
 
     #{ticketEditorBean.fetchAllTickets()}
-    
+
+    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        <h:outputText value="Sortierung: :" />
+        <p:selectManyButton value="#{filterBean.selectedOptions}">
+            <f:selectItem itemLabel="Open" itemValue="open" />
+            <f:selectItem itemLabel="In Process" itemValue="inProcess" />
+            <f:selectItem itemLabel="Closed" itemValue="closed" />
+        </p:selectManyButton>
+    </h:panelGrid>
+
     <h:outputText value="Suche:" />
     <p:inputText value="#{ticketEditorBean.searchString}">
         <p:ajax event="keyup" delay="100" update="searchResult"

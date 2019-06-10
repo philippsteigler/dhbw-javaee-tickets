@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 @SessionScoped
@@ -25,6 +26,9 @@ public class TicketEditorBean extends AbstractBean {
 
     @Inject
     private SecurityBean securityBean;
+
+    @Inject
+    private FilterBean filterBean;
 
     private static final String VIEW_DETAILS = "editor-ticket-details";
     private String REDIRECT = "";
@@ -84,10 +88,17 @@ public class TicketEditorBean extends AbstractBean {
     }
 
     public void fetchAllTickets() {
-        if (searchString.isEmpty()) {
+        if (searchString.isEmpty() && filterBean.getSelectedOptions().isEmpty()) {
             searchResult = ImmutableList.copyOf(ticketDAO.getAll());
         } else {
-            searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubject(searchString));
+            searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubject(searchString)).stream().filter(ticket -> {
+                for (String option : filterBean.getSelectedOptions()) {
+                    if (option.equals(ticket.getStatus().toString())) {
+                        return true;
+                    }
+                }
+                return false;
+            }).collect(Collectors.toList());
         }
     }
 
@@ -148,5 +159,7 @@ public class TicketEditorBean extends AbstractBean {
         currentTicket.setStatusToOpen();
         saveTicket(currentTicket);
     }
+
+
 
 }
