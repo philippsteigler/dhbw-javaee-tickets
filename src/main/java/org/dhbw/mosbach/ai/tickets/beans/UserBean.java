@@ -1,25 +1,21 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
 import com.google.common.collect.ImmutableList;
-import com.sun.istack.Nullable;
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
 import org.dhbw.mosbach.ai.tickets.model.Role;
 import org.dhbw.mosbach.ai.tickets.model.User;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Named("userBean")
 @SessionScoped
-public class UserBean extends AbstractBean {
+public class    UserBean extends AbstractBean {
     private static final long serialVersionUID = -7105806000082771152L;
 
     @Inject
@@ -80,6 +76,13 @@ public class UserBean extends AbstractBean {
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.deleteSuccess");
 
         return VIEW_USERS;
+    }
+
+    public String deleteAccount() {
+        userDAO.removeDetached(securityBean.getUser());
+        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.deleteSuccess");
+
+        return securityBean.logout();
     }
 
     public void setSearchString(String searchString) {

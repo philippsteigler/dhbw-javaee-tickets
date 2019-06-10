@@ -8,28 +8,25 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-<ui:define name="title">#{msgs['editor.tickets.title']}</ui:define>
-<ui:define name="header">#{msgs['editor.tickets.header']}</ui:define>
-<ui:define name="content">
+    <ui:define name="title">#{msgs['editor.tickets.title']}</ui:define>
+    <ui:define name="header">#{msgs['editor.tickets.header']}</ui:define>
+    <ui:define name="content">
+        <h:form id="form" prependId="false">
+            <f:facet name="last">
+                <h:outputStylesheet name="search-tickets.css" library="styles" />
+            </f:facet>
 
-<h:form id="form">
+            #{ticketEditorBean.fetchAllTickets()}
 
-    <style type="text/css">
-        .logo {
-            width: 5%
-        }
-
-        .detail {
-            width: 95%;
-            padding-left: 25px;
-        }
-
-        .ui-datascroller .ui-datascroller-item {
-            border-bottom: 1px solid #A8A8A8;
-            padding: 25px 10px;
-        }
-    </style>
-
+            <p:panel id="searchPanel" >
+                <p:panelGrid id="searchPanelGrid" columns="1">
+                    <p:inputText id="searchInput" value="#{ticketEditorBean.searchString}">
+                        <p:ajax event="keyup" delay="100" update="searchResult"
+                                listener="#{ticketEditorBean.fetchAllTickets()}" />
+                    </p:inputText>
+                    <p:watermark for="searchInput" value="Nach Tickets suchen..." id="watermark" />
+                </p:panelGrid>
+            </p:panel>
     #{ticketEditorBean.fetchAllTickets()}
 
     <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
@@ -47,29 +44,29 @@
                 listener="#{ticketEditorBean.fetchAllTickets()}" />
     </p:inputText>
 
-    <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10" rendered="#{not empty ticketEditorBean.searchResult}">
-        <f:facet name="header">
-            #{msgs['label.scrollDownTickets']}
-        </f:facet>
+            <p:panel id="resultPanel" >
+                <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10" rendered="#{not empty ticketEditorBean.searchResult}">
+                    <f:facet name="header">Tickets</f:facet>
 
-        <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
-            <h:commandButton action="#{ticketEditorBean.viewTicketDetails(ticket, 'editor-all-tickets')}" value="Details" />
+                    <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
+                        <h:commandButton action="#{ticketEditorBean.viewTicketDetails(ticket, 'editor-all-tickets')}" value="Details" id="detailsButton" />
 
-            <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}" />
+                        <p:graphicImage library="images" name="#{ticket.status}.png" alt="#{ticket.status}"/>
 
-            <p:outputPanel>
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputText value="#{msgs['editor']}:" />
-                    <h:outputText value="#{userBean.getUserName(ticket.editorId)}" style="font-weight: bold"/>
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="#{msgs['editor']}:" />
+                                <h:outputText value="#{userBean.getUserName(ticket.editorId)}" style="font-weight: bold"/>
 
-                    <h:outputText value="#{msgs['label.subject']}:" />
-                    <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
-                </h:panelGrid>
-            </p:outputPanel>
-        </h:panelGrid>
-    </p:dataScroller>
-</h:form>
-</ui:define>
+                                <h:outputText value="#{msgs['label.subject']}:" />
+                                <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:panelGrid>
+                </p:dataScroller>
+            </p:panel>
+        </h:form>
+    </ui:define>
 </ui:composition>
 </html>
 
