@@ -1,5 +1,6 @@
 package org.dhbw.mosbach.ai.tickets.database;
 
+import org.dhbw.mosbach.ai.tickets.model.Role;
 import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.User;
 import org.jboss.security.Base64Encoder;
@@ -60,5 +61,13 @@ public class UserDAO extends BaseDAO<User, Long> {
         }
 
         return Collections.emptyList();
+    }
+
+    @RolesAllowed(value = { Roles.ADMIN })
+    public List<Role> getRoles() {
+
+        final String query = String.format("FROM %s", Role.class.getName());
+
+        return em.createQuery(query, Role.class).getResultList();
     }
 }
