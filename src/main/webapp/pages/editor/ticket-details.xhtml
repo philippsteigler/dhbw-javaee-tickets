@@ -8,63 +8,54 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/basic.xhtml">
-<ui:define name="title">#{msgs['editor.details.title']}</ui:define>
-<ui:define name="header">#{msgs['editor.details.header']}</ui:define>
-<ui:define name="content">
-    <h:form id="form">
+    <ui:define name="title">#{msgs['editor.details.title']}</ui:define>
+    <ui:define name="header">#{msgs['editor.details.header']}</ui:define>
+    <ui:define name="content">
+        <h:form id="form" prependId="false">
+            <f:facet name="last">
+                <h:outputStylesheet name="details-ticket.css" library="styles" />
+            </f:facet>
 
-        <style type="text/css">
-            .logo {
-                width: 5%
-            }
+            <p:dialog header="#{msgs['entry.edit']}" widgetVar="dlgEntry" modal="true" height="200" width="500">
+                <p:inputTextarea style="margin: 0 auto" rows="8" cols="70" id="entryText" value="#{ticketEditorBean.entryContent}" />
+                <h:commandButton value="Eintrag Hinzufügen" action="#{ticketEditorBean.addEntryToTicket(ticketEditorBean.entryContent)}"/>
+            </p:dialog>
 
-            .delegate {
-                width: 33%;
-                padding-left: 1%;
-            }
+            <p:dialog header="#{msgs['ticket.delegate']}" widgetVar="dlgDelegate" modal="true" height="600" width="500" resizable="false">
+                <p:dataScroller id="editors" value="#{userBean.getEditors()}" var="user" chunkSize="10">
+                    <f:facet name="header">
+                        Scroll Down to Load More Uers
+                    </f:facet>
 
-            .delegateButtons {
-                width: 33%;
-                padding-right: 1%;
-            }
+                    <h:panelGrid columns="2" style="width:100%" columnClasses="delegate,delegateButtons">
+                        <h:outputText value="#{user.name}" />
+                        <h:commandButton value="Delegieren" action="#{ticketEditorBean.delegateTicket(user.id)}" />
+                    </h:panelGrid>
+                </p:dataScroller>
+            </p:dialog>
 
-            .detail {refreshPage()
-                width: 95%;
-                padding-left: 25px;
-            }
+            <h:panelGrid id="ticketDetailsPanelGridInfo" columns="2" columnClasses="logo,detail">
+                <h:outputLabel value="#{msgs['label.ticketId']}:"/>
+                <h:outputText value="#{ticketEditorBean.currentTicket.id}"/>
 
-            .detail td {
-                font-size: 24px;
-            }
+                <h:outputLabel value="#{msgs['label.subject']}:"/>
+                <h:outputText value="#{ticketEditorBean.currentTicket.subject}"/>
 
-            .ui-datascroller .ui-datascroller-item {
-                border-bottom: 1px solid #A8A8A8;
-                padding: 25px 10px;
-            }
+                <h:outputLabel value="#{msgs['editor']}:"/>
+                <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.editorId)}" />
 
-        </style>
+                <h:outputLabel value="#{msgs['label.status']}:"/>
+                <h:outputText value="#{ticketEditorBean.currentTicket.status}"/>
 
-        <p:dialog header="#{msgs['entry.edit']}" widgetVar="dlgEntry" modal="true" height="200" width="500">
-            <p:inputTextarea style="margin: 0 auto" rows="8" cols="70" id="entryText" value="#{ticketEditorBean.entryContent}" />
-            <h:commandButton value="Eintrag Hinzufügen" action="#{ticketEditorBean.addEntryToTicket(ticketEditorBean.entryContent)}"/>
-        </p:dialog>
+                <h:outputLabel value="#{msgs['label.customer']}:"/>
+                <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.customerId)}"/>
 
-        <p:dialog header="#{msgs['ticket.delegate']}" widgetVar="dlgDelegate" modal="true" height="600" width="500" resizable="false">
-            <p:dataScroller id="editors" value="#{userBean.getEditors()}" var="user" chunkSize="10">
-                <f:facet name="header">
-                    Scroll Down to Load More Uers
-                </f:facet>
+                <h:outputLabel value="#{msgs['label.company']}:"/>
+                <h:outputText value="#{userBean.getUserCompany(ticketEditorBean.currentTicket.customerId)}"/>
 
-                <h:panelGrid columns="2" style="width:100%" columnClasses="delegate,delegateButtons">
-                    <h:outputText value="#{user.name}" />
-                    <h:commandButton value="Delegieren" action="#{ticketEditorBean.delegateTicket(user.id)}" />
-                </h:panelGrid>
-            </p:dataScroller>
-        </p:dialog>
+            </h:panelGrid>
 
-        <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-            <h:outputText />
-            <h:panelGrid columns="6" class="buttons">
+            <h:panelGrid id="ticketDetailsPanelGridButtons" columns="6" class="buttons">
                 <h:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" rendered="#{editorView.renderButton('addEntry')}"/>
                 <h:commandButton value="#{msgs['button.delegate']}" type="button" onclick="PF('dlgDelegate').show();" rendered="#{editorView.renderButton('delegate')}"/>
                 <h:commandButton value="#{msgs['button.release']}" action="#{ticketEditorBean.releaseTicket()}" rendered="#{editorView.renderButton('release')}"/>
@@ -73,45 +64,22 @@
                 <h:commandButton value="#{msgs['button.reopen']}" action="#{ticketEditorBean.reopenTicket()}" rendered="#{editorView.renderButton('reopen')}"/>
             </h:panelGrid>
 
-            <h3 style="margin-top:0">#{msgs['label.status']}: </h3>
-            <p:graphicImage library="images" name="#{ticketEditorBean.currentTicket.status}.png" alt="#{ticketEditorBean.currentTicket.status}" />
-
-            <h2 style="margin-top:0">#{msgs['label.subject']}: </h2>
-            <h:outputText value="#{ticketEditorBean.currentTicket.subject}" />
-
-            <h3 style="margin-top:0">#{msgs['label.ticketId']}: </h3>
-            <h:outputText value="#{ticketEditorBean.currentTicket.id}" />
-
-            <h3 style="margin-top:0">#{msgs['editor']}: </h3>
-            <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.editorId)}" />
-
-            <h3 style="margin-top:0">#{msgs['label.customer']}: </h3>
-            <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.customerId)}" />
-
-            <h3 style="margin-top:0">#{msgs['label.company']}: </h3>
-            <h:outputText value="#{userBean.getUserCompany(ticketEditorBean.currentTicket.customerId)}" />
-
-            <h3>#{msgs['entries']}: </h3>
-        </h:panelGrid>
-
             <p:dataScroller id="searchResult" value="#{ticketEditorBean.currentEntries}" var="entry" chunkSize="10">
-            <f:facet name="header">
-                #{msgs['label.scrollDownEntries']}
-            </f:facet>
+                <f:facet name="header">Verlauf</f:facet>
 
-            <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                <h:outputText value="#{msgs['date']}: " />
-                <h:outputText value="#{generalView.formatDate(entry.createDate)}" />
+                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                    <h:outputText value="#{msgs['date']}: " />
+                    <h:outputText value="#{generalView.formatDate(entry.createDate)}" />
 
-                <h:outputText value="#{msgs['label.creator']}: " />
-                <h:outputText value="#{userBean.getUserName(entry.creatorID)}" />
+                    <h:outputText value="#{msgs['editor']}: " />
+                    <h:outputText value="#{userBean.getUserName(entry.creatorID)}" />
 
-                <h:outputText value="#{msgs['entry']}: " />
-                <h:outputText value="#{entry.content}" />
-            </h:panelGrid>
-        </p:dataScroller>
+                    <h:outputText value="#{msgs['entry']}: " />
+                    <h:outputText value="#{entry.content}" />
+                </h:panelGrid>
+            </p:dataScroller>
 
-    </h:form>
-</ui:define>
+        </h:form>
+    </ui:define>
 </ui:composition>
 </html>
