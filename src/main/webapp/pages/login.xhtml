@@ -17,7 +17,11 @@
 
         <p:panel id="loginPanel" header="Login" styleClass="center" >
             <h:form id="loginForm" onsubmit="action='j_security_check';" prependId="false">
-                <p:panelGrid id="loginPanelGrid" columns="2">
+                <p:panelGrid id="loginPanelGridInfo" columns="1">
+                    <h:outputText value="Bitte geben Sie Ihre Zugangsdaten ein."/>
+                </p:panelGrid>
+
+                <p:panelGrid id="loginPanelGridInput" columns="2">
                     <h:outputLabel value="Benutzername:" />
                     <p:inputText id="j_username" required="true" requiredMessage="Benutzername darf nicht leer sein!" />
 
