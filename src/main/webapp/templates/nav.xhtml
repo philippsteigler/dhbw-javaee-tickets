@@ -43,7 +43,7 @@
 						<b:navCommandLink value="Alle Tickets" action="/pages/editor/all-tickets.xhtml?faces-redirect=true" immediate="true" />
 					</b:dropMenu>
 
-					<b:dropMenu value="Kunden" rendered="#{securityBean.isUserInRole('customer')}" >
+					<b:dropMenu value="Kunde" rendered="#{securityBean.isUserInRole('customer')}" >
 						<b:navCommandLink value="Meine Liste" action="/pages/customer/my-tickets.xhtml?faces-redirect=true" immediate="true" />
 						<b:navCommandLink value="Mein Unternehmen" action="/pages/customer/company-tickets.xhtml?faces-redirect=true" immediate="true" />
 						<b:navCommandLink value="Neues Ticket" action="/pages/customer/new-ticket.xhtml?faces-redirect=true" immediate="true" />
@@ -53,7 +53,8 @@
 				<!-- Logout for all Roles -->
 				<b:navbarLinks>
 					<b:dropMenu value="Benutzer: #{securityBean.user.name}">
-						<b:navCommandLink value="Logout" action="#{securityBean.logout()}" ajax="false" />
+						<b:navCommandLink value="Mein Profil" action="/pages/index.xhtml?faces-redirect=true" immediate="true"  />
+						<b:navCommandLink value="Abmelden" action="#{securityBean.logout()}" ajax="false" />
 					</b:dropMenu>
 				</b:navbarLinks>
 			</b:navbarLinks>

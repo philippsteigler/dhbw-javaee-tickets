@@ -8,12 +8,6 @@
         <display-name>Global Navigation Rules</display-name>
         <from-view-id>*</from-view-id>
 
-        <!-- Index -->
-        <navigation-case>
-            <from-outcome>home</from-outcome>
-            <to-view-id>/pages/index.xhtml</to-view-id>
-        </navigation-case>
-
         <!-- Admin Pages-->
         <navigation-case>
             <from-outcome>admin-all-users</from-outcome>
@@ -30,6 +24,7 @@
             <to-view-id>/pages/admin/new-user.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+
         <!-- Editor Pages -->
         <navigation-case>
             <from-outcome>editor-my-tickets</from-outcome>
