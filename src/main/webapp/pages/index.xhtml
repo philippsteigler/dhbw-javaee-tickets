@@ -10,11 +10,29 @@
     <ui:define name="title">#{msgs['index.title']}</ui:define>
     <ui:define name="header">#{msgs['index.header']}</ui:define>
     <ui:define name="content">
+        <h:form id="form" prependId="false">
+            <f:facet name="last">
+                <h:outputStylesheet name="new-ticket.css" library="styles" />
+            </f:facet>
 
-        <f:facet name="last">
-            <h:outputStylesheet name="index.css" library="styles" />
-        </f:facet>
+            <p:panel style="margin-bottom: 20px" header="[12. Juni 2019] JETZT GEWINNEN: 2 Tickets für Meisterdetektiv Pikachu!" styleClass="center" >
+                <p:panelGrid columns="1">
+                    <h:outputText value="Finden Sie das Easter-Egg und mailen Sie Ihre Lösung an root@ticket-master.de"/>
+                </p:panelGrid>
+            </p:panel>
 
+            <p:panel style="margin-bottom: 20px" header="[14. Mai 2017] NEWS: Ticket Master V1.3 wurde soeben veröffentlicht!" styleClass="center" >
+                <p:panelGrid columns="1">
+                    <h:outputText value="Loggen Sie sich direkt ein und erkunden sie die neuen Funktionen:"/>
+                    <h:outputText value="- Intuitive Bedienung"/>
+                    <h:outputText value="- Futuristisches, simples Design"/>
+                    <h:outputText value="- Login/Logout"/>
+                    <h:outputText value="- Suchen in Ticketlisten"/>
+                    <h:outputText value="- Keine Verarbeitung ihrer privaten Daten!"/>
+                    <h:outputText value="- Delegieren Sie Ihre Tickets an andere Kollegen"/>
+                </p:panelGrid>
+            </p:panel>
+        </h:form>
     </ui:define>
 </ui:composition>
 
