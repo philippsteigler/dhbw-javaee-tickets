@@ -1,0 +1,16 @@
+.ui-panelgrid tr, .ui-panelgrid td {
+    border:none !important;
+}
+
+.center {
+    margin: auto;
+    width: 500px;
+}
+
+#loginPanel {
+    margin-top: 50px;
+}
+
+#loginPanelGrid, #j_username, #j_password {
+    width: 100%;
+}
