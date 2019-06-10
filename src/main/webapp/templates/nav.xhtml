@@ -53,7 +53,7 @@
 				<!-- Logout for all Roles -->
 				<b:navbarLinks>
 					<b:dropMenu value="Benutzer: #{securityBean.user.name}">
-						<b:navCommandLink value="Mein Profil" action="/pages/index.xhtml?faces-redirect=true" immediate="true"  />
+						<b:navCommandLink value="Mein Profil" action="/pages/my-profile.xhtml?faces-redirect=true" immediate="true"  />
 						<b:navCommandLink value="Abmelden" action="#{securityBean.logout()}" ajax="false" />
 					</b:dropMenu>
 				</b:navbarLinks>
