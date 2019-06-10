@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
@@ -10,15 +11,21 @@
     <ui:define name="header">#{msgs['login.header']}</ui:define>
     <ui:define name="content">
 
-        <p:panel id="basic" header="Login" style="margin-bottom:20px">
-            <h:form id="login" onsubmit="action='j_security_check';" prependId="false">
-                <h:panelGrid columns="2">
-                    <p:outputLabel for="j_username" value="Benutzername:" />
-                    <p:inputText id="j_username" />
-                    <p:outputLabel for="j_password" value="Passwort:" />
-                    <p:password id="j_password" />
+        <f:facet name="last">
+            <h:outputStylesheet name="login.css" library="styles" />
+        </f:facet>
+
+        <p:panel id="loginPanel" header="Login" styleClass="center" >
+            <h:form id="loginForm" onsubmit="action='j_security_check';" prependId="false">
+                <p:panelGrid id="loginPanelGrid" columns="2">
+                    <h:outputLabel value="Benutzername:" />
+                    <p:inputText id="j_username" required="true" requiredMessage="Benutzername darf nicht leer sein!" />
+
+                    <h:outputLabel value="Passwort:" />
+                    <p:password id="j_password" required="true" requiredMessage="Passwort darf nicht leer sein!"/>
+
                     <h:commandButton id="submit" value="Anmelden" ajax="false"/>
-                </h:panelGrid>
+                </p:panelGrid>
             </h:form>
         </p:panel>
 

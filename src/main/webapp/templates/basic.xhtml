@@ -12,9 +12,8 @@
 </h:head>
 
 <h:body style="padding: 30px 30px 60px;">
-    <h:outputStylesheet name="basic.css" library="styles" />
     <f:facet name="last">
-		<ui:remove>Ensure (by using facet name=last) that basic.css rules them all!</ui:remove>
+        <h:outputStylesheet name="basic.css" library="styles" />
 	</f:facet>
 
 	<div id="menu"><ui:include src="/templates/nav.xhtml" /></div>
