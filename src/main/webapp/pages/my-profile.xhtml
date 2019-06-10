@@ -11,43 +11,53 @@
     <ui:define name="title">#{msgs['user.myProfile']}</ui:define>
     <ui:define name="header">#{msgs['user.myProfile']}</ui:define>
     <ui:define name="content">
-        <h:form id="form">
-            <style type="text/css">
-                .description {
-                    width: 15%;
-                }
+        <f:facet name="last">
+            <h:outputStylesheet name="myProfile.css" library="styles" />
+        </f:facet>
 
-                .detail {
-                    width: 80%;
-                    padding-left: 25px;
-                }
-            </style>
+        <p:panel id="myProfilePanel" header="#{msgs['user.myProfile.message']}" styleClass="panelGridCenterAndTop">
 
-            #{generalView.getUserToDisplay()}
+            <h:form id="form">
 
-            <h:panelGrid style="width:100%" columns="2" cellpadding="2" columnClasses="description, detail">
-                <h3>#{msgs['label.name']}</h3>
-                <h:outputText value="#{generalView.name}" />
 
-                <h3>#{msgs['label.login_id']}</h3>
-                <h:outputText value="#{generalView.userName}" />
+                #{generalView.getUserToDisplay()}
 
-                <h3>#{msgs['label.email']}</h3>
-                <h:outputText value="#{generalView.email}" />
+                <h:panelGrid style="width:100%" columns="2" cellpadding="80" columnClasses="description, detail" styleClass="panelGridCenter" >
+                    <h:outputLabel value="#{msgs['label.name']}: " style="font-weight: bold"/>
+                    <h:outputText value="#{generalView.name}" />
 
-                <h3>#{msgs['label.company']}</h3>
-                <h:outputText value="#{generalView.company}" />
+                    <h:outputLabel value="#{msgs['label.login_id']}: " style="font-weight: bold"/>
+                    <h:outputText value="#{generalView.userName}" />
 
-                <h3>#{msgs['label.role']}</h3>
-                <p:outputPanel>
-                    <h:dataTable value="#{generalView.roles}" var="role"><f:facet name="Role">Status</f:facet>
-                        <h:column>
-                            #{role.name}
-                        </h:column>
-                    </h:dataTable>
-                </p:outputPanel>
-            </h:panelGrid>
-        </h:form>
+                    <h:outputLabel value="#{msgs['label.email']}: " style="font-weight: bold"/>
+                    <h:outputText value="#{generalView.email}" />
+
+                    <h:outputLabel value="#{msgs['label.company']}: " style="font-weight: bold"/>
+                    <h:outputText value="#{generalView.company}" />
+
+                    <h:outputLabel value="#{msgs['label.role']}: " style="font-weight: bold"/>
+                    <p:outputPanel>
+                        <h:dataTable value="#{generalView.roles}" var="role"><f:facet name="Role">Status</f:facet>
+                            <h:column>
+                                #{role.name}
+                            </h:column>
+                        </h:dataTable>
+                    </p:outputPanel>
+                </h:panelGrid>
+                <h:panelGrid style="width:100%" columns="1" cellpadding="80" columnClasses="description, detail" styleClass="commandButton" >
+                    <p:growl id="message" showDetail="true" />
+
+                    <p:commandButton value="Profil löschen" action="#{userBean.deleteAccount()}" update="message">
+                        <p:confirm header="Achtung" message="Möchten Sie Ihr Profil wirklich löschen?"/>
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" />
+                        <p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no"/>
+                    </p:confirmDialog>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
     </ui:define>
 </ui:composition>
 </html>
