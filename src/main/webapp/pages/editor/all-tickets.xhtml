@@ -31,7 +31,7 @@
     </style>
 
     #{ticketEditorBean.fetchAllTickets()}
-
+    
     <h:outputText value="Suche:" />
     <p:inputText value="#{ticketEditorBean.searchString}">
         <p:ajax event="keyup" delay="100" update="searchResult"
