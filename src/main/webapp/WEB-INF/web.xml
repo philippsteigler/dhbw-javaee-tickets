@@ -102,8 +102,8 @@
         <auth-method>FORM</auth-method>
         <realm-name>ticketsDomain</realm-name>
         <form-login-config>
-            <form-login-page>/login.xhtml</form-login-page>
-            <form-error-page>/login.xhtml</form-error-page>
+            <form-login-page>/pages/login.xhtml</form-login-page>
+            <form-error-page>/pages/login.xhtml</form-error-page>
         </form-login-config>
     </login-config>
 </web-app>
