@@ -124,11 +124,11 @@ public class UserBean extends AbstractBean {
     }
 
     public String getUserName(long id) {
-        if (id == 0) {
-            return "None";
-        } else {
-            return userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getName();
-        }
+        List<User> findUser = userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList());
+        if (!findUser.isEmpty()) {
+            return findUser.get(0).getName();
+        } else return "None";
+
     }
 
     public String getUserCompany(long id) {
