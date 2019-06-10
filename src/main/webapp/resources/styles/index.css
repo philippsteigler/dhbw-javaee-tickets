@@ -1,0 +1,8 @@
+#form {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.ui-panelgrid tr, .ui-panelgrid td {
+    border:none !important;
+}
