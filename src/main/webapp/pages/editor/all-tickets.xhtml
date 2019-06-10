@@ -19,12 +19,12 @@
             #{ticketEditorBean.fetchAllTickets()}
 
             <p:panel id="searchPanel" >
-                <p:panelGrid id="searchPanelGrid" columns="2">
-                    <h:outputLabel id="searchLabel" value="Suche:" />
+                <p:panelGrid id="searchPanelGrid" columns="1">
                     <p:inputText id="searchInput" value="#{ticketEditorBean.searchString}">
                         <p:ajax event="keyup" delay="100" update="searchResult"
                                 listener="#{ticketEditorBean.fetchAllTickets()}" />
                     </p:inputText>
+                    <p:watermark for="searchInput" value="Nach Tickets suchen..." id="watermark" />
                 </p:panelGrid>
             </p:panel>
 
