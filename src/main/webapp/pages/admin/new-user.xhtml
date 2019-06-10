@@ -12,30 +12,44 @@
 <ui:define name="header">#{msgs['customer.create.header']}</ui:define>
 <ui:define name="content">
 <h:form id="form">
-        <h4>#{msgs['label.name']}</h4>
-        <p:inputText value=""/>
 
-        <h4>#{msgs['label.email']}</h4>
-        <p:inputText value=""/>
+    #{userBean.fetchAllRoles()}
 
-        <h4>#{msgs['label.role']}</h4>
-        <p:selectOneMenu id="role" value="" style="width:125px">
-            <f:selectItem itemLabel="Customer" itemValue="Customer" />
-            <f:selectItem itemLabel="Editor" itemValue="Editor" />
-            <f:selectItem itemLabel="Admin" itemValue="Admin" />
-        </p:selectOneMenu>
+        <h:panelGrid id="grid" columns="3" cellpadding="5">
+            <h:outputLabel for="name" value="#{msgs['label.name']}: " style="font-weight:bold"/>
+            <p:inputText id="name" value="#{userBean.name}" required="true"/>
+            <p:message for="name" />
 
-        <h4>#{msgs['label.company']}</h4>
-        <p:selectOneMenu id="city" value="" effect="fold" editable="true">
-            <f:selectItem itemLabel="Deutsche Bundesbank" itemValue="Deutsche Bundesbank" />
-            <f:selectItem itemLabel="IBM" itemValue="IBM" />
-        </p:selectOneMenu>
+            <h:outputLabel for="login_id" value="#{msgs['label.login_id']}: " style="font-weight:bold"/>
+            <p:inputText id="login_id" value="#{userBean.login_id}" required="true"/>
+            <p:message for="login_id" />
 
-        <h4>#{msgs['label.password']}</h4>
-        <p:password id="feedback" value="" feedback="true" />
+            <h:outputLabel for="email" value="#{msgs['label.email']}: " style="font-weight:bold"/>
+            <p:inputText id="email" value="#{userBean.email}" required="true"/>
+            <p:message for="email" />
 
+            <h:outputLabel for="role" value="#{msgs['label.role']}: " style="font-weight:bold"/>
+            <h:selectOneMenu id="role" value="#{userBean.role}" style="width:125px">
+                <f:selectItem itemLabel="Customer" itemValue="customer" />
+                <f:selectItem itemLabel="Editor" itemValue="editor"/>
+                <f:selectItem itemLabel="Admin" itemValue="admin" />
+            </h:selectOneMenu>
+            <p:message for="role" />
+
+            <h:outputLabel for="company" value="#{msgs['label.company']}: " style="font-weight:bold"/>
+            <p:selectOneMenu id="company" value="#{userBean.companyName}" effect="fold" editable="true" required="true">
+                <f:selectItem itemLabel="Deutsche Bundesbank" itemValue="Deutsche Bundesbank" />
+                <f:selectItem itemLabel="IBM" itemValue="IBM" />
+            </p:selectOneMenu>
+            <p:message for="company" />
+
+            <h:outputLabel for="password" value="#{msgs['label.password']}: " style="font-weight:bold"/>
+            <p:password id="password" value="#{userBean.password}" feedback="true" required="true"/>
+            <p:message for="password" />
+
+        </h:panelGrid>
         <br></br>
-        <h:commandButton value="Benutzer anlegen" />
+        <h:commandButton value="Benutzer anlegen" action="#{userBean.newUser(userBean.login_id, userBean.name, userBean.companyName, userBean.email, userBean.password,  userBean.role)}" style="margin-right:10px"/>
 </h:form>
 </ui:define>
 </ui:composition>
