@@ -76,7 +76,6 @@ public class DemoDataProvider {
 		em.persist(editorRole);
 		em.persist(customerRole);
 
-		createUser("root", "Root", "Ticket Master", "root@ticket.master", "toor", adminRole, editorRole, customerRole);
 		createUser("admin", "The Admin", "Ticket Master", "admin@ticket.master", "admin", adminRole);
 		createUser("editor1", "Rolf Meyer", "Ticket Master", "rolf@ticket.master", "mosbach", editorRole);
 		createUser("editor2", "Alex Löwen", "Ticket Master", "alex@ticket.master", "mosbach", editorRole);
@@ -86,6 +85,7 @@ public class DemoDataProvider {
 		createUser("customer2", "Jens Hadarmad", "Deutsche Bundesbank", "jend@bundesbank.de", "mosbach", customerRole);
 		createUser("customer3", "Benno Gut", "Deutsche Bundesbank", "benno@bundesbank.de", "mosbach", customerRole);
 		createUser("customer4", "Vanessa Richter", "IBM", "vanessa@ibm.com", "mosbach", customerRole);
+		createUser("root", "Root", "Ticket Master", "root@ticket.master", "toor", adminRole, editorRole, customerRole);
 	}
 
 	private User createUser(String login, String userName, String companyName, String email, String password, Role... userRoles) {
@@ -101,6 +101,7 @@ public class DemoDataProvider {
 		List<User> editors = userDAOProxy.getAll().stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("editor"))).collect(Collectors.toList());
 		List<User> customers = userDAOProxy.getAll().stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("customer"))).collect(Collectors.toList());
 		Random randomIndex = new Random();
+		long editorId;
 
 		// Freie Tickets
 		createTicket("The Grinch hated Christmas",
@@ -154,20 +155,24 @@ public class DemoDataProvider {
 		);
 
 		// Tickets in Bearbeitung
-		createTicket("Windows is broken 1",
+		editorId = editors.get(randomIndex.nextInt(editors.size())).getId();
+		createTicket("Windows startet nicht!",
 				Ticket.Status.inProcess,
-				"I am a nobody, nobody is perfect, therefore I am perfect.",
-				editors.get(randomIndex.nextInt(editors.size())).getId(),
+				"Leider startet mein Windows-PC nicht mehr. Bitte helfen Sie mir!",
+				editorId,
 				customers.get(randomIndex.nextInt(customers.size())).getId(),
-				new Date()
+				new Date(),
+				new Entry(editorId, "Haben Sie den PC schon einmal aus und wieder an geschaltet?", new Date())
 		);
 
-		createTicket("Windows is broken 2",
+		editorId = editors.get(randomIndex.nextInt(editors.size())).getId();
+		createTicket("Ich habe aus versehen system32 gelöscht, was kann ich da tun?",
 				Ticket.Status.inProcess,
-				"I wondered why the frisbee was getting bigger, and then it hit me.",
-				editors.get(randomIndex.nextInt(editors.size())).getId(),
+				"Bitte um schnellstmögliche Hilfe. Frage in Betreff.",
+				editorId,
 				customers.get(randomIndex.nextInt(customers.size())).getId(),
-				new Date()
+				new Date(),
+				new Entry(editorId, "Haben Sie den PC schon einmal aus und wieder an geschaltet?", new Date())
 		);
 
 		createTicket("Windows is broken 3",
@@ -218,14 +223,22 @@ public class DemoDataProvider {
 				customers.get(randomIndex.nextInt(customers.size())).getId(),
 				new Date()
 		);
+
 	}
 
-	private Ticket createTicket(String subject, Ticket.Status status, String content, long editorId, long customerId, Date createDate){
+	private Ticket createTicket(String subject, Ticket.Status status, String content, long editorId, long customerId, Date createDate, Entry... additionalEntry){
 		final Ticket ticket = new Ticket(subject, status, content, editorId, customerId);
 		final Entry entry = new Entry(customerId, content, createDate);
+
 		ticket.addEntry(entry);
+		if (additionalEntry.length > 0){
+			ticket.addEntry(additionalEntry[0]);
+		}
 		ticketDAO.persist(ticket);
 		entryDAO.persist(entry);
+		if (additionalEntry.length > 0){
+			entryDAO.persist(additionalEntry);
+		}
 		return ticket;
 	}
 
