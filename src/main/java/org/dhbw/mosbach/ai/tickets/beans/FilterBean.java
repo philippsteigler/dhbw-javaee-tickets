@@ -13,11 +13,11 @@ public class FilterBean extends AbstractBean {
 
     private String selectedOption = "";
 
-    public String getSelectedOption() {
+    public String getSelectedOptionForAllTickets() {
         return selectedOption;
     }
 
-    public void setSelectedOption(String selectedOption) {
+    public void setSelectedOptionForAllTickets(String selectedOption) {
         if (selectedOption.equals("all")) {
             this.selectedOption = "";
         } else {
