@@ -29,7 +29,7 @@
             </p:panel>
 
             <p:panel id="resultPanel" >
-                <p:dataScroller id="searchResult" value="#{userBean.searchResult}" var="user" chunkSize="10" rendered="#{not empty userBean.searchResult}">
+                <p:dataScroller id="searchResult" value="#{userBean.searchResult}" var="user" chunkSize="10">
                     <f:facet name="header">Benutzer</f:facet>
 
                     <h:panelGrid columns="3" style="width:100%" columnClasses="button,detail,detail">
