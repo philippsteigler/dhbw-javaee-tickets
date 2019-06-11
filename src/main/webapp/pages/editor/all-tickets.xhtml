@@ -19,23 +19,24 @@
             #{ticketEditorBean.fetchAllTickets()}
 
             <p:panel id="searchPanel" >
-                <p:panelGrid id="searchPanelGrid" columns="1">
+                <p:panelGrid id="searchPanelGrid" columns="2">
                     <p:inputText id="searchInput" value="#{ticketEditorBean.searchString}">
                         <p:ajax event="keyup" delay="100" update="searchResult"
                                 listener="#{ticketEditorBean.fetchAllTickets()}" />
                     </p:inputText>
                     <p:watermark for="searchInput" value="Nach Tickets suchen..." id="watermark" />
                 </p:panelGrid>
+                <p:panel id="statusPanel">
+                    <p:panelGrid columns="2">
+                        <p:selectOneButton value="#{filterBean.selectedOption}">
+                            <f:selectItem itemLabel="Open" itemValue="open" />
+                            <f:selectItem itemLabel="In Process" itemValue="inProcess" />
+                            <f:selectItem itemLabel="Closed" itemValue="closed" />
+                        </p:selectOneButton>
+                        <p:commandButton value="Sortieren" update="searchResult" />
+                    </p:panelGrid>
+                </p:panel>
             </p:panel>
-
-        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-            <p:selectManyButton value="#{filterBean.selectedOptions}">
-                <f:selectItem itemLabel="Open" itemValue="open" />
-                <f:selectItem itemLabel="In Process" itemValue="inProcess" />
-                <f:selectItem itemLabel="Closed" itemValue="closed" />
-            </p:selectManyButton>
-            <p:commandButton value="Sortieren" update="searchResult" />
-        </h:panelGrid>
 
             <p:panel id="resultPanel" >
                 <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10" rendered="#{not empty ticketEditorBean.searchResult}">

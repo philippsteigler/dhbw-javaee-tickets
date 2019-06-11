@@ -16,14 +16,14 @@ public class FilterBean extends AbstractBean {
     @Inject
     TicketEditorBean ticketEditorBean;
 
-    private List<String> selectedOptions = new ArrayList<>();
+    private String selectedOption = "";
 
-    public List<String> getSelectedOptions() {
-        return selectedOptions;
+    public String getSelectedOption() {
+        return selectedOption;
     }
 
-    public void setSelectedOptions(List<String> selectedOptions) {
-        this.selectedOptions = selectedOptions;
+    public void setSelectedOption(String selectedOption) {
+        this.selectedOption = selectedOption;
         ticketEditorBean.fetchAllTickets();
     }
 
