@@ -17,6 +17,10 @@
     padding-left: 25px;
 }
 
+.buttons {
+    margin-top: 20px;
+}
+
 #ticketDetailsPanelGridButtons {
     margin-bottom: 10px;
 }

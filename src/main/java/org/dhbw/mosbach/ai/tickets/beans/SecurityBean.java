@@ -29,7 +29,7 @@ public class SecurityBean {
     private HttpServletRequest request;
     private User loggedInUser;
 
-    final static String HOME = "home";
+    private final static String VIEW_LOGIN_SUCCESS = "/pages/loginsuccess.xhtml?faces-redirect=true";
 
     private HttpServletRequest getRequest() {
         if (request != null) {
@@ -73,7 +73,7 @@ public class SecurityBean {
 
     public String login() {
         loggedInUser = null;
-        return "/pages/loginsuccess.xhtml?faces-redirect=true";
+        return VIEW_LOGIN_SUCCESS;
     }
 
     public String logout() {
@@ -87,6 +87,6 @@ public class SecurityBean {
             logger.warn("Exception during logout", e);
         }
 
-        return HOME;
+        return VIEW_LOGIN_SUCCESS;
     }
 }

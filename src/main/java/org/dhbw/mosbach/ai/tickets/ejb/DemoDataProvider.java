@@ -82,7 +82,7 @@ public class DemoDataProvider {
 		createUser("editor3", "Mike Pfeffer", "Ticket Master", "mike@ticket.master", "mosbach", editorRole);
 		createUser("editor4", "Fritz Birnbaum", "Ticket Master", "fritz@ticket.master", "mosbach", editorRole);
 		createUser("customer1", "Edwin Kopf", "IBM", "edwin@ibm.com", "mosbach", customerRole);
-		createUser("customer2", "Jens Hadarmad", "Deutsche Bundesbank", "jend@bundesbank.de", "mosbach", customerRole);
+		createUser("customer2", "Jens Hadarmad", "Deutsche Bundesbank", "jens@bundesbank.de", "mosbach", customerRole);
 		createUser("customer3", "Benno Gut", "Deutsche Bundesbank", "benno@bundesbank.de", "mosbach", customerRole);
 		createUser("customer4", "Vanessa Richter", "IBM", "vanessa@ibm.com", "mosbach", customerRole);
 		createUser("root", "Root", "Ticket Master", "root@ticket.master", "toor", adminRole, editorRole, customerRole);
