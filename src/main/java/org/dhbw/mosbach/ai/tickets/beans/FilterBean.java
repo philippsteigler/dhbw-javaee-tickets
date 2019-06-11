@@ -8,9 +8,6 @@ import javax.inject.Named;
 @SessionScoped
 public class FilterBean extends AbstractBean {
 
-    @Inject
-    TicketEditorBean ticketEditorBean;
-
     private String selectedOption = "";
 
     public String getSelectedOptionForAllTickets() {
@@ -23,7 +20,5 @@ public class FilterBean extends AbstractBean {
         } else {
             this.selectedOption = selectedOption;
         }
-        ticketEditorBean.fetchAllTickets();
     }
-
 }

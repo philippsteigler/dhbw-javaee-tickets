@@ -33,14 +33,14 @@
                             <f:selectItem itemLabel="Open" itemValue="open" />
                             <f:selectItem itemLabel="In Process" itemValue="inProcess" />
                             <f:selectItem itemLabel="Closed" itemValue="closed" />
-                            <p:ajax update="searchResult" listener="#{ticketEditorBean.fetchAllTickets}" />
+                            <p:ajax update="searchResult" listener="#{ticketEditorBean.fetchAllTickets()}" />
                         </p:selectOneButton>
                     </p:panelGrid>
                 </p:panel>
             </p:panel>
 
             <p:panel id="resultPanel" >
-                <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10" rendered="#{not empty ticketEditorBean.searchResult}">
+                <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10" >
                     <f:facet name="header">Tickets</f:facet>
 
                     <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
