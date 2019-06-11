@@ -4,6 +4,7 @@ import org.dhbw.mosbach.ai.tickets.model.Ticket;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.List;
 @Named
 @SessionScoped
 public class FilterBean extends AbstractBean {
+
+    @Inject
+    TicketEditorBean ticketEditorBean;
 
     private List<String> selectedOptions = new ArrayList<>();
 
@@ -20,5 +24,7 @@ public class FilterBean extends AbstractBean {
 
     public void setSelectedOptions(List<String> selectedOptions) {
         this.selectedOptions = selectedOptions;
+        ticketEditorBean.fetchAllTickets();
     }
+
 }
