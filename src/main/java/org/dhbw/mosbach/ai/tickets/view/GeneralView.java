@@ -45,9 +45,17 @@ public class GeneralView implements Serializable {
         return dateFormat.format(date);
     }
 
+    // Für die Präsentation wird auf Deutsch gerendert
+    public String statusToString(String status) {
+        switch (status) {
+            case "open": return "Offen";
+            case "closed": return "Geschlossen";
+            case "inProcess": return "In Bearbeitung";
+            default: return "";
+        }
+    }
+
     //Getter and Setter
-
-
     public String getName() {
         return name;
     }

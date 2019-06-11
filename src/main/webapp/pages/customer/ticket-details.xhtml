@@ -32,7 +32,7 @@
             <h:outputText value="#{userBean.getUserName(ticketCustomerBean.currentTicket.editorId)}" />
 
             <h:outputLabel value="#{msgs['label.status']}:"/>
-            <h:outputText value="#{ticketCustomerBean.currentTicket.status}"/>
+            <h:outputText value="#{generalView.statusToString(ticketCustomerBean.currentTicket.status)}"/>
 
             <h:outputLabel value="#{msgs['label.customer']}:"/>
             <h:outputText value="#{userBean.getUserName(ticketCustomerBean.currentTicket.customerId)}"/>
@@ -42,7 +42,7 @@
 
         </h:panelGrid>
 
-        <h:panelGrid id="ticketDetailsPanelGridButtons" columns="1" class="">
+        <h:panelGrid id="ticketDetailsPanelGridButtons" columns="1" class="buttons">
             <h:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" rendered="#{customerView.renderButton()}"/>
         </h:panelGrid>
 

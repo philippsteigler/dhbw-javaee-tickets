@@ -45,7 +45,7 @@
                 <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.editorId)}" />
 
                 <h:outputLabel value="#{msgs['label.status']}:"/>
-                <h:outputText value="#{ticketEditorBean.currentTicket.status}"/>
+                <h:outputText value="#{generalView.statusToString(ticketEditorBean.currentTicket.status)}"/>
 
                 <h:outputLabel value="#{msgs['label.customer']}:"/>
                 <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.customerId)}"/>

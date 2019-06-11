@@ -11,15 +11,13 @@
     <ui:define name="title">#{msgs['admin.user.title']}</ui:define>
     <ui:define name="header">#{msgs['admin.details.title']}</ui:define>
     <ui:define name="content">
+        <h:form id="form">
 
-        <f:facet name="last">
-            <h:outputStylesheet name="myProfile.css" library="styles" />
-        </f:facet>
+            <f:facet name="last">
+                <h:outputStylesheet name="myProfile.css" library="styles" />
+            </f:facet>
 
-        <p:panel id="userDetails" header="#{msgs['admin.details.data']}" styleClass="panelGridCenterAndTop">
-
-            <h:form id="form">
-
+            <p:panel id="userDetails" header="#{msgs['admin.details.data']}" styleClass="panelGridCenterAndTop">
 
                 #{generalView.getUserToDisplay()}
 
@@ -38,7 +36,7 @@
 
                     <h:outputLabel value="#{msgs['label.role']}: " style="font-weight: bold"/>
                     <p:outputPanel>
-                        <h:dataTable value="#{userBean.currentUser.roles}" var="role"><f:facet name="Role">Status</f:facet>
+                        <h:dataTable value="#{generalView.roles}" var="role"><f:facet name="Role">Status</f:facet>
                             <h:column>
                                 #{role.name}
                             </h:column>
@@ -57,8 +55,8 @@
                         <p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no"/>
                     </p:confirmDialog>
                 </h:panelGrid>
-            </h:form>
-        </p:panel>
+            </p:panel>
+        </h:form>
     </ui:define>
 </ui:composition>
 </html>
