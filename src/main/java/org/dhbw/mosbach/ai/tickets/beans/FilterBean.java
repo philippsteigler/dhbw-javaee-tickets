@@ -23,7 +23,11 @@ public class FilterBean extends AbstractBean {
     }
 
     public void setSelectedOption(String selectedOption) {
-        this.selectedOption = selectedOption;
+        if (selectedOption.equals("all")) {
+            this.selectedOption = "";
+        } else {
+            this.selectedOption = selectedOption;
+        }
         ticketEditorBean.fetchAllTickets();
     }
 
