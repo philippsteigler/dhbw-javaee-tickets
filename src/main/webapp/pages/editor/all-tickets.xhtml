@@ -29,10 +29,9 @@
                 <p:panel id="statusPanel">
                     <p:panelGrid columns="2">
                         <p:selectOneButton value="#{filterBean.selectedOptionForAllTickets}" >
-                            <f:selectItem itemLabel="All" itemValue="all" />
-                            <f:selectItem itemLabel="Open" itemValue="open" />
-                            <f:selectItem itemLabel="In Process" itemValue="inProcess" />
-                            <f:selectItem itemLabel="Closed" itemValue="closed" />
+                            <f:selectItem itemLabel="Offen" itemValue="open" />
+                            <f:selectItem itemLabel="In Bearbeitung" itemValue="inProcess" />
+                            <f:selectItem itemLabel="Geschlossen" itemValue="closed" />
                             <p:ajax update="searchResult" listener="#{ticketEditorBean.fetchAllTickets()}" />
                         </p:selectOneButton>
                     </p:panelGrid>

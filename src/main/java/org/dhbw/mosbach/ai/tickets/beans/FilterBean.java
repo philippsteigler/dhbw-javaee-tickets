@@ -2,6 +2,7 @@ package org.dhbw.mosbach.ai.tickets.beans;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import java.util.Objects;
 
 @Named
 @SessionScoped
@@ -14,10 +15,6 @@ public class FilterBean extends AbstractBean {
     }
 
     public void setSelectedOptionForAllTickets(String selectedOption) {
-        if (selectedOption == null || selectedOption.equals("all")) {
-            this.selectedOption = "";
-        } else {
-            this.selectedOption = selectedOption;
-        }
+        this.selectedOption = Objects.requireNonNullElse(selectedOption, "");
     }
 }
