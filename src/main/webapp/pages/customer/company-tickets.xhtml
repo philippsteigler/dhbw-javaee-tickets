@@ -19,17 +19,27 @@
             #{ticketCustomerBean.fetchAllTickets()}
 
             <p:panel id="searchPanel" >
-                <p:panelGrid id="searchPanelGrid" columns="1">
-                    <p:inputText id="searchInput" value="#{ticketCustomerBean.searchString}">
-                        <p:ajax event="keyup" delay="100" update="searchResult"
-                                listener="#{ticketCustomerBean.fetchAllTickets()}" />
-                    </p:inputText>
-                    <p:watermark for="searchInput" value="Nach Tickets suchen..." id="watermark" />
+                <p:panelGrid id="searchPanelGrid" columns="2">
+                    <p:column>
+                        <p:selectOneButton value="#{filterBean.selectedOptionForAllTickets}" >
+                            <f:selectItem itemLabel="Offen" itemValue="open" />
+                            <f:selectItem itemLabel="In Bearbeitung" itemValue="inProcess" />
+                            <f:selectItem itemLabel="Geschlossen" itemValue="closed" />
+                            <p:ajax update="searchResult" listener="#{ticketCustomerBean.fetchAllTickets()}" />
+                        </p:selectOneButton>
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="searchInput" value="#{ticketCustomerBean.searchString}">
+                            <p:ajax event="keyup" delay="100" update="searchResult"
+                                    listener="#{ticketCustomerBean.fetchAllTickets()}" />
+                        </p:inputText>
+                        <p:watermark for="searchInput" value="Nach Tickets suchen..." id="watermark" />
+                    </p:column>
                 </p:panelGrid>
             </p:panel>
 
             <p:panel id="resultPanel" >
-                <p:dataScroller id="searchResult" value="#{ticketCustomerBean.searchResult}" var="ticket" chunkSize="10" rendered="#{not empty ticketCustomerBean.searchResult}">
+                <p:dataScroller id="searchResult" value="#{ticketCustomerBean.searchResult}" var="ticket" chunkSize="10" >
                     <f:facet name="header">Tickets</f:facet>
 
                     <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">

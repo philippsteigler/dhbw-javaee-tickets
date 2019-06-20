@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 @SessionScoped
@@ -26,6 +27,9 @@ public class TicketCustomerBean extends AbstractBean {
 
     @Inject
     private SecurityBean securityBean;
+
+    @Inject
+    private FilterBean filterBean;
 
     private static final String VIEW_DETAILS = "customer-ticket-details";
 
@@ -79,18 +83,42 @@ public class TicketCustomerBean extends AbstractBean {
     }
 
     public void fetchMyTickets() {
-        if (searchString.isEmpty()) {
+        if (searchString.isEmpty() && filterBean.getSelectedOptionForAllTickets().isEmpty()) {
             searchResult = ImmutableList.copyOf(ticketDAO.getAllTicketsForCustomerID(securityBean.getUser().getId()));
         } else {
-            searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForCustomerID(searchString, securityBean.getUser().getId()));
+            if (filterBean.getSelectedOptionForAllTickets().isEmpty()) {
+                searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForCustomerID(searchString, securityBean.getUser().getId()));
+            } else {
+                if (searchString.isEmpty()) {
+                    searchResult = ImmutableList.copyOf(ticketDAO.getAllTicketsForCustomerID(securityBean.getUser().getId())).stream().filter(
+                            ticket -> filterBean.getSelectedOptionForAllTickets().equals(ticket.getStatus().toString())
+                    ).collect(Collectors.toList());
+                } else {
+                    searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForCustomerID(searchString, securityBean.getUser().getId())).stream().filter(
+                            ticket -> filterBean.getSelectedOptionForAllTickets().equals(ticket.getStatus().toString())
+                    ).collect(Collectors.toList());
+                }
+            }
         }
     }
 
     public void fetchAllTickets() {
-        if (searchString.isEmpty()) {
+        if (searchString.isEmpty() && filterBean.getSelectedOptionForAllTickets().isEmpty()) {
             searchResult = ImmutableList.copyOf(ticketDAO.getAllTicketsForCompany(securityBean.getUser().getCompany()));
         } else {
-            searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForCompany(searchString, securityBean.getUser().getCompany()));
+            if (filterBean.getSelectedOptionForAllTickets().isEmpty()) {
+                searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForCompany(searchString, securityBean.getUser().getCompany()));
+            } else {
+                if (searchString.isEmpty()) {
+                    searchResult = ImmutableList.copyOf(ticketDAO.getAllTicketsForCompany(securityBean.getUser().getCompany())).stream().filter(
+                            ticket -> filterBean.getSelectedOptionForAllTickets().equals(ticket.getStatus().toString())
+                    ).collect(Collectors.toList());
+                } else {
+                    searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForCompany(searchString, securityBean.getUser().getCompany())).stream().filter(
+                            ticket -> filterBean.getSelectedOptionForAllTickets().equals(ticket.getStatus().toString())
+                    ).collect(Collectors.toList());
+                }
+            }
         }
     }
 

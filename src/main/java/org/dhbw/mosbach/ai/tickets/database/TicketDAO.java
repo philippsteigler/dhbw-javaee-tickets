@@ -18,7 +18,7 @@ public class TicketDAO extends BaseDAO<Ticket, Long>{
     }
 
     public List<Ticket> getTicketsContainingSubject(String substring) {
-        if ((substring != null) && (substring.length() >= 2)) {
+        if ((substring != null) && (substring.length() >= 1)) {
             final String query = String.format("FROM %s t WHERE UPPER(t.subject) LIKE :subject", Ticket.class.getName());
 
             return em.createQuery(query, Ticket.class)
@@ -42,7 +42,7 @@ public class TicketDAO extends BaseDAO<Ticket, Long>{
     }
 
     public List<Ticket> getTicketsContainingSubjectForEditorID(String substring, long id) {
-        if ((substring != null) && (substring.length() >= 2) && (id >= 0)) {
+        if ((substring != null) && (substring.length() >= 1) && (id >= 0)) {
             final String query = String.format("FROM %s t WHERE UPPER(t.subject) LIKE :subject AND t.editorId = :editorId", Ticket.class.getName());
 
             return em.createQuery(query, Ticket.class)
@@ -67,7 +67,7 @@ public class TicketDAO extends BaseDAO<Ticket, Long>{
     }
 
     public List<Ticket> getTicketsContainingSubjectForCustomerID(String substring, long id) {
-        if ((substring != null) && (substring.length() >= 2) && (id >= 0)) {
+        if ((substring != null) && (substring.length() >= 1) && (id >= 0)) {
             final String query = String.format("FROM %s t WHERE UPPER(t.subject) LIKE :subject AND t.customerId = :customerId", Ticket.class.getName());
 
             return em.createQuery(query, Ticket.class)
@@ -92,7 +92,7 @@ public class TicketDAO extends BaseDAO<Ticket, Long>{
     }
 
     public List<Ticket> getTicketsContainingSubjectForCompany(String substring, String company) {
-        if ((substring != null) && (substring.length() >= 2) && (company != null)) {
+        if ((substring != null) && (substring.length() >= 1) && (company != null)) {
             final String query = String.format("FROM %s t WHERE UPPER(t.subject) LIKE :subject AND t.customerId IN (SELECT u.id FROM %s u WHERE u.company LIKE :company)", Ticket.class.getName(), User.class.getName());
 
             return em.createQuery(query, Ticket.class)

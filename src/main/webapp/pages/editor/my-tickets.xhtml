@@ -20,16 +20,18 @@
 
             <p:panel id="searchPanel" >
                 <p:panelGrid id="searchPanelGrid" columns="1">
-                    <p:inputText id="searchInput" value="#{ticketEditorBean.searchString}">
-                        <p:ajax event="keyup" delay="100" update="searchResult"
-                                listener="#{ticketEditorBean.fetchMyTickets()}" />
-                    </p:inputText>
-                    <p:watermark for="searchInput" value="Nach Tickets suchen..." id="watermark" />
+                    <p:column>
+                        <p:inputText id="searchInput" value="#{ticketEditorBean.searchString}">
+                            <p:ajax event="keyup" delay="100" update="searchResult"
+                                    listener="#{ticketEditorBean.fetchMyTickets()}" />
+                        </p:inputText>
+                        <p:watermark for="searchInput" value="Nach Tickets suchen..." id="watermark" />
+                    </p:column>
                 </p:panelGrid>
             </p:panel>
 
             <p:panel id="resultPanel" >
-                <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10" rendered="#{not empty ticketEditorBean.searchResult}">
+                <p:dataScroller id="searchResult" value="#{ticketEditorBean.searchResult}" var="ticket" chunkSize="10" >
                     <f:facet name="header">Tickets</f:facet>
 
                     <h:panelGrid columns="3" style="width:100%" columnClasses="logo,logo,detail">
