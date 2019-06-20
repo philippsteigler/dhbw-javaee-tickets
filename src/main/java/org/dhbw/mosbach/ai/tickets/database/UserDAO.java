@@ -78,4 +78,12 @@ public class UserDAO extends BaseDAO<User, Long> {
 
         return em.createQuery(query, String.class).getResultList();
     }
+
+    public List<String> getLoginIds() {
+
+        final String query = String.format("SELECT u.login_id FROM %s u", User.class.getName());
+
+        return em.createQuery(query, String.class).getResultList();
+    }
+
 }

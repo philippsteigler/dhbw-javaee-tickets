@@ -1,10 +1,6 @@
 package org.dhbw.mosbach.ai.tickets.view;
 
-import org.dhbw.mosbach.ai.tickets.beans.SecurityBean;
-import org.dhbw.mosbach.ai.tickets.beans.TicketCustomerBean;
-
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
@@ -12,15 +8,9 @@ import java.io.Serializable;
 @SessionScoped
 public class AdminView implements Serializable {
 
-    @Inject
-    private SecurityBean securityBean;
-
-    @Inject
-    private TicketCustomerBean ticketCustomerBean;
-
     private String login_id;
     private String name;
-    private String companyName;
+    private String companyName = "";
     private String email;
     private String password;
     private String role = "customer";
@@ -33,7 +23,11 @@ public class AdminView implements Serializable {
             setCompanyName("Ticket Master");
             return true;
         } else {
-            setCompanyName("");
+
+            if (companyName.equals("Ticket Master")) {
+                setCompanyName("");
+            }
+
             return false;
         }
     }
