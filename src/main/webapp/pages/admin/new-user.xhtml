@@ -26,30 +26,31 @@
 
                 <p:panelGrid id="newUserPanelGridInput" columns="1">
                     <h:outputLabel for="name" value="#{msgs['label.name']}" style="font-weight:bold"/>
-                    <p:inputText id="name" value="#{userBean.name}" required="true" requiredMessage="Name darf nicht leer sein!"/>
+                    <p:inputText id="name" value="#{adminView.name}" required="true" requiredMessage="Name darf nicht leer sein!"/>
 
                     <h:outputLabel for="login_id" value="#{msgs['label.login_id']}" style="font-weight:bold"/>
-                    <p:inputText id="login_id" value="#{userBean.login_id}" required="true" requiredMessage="Login-ID darf nicht leer sein!"/>
+                    <p:inputText id="login_id" value="#{adminView.login_id}" required="true" requiredMessage="Login-ID darf nicht leer sein!"/>
 
                     <h:outputLabel for="email" value="#{msgs['label.email']}" style="font-weight:bold"/>
-                    <p:inputText id="email" value="#{userBean.email}" required="true" requiredMessage="E-Mail-Adresse darf nicht leer sein!"/>
+                    <p:inputText id="email" value="#{adminView.email}" required="true" requiredMessage="E-Mail-Adresse darf nicht leer sein!"/>
 
                     <h:outputLabel for="role" value="#{msgs['label.role']}" style="font-weight:bold"/>
-                    <h:selectOneMenu id="role" value="#{userBean.role}" style="width:125px" required="true" requiredMessage="Rolle darf nicht leer sein!">
+                    <p:selectOneMenu id="role" value="#{adminView.role}" style="width:125px" required="true" requiredMessage="Rolle darf nicht leer sein!">
                         <f:selectItem itemLabel="Customer" itemValue="customer" />
                         <f:selectItem itemLabel="Editor" itemValue="editor"/>
                         <f:selectItem itemLabel="Admin" itemValue="admin" />
-                    </h:selectOneMenu>
+                        <p:ajax update="company"/>
+                    </p:selectOneMenu>
 
-                    <h:outputLabel for="company" value="#{msgs['label.company']}" style="font-weight:bold"/>
-                    <p:selectOneMenu id="company" value="#{userBean.companyName}" effect="fold" editable="true" required="true" requiredMessage="Unternehmen darf nicht leer sein!">
+                    <h:outputLabel for="company" value="#{msgs['label.company']}" style="font-weight:bold" />
+                    <p:selectOneMenu id="company" value="#{adminView.companyName}" effect="fold" editable="true" required="true" disabled="#{adminView.disableCompanySelection(adminView.role)}" requiredMessage="Unternehmen darf nicht leer sein!">
                         <f:selectItems value="#{userBean.companies}"/>
                     </p:selectOneMenu>
 
                     <h:outputLabel for="password" value="#{msgs['label.password']}" style="font-weight:bold"/>
-                    <p:password id="password" value="#{userBean.password}" feedback="true" required="true" requiredMessage="Passwort darf nicht leer sein!"/>
+                    <p:password id="password" value="#{adminView.password}" feedback="true" required="true" requiredMessage="Passwort darf nicht leer sein!"/>
 
-                    <h:commandButton value="Benutzer anlegen" action="#{userBean.newUser(userBean.login_id, userBean.name, userBean.companyName, userBean.email, userBean.password,  userBean.role)}" />
+                    <h:commandButton value="Benutzer anlegen" action="#{userBean.newUser(adminView.login_id, adminView.name, adminView.companyName, adminView.email, adminView.password,  adminView.role)}" />
                 </p:panelGrid>
             </p:panel>
         </h:form>
