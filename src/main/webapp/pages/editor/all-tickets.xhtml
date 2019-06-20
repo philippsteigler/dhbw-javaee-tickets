@@ -20,22 +20,22 @@
 
             <p:panel id="searchPanel" >
                 <p:panelGrid id="searchPanelGrid" columns="2">
-                    <p:inputText id="searchInput" value="#{ticketEditorBean.searchString}">
-                        <p:ajax event="keyup" delay="100" update="searchResult"
-                                listener="#{ticketEditorBean.fetchAllTickets()}" />
-                    </p:inputText>
-                    <p:watermark for="searchInput" value="Nach Tickets suchen..." id="watermark" />
-                </p:panelGrid>
-                <p:panel id="statusPanel">
-                    <p:panelGrid columns="2">
+                    <p:column>
                         <p:selectOneButton value="#{filterBean.selectedOptionForAllTickets}" >
                             <f:selectItem itemLabel="Offen" itemValue="open" />
                             <f:selectItem itemLabel="In Bearbeitung" itemValue="inProcess" />
                             <f:selectItem itemLabel="Geschlossen" itemValue="closed" />
                             <p:ajax update="searchResult" listener="#{ticketEditorBean.fetchAllTickets()}" />
                         </p:selectOneButton>
-                    </p:panelGrid>
-                </p:panel>
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="searchInput" value="#{ticketEditorBean.searchString}">
+                            <p:ajax event="keyup" delay="100" update="searchResult"
+                                    listener="#{ticketEditorBean.fetchAllTickets()}" />
+                        </p:inputText>
+                        <p:watermark for="searchInput" value="Nach Tickets suchen..." id="watermark" />
+                    </p:column>
+                </p:panelGrid>
             </p:panel>
 
             <p:panel id="resultPanel" >

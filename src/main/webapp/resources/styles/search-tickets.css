@@ -7,37 +7,25 @@
     border:none !important;
 }
 
-#searchPanelGrid {
-    float: right;
-    margin: auto;
-    width: 100%;
-    max-width: 500px;
-}
-
-#searchLabel {
-    float: right;
-}
-
-#resultPanel {
-    border:none !important;
-    padding-left: 12px;
-    padding-right: 12px;
-    clear: right;
-}
-
 #searchPanel {
     border:none !important;
 }
 
-#searchInput {
+#searchPanelGrid {
     margin-top: 10px;
     width: 100%;
 }
 
-#statusPanel {
-    padding-right: 30px;
-    border: none;
- }
+#searchInput {
+    float: right;
+    margin: auto;
+    width: 100%;
+    max-width: 400px;
+}
+
+#resultPanel {
+    border:none !important;
+}
 
 .ui-datascroller .ui-datascroller-item {
     border-bottom: 1px solid #A8A8A8;

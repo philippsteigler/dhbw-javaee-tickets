@@ -20,11 +20,13 @@
 
             <p:panel id="searchPanel" >
                 <p:panelGrid id="searchPanelGrid" columns="1">
-                    <p:inputText id="searchInput" value="#{ticketEditorBean.searchString}">
-                        <p:ajax event="keyup" delay="100" update="searchResult"
-                                listener="#{ticketEditorBean.fetchMyTickets()}" />
-                    </p:inputText>
-                    <p:watermark for="searchInput" value="Nach Tickets suchen..." id="watermark" />
+                    <p:column>
+                        <p:inputText id="searchInput" value="#{ticketEditorBean.searchString}">
+                            <p:ajax event="keyup" delay="100" update="searchResult"
+                                    listener="#{ticketEditorBean.fetchMyTickets()}" />
+                        </p:inputText>
+                        <p:watermark for="searchInput" value="Nach Tickets suchen..." id="watermark" />
+                    </p:column>
                 </p:panelGrid>
             </p:panel>
 
