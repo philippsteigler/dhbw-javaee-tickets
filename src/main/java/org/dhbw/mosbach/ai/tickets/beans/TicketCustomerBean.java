@@ -83,10 +83,22 @@ public class TicketCustomerBean extends AbstractBean {
     }
 
     public void fetchMyTickets() {
-        if (searchString.isEmpty()) {
+        if (searchString.isEmpty() && filterBean.getSelectedOptionForAllTickets().isEmpty()) {
             searchResult = ImmutableList.copyOf(ticketDAO.getAllTicketsForCustomerID(securityBean.getUser().getId()));
         } else {
-            searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForCustomerID(searchString, securityBean.getUser().getId()));
+            if (filterBean.getSelectedOptionForAllTickets().isEmpty()) {
+                searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForCustomerID(searchString, securityBean.getUser().getId()));
+            } else {
+                if (searchString.isEmpty()) {
+                    searchResult = ImmutableList.copyOf(ticketDAO.getAllTicketsForCustomerID(securityBean.getUser().getId())).stream().filter(
+                            ticket -> filterBean.getSelectedOptionForAllTickets().equals(ticket.getStatus().toString())
+                    ).collect(Collectors.toList());
+                } else {
+                    searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForCustomerID(searchString, securityBean.getUser().getId())).stream().filter(
+                            ticket -> filterBean.getSelectedOptionForAllTickets().equals(ticket.getStatus().toString())
+                    ).collect(Collectors.toList());
+                }
+            }
         }
     }
 

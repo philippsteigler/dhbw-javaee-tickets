@@ -19,7 +19,15 @@
             #{ticketCustomerBean.fetchMyTickets()}
 
             <p:panel id="searchPanel" >
-                <p:panelGrid id="searchPanelGrid" columns="1">
+                <p:panelGrid id="searchPanelGrid" columns="2">
+                    <p:column>
+                        <p:selectOneButton value="#{filterBean.selectedOptionForAllTickets}" >
+                            <f:selectItem itemLabel="Offen" itemValue="open" />
+                            <f:selectItem itemLabel="In Bearbeitung" itemValue="inProcess" />
+                            <f:selectItem itemLabel="Geschlossen" itemValue="closed" />
+                            <p:ajax update="searchResult" listener="#{ticketCustomerBean.fetchMyTickets()}" />
+                        </p:selectOneButton>
+                    </p:column>
                     <p:column>
                         <p:inputText id="searchInput" value="#{ticketCustomerBean.searchString}">
                             <p:ajax event="keyup" delay="100" update="searchResult"
