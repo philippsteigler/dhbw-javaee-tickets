@@ -43,7 +43,7 @@
                     </p:selectOneMenu>
 
                     <h:outputLabel for="company" value="#{msgs['label.company']}" style="font-weight:bold" />
-                    <p:selectOneMenu id="company" value="#{adminView.companyName}" effect="fold" editable="true" required="true" disabled="#{adminView.disableCompanyInput(adminView.role)}" requiredMessage="Unternehmen darf nicht leer sein!">
+                    <p:selectOneMenu id="company" value="#{adminView.companyName}" effect="fold" editable="true" required="true" disabled="#{adminView.disableCompanySelection(adminView.role)}" requiredMessage="Unternehmen darf nicht leer sein!">
                         <f:selectItems value="#{userBean.companies}"/>
                     </p:selectOneMenu>
 

@@ -15,15 +15,21 @@ public class AdminView implements Serializable {
     private String password;
     private String role = "customer";
 
-    public boolean disableCompanyInput(String role) {
+    //depended on selected role disable company selection
+    public boolean disableCompanySelection(String role) {
         if (role == null){
             return true;
+
         }
         else if (!role.equals("customer")) {
+
+            //if role equals admin or editor (not customer) set company name to "Ticket Master" and disable company selection
             setCompanyName("Ticket Master");
             return true;
+
         } else {
 
+            //if the actual value in companyName equals "Ticket Master" set it to default
             if (companyName.equals("Ticket Master")) {
                 setCompanyName("");
             }

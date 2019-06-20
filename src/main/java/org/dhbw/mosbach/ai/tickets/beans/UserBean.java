@@ -42,23 +42,32 @@ public class    UserBean extends AbstractBean {
 
     public String newUser(String login_id, String name, String companyName, String email, String password, String role) {
 
+        //check if login_id already exists
         if (checkIfLoginIdExist(login_id)) {
+
+            //clear only login_id input field and print fatal error message
             adminView.setLogin_id("");
             addLocalizedFacesMessage(FacesMessage.SEVERITY_FATAL, "admin.loginId.duplicated");
+
+            //stay on page
             return null;
         } else {
 
+            //create new user and save new user
             final User user = new User(login_id, name, companyName, email);
             user.getRoles().add(parseRoles(role));
             userDAO.changePassword(user, password);
             saveUser(user);
 
+            //set all input fields to default
             adminView.setName("");
             adminView.setLogin_id("");
             adminView.setEmail("");
             adminView.setRole("customer");
             adminView.setCompanyName("");
             adminView.setPassword("");
+
+            //leave page and go back to user view
             return VIEW_USERS;
         }
     }
@@ -163,6 +172,8 @@ public class    UserBean extends AbstractBean {
     }
 
     private boolean checkIfLoginIdExist(String loginId) {
+
+        //get all login_Ids from database and check if argument loginId already exists
         List<String> loginIds = userDAO.getLoginIds();
 
         return loginIds.contains(loginId);
