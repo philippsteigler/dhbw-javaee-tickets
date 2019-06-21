@@ -86,11 +86,21 @@ public class UserBean extends AbstractBean {
         }
     }
 
+    // Nur der Administrator darf auf diese kritischen Daten zugreifen!
+    @RolesAllowed(value = { Roles.ADMIN })
+    private boolean checkIfLoginIdExist(String loginId) {
+
+        // alle login_ids aus der Datenbank laden und überprüfen, ob die übergebene loginId bereits existiert
+        List<String> loginIds = userDAO.getLoginIds();
+
+        return loginIds.contains(loginId);
+    }
+
     // Methode zum Parsen von Rollen aus der Web-Maske beim Anlegen neuer Benutzer.
     // Diese werden als Typ String vom Frontend übergeben und müssen auf existierende Rollen der Datenbank übertragen werden.
     private Role parseRoles(String role){
 
-        // Durchlaufe alle übergebenen Rollen
+        // Durchlaufe alle übergebenen Rollen.
         for (Role roleFromDatabase : roles) {
 
             // Sofern für die Zeichenkette eine passende Rolle existiert, gib diese zurück.
@@ -104,6 +114,7 @@ public class UserBean extends AbstractBean {
     }
 
     // Methode zum Speichern des neuen Users in die Datenbank über das UserDAO.
+    //
     // Nur Admins dürfen über diese Methode neue User in die Datenbank speichern!
     @RolesAllowed(value = { Roles.ADMIN })
     private void saveUser(User user) {
@@ -112,17 +123,19 @@ public class UserBean extends AbstractBean {
     }
 
     // Methode zum Löschen eines Users in die Datenbank über das UserDAO.
+    //
     // Diese Methode kann nur vom Admin über die Detailansicht aufgerufen werden!
     @RolesAllowed(value = { Roles.ADMIN })
     public String deleteUser(User user) {
         userDAO.removeDetached(user);
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.deleteSuccess");
 
-        // Nach dem Löschen zurück von der Dateilansicht zur Benutzer-Liste
+        // Nach dem Löschen zurück von der Dateilansicht zur Benutzer-Liste.
         return VIEW_USERS;
     }
 
     // Methode zum Löschen des eigenen Benutzerkontos über das UserDAO.
+    //
     // Darf von jedem Benutzer ausgeführt werden.
     @PermitAll
     public String deleteAccount() {
@@ -147,10 +160,20 @@ public class UserBean extends AbstractBean {
         return searchResult;
     }
 
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public User getCurrentUser() {
         return currentUser;
     }
 
+    public List<String> getCompanies() {
+        return companies;
+    }
+
+    // Speicher den aktuellen User, dessen Details angezeigt werden sollen.
+    // Anschließend wird auf die Detailansicht des ausgewählten Users weitergeleitet.
     public String viewUserDetails(User user) {
         this.currentUser = user;
 
@@ -189,11 +212,16 @@ public class UserBean extends AbstractBean {
         companies.remove("Ticket Master");
     }
 
+    // Gib alle möglichen Editoren zurück. Wird im Frontend zum Delegieren von Tickets benötigt.
+    // Der eigene User wird nicht zum Delegieren aufgelistet.
     public List<User> getEditors() {
         return userDAO.getAll().stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("editor")
                 && user.getId() != securityBean.getUser().getId())).collect(Collectors.toList());
     }
 
+    // Methode zur Übersetzung von Benutzer-IDs in Benutzernamen.
+    //
+    // Wird zur schöneren Anzeige im Frontend benötigt, da für Tickets nur die IDs der User hinterlegt sind.
     public String getUserName(long id) {
         List<User> findUser = userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList());
         if (!findUser.isEmpty()) {
@@ -202,26 +230,11 @@ public class UserBean extends AbstractBean {
 
     }
 
+    // Methode zur Übersetzung von Benutzer-IDs in Unternehmen.
+    //
+    // Wird zur schöneren Anzeige in den Ticket-Details benötigt, um die Firma eines Users anzuzeigen, da nur dessen
+    // User-ID aus einem Ticket bekannt ist.
     public String getUserCompany(long id) {
         return userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getCompany();
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
-
-
-    public List<String> getCompanies() {
-        return companies;
-    }
-
-    // Nur der Administrator darf auf diese kritischen Daten zugreifen!
-    @RolesAllowed(value = { Roles.ADMIN })
-    private boolean checkIfLoginIdExist(String loginId) {
-
-        // alle login_ids aus der Datenbank laden und überprüfen, ob die übergebene loginId bereits existiert
-        List<String> loginIds = userDAO.getLoginIds();
-
-        return loginIds.contains(loginId);
     }
 }
