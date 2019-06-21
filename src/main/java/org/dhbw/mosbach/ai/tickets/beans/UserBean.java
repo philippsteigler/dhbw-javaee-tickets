@@ -51,8 +51,8 @@ public class UserBean extends AbstractBean {
 
     // Methode zum Anlegen neuer Benutzer von der Webseite aus.
     //
-    //Alle Eingaben der Web-Maske werden hier übernommen und verarbeitet.
-    //Nur Admins dürfen neue Benutzer anlegen!
+    // Alle Eingaben der Web-Maske werden hier übernommen und verarbeitet.
+    // Nur Admins dürfen neue Benutzer anlegen!
     @RolesAllowed(value = { Roles.ADMIN })
     public String newUser(String login_id, String name, String companyName, String email, String password, String role) {
 
