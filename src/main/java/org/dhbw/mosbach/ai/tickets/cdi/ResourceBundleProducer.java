@@ -10,6 +10,9 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * @author Alexander Auch
+ */
 @ApplicationScoped
 public class ResourceBundleProducer implements Serializable {
 	private static final long serialVersionUID = 8116790746245922039L;

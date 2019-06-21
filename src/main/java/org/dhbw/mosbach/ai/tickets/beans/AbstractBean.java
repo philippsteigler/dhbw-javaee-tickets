@@ -10,14 +10,16 @@ import javax.inject.Inject;
 import java.io.Serializable;
 import java.text.MessageFormat;
 
+/**
+ * @author Alexander Auch
+ */
 public class AbstractBean implements Serializable {
     private static final long serialVersionUID = 5791757036321568029L;
 
     @Inject
     private ResourceBundleProxy localeMessages;
 
-    public AbstractBean()
-    {
+    public AbstractBean() {
         super();
     }
 

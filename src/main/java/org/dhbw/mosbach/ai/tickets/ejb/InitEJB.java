@@ -13,6 +13,9 @@ import javax.ejb.TimerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author Alexander Auch
+ */
 @Startup
 @Singleton
 public class InitEJB {

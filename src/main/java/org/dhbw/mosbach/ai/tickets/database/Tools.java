@@ -21,10 +21,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
 /**
- * Database Tool functions.
- *
- * @author Alexander.Auch
- *
+ * @author Alexander Auch
  */
 @Dependent
 public final class Tools
