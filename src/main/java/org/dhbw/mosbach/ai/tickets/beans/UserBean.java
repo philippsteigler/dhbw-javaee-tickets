@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Named("userBean")
 @SessionScoped
-public class    UserBean extends AbstractBean {
+public class UserBean extends AbstractBean {
     private static final long serialVersionUID = -7105806000082771152L;
 
     @Inject
@@ -71,8 +71,6 @@ public class    UserBean extends AbstractBean {
             return VIEW_USERS;
         }
     }
-
-
 
     private Role parseRoles(String role){
 
@@ -178,5 +176,4 @@ public class    UserBean extends AbstractBean {
 
         return loginIds.contains(loginId);
     }
-
 }
