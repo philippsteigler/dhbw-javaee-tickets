@@ -1,12 +1,14 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
-import com.fasterxml.jackson.databind.util.CompactStringObjectMap;
 import com.google.common.collect.ImmutableList;
 import org.dhbw.mosbach.ai.tickets.database.EntryDAO;
 import org.dhbw.mosbach.ai.tickets.database.TicketDAO;
 import org.dhbw.mosbach.ai.tickets.model.Entry;
+import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.Ticket;
+import org.dhbw.mosbach.ai.tickets.security.CDIRoleCheck;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
@@ -17,6 +19,8 @@ import java.util.stream.Collectors;
 
 @Named
 @SessionScoped
+@CDIRoleCheck
+@RolesAllowed(value = { Roles.ADMIN, Roles.CUSTOMER})
 public class TicketCustomerBean extends AbstractBean {
 
     @Inject

@@ -72,8 +72,6 @@ public class    UserBean extends AbstractBean {
         }
     }
 
-
-
     private Role parseRoles(String role){
 
         for (Role roleFromDatabase : roles) {
@@ -178,5 +176,4 @@ public class    UserBean extends AbstractBean {
 
         return loginIds.contains(loginId);
     }
-
 }
