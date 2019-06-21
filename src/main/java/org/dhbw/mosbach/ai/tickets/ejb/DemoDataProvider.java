@@ -227,7 +227,7 @@ public class DemoDataProvider {
 	}
 
 	private Ticket createTicket(String subject, Ticket.Status status, String content, long editorId, long customerId, Date createDate, Entry... additionalEntry){
-		final Ticket ticket = new Ticket(subject, status, content, editorId, customerId);
+		final Ticket ticket = new Ticket(subject, status, editorId, customerId);
 		final Entry entry = new Entry(customerId, content, createDate);
 
 		ticket.addEntry(entry);

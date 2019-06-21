@@ -112,6 +112,7 @@ public class TicketEditorBean extends AbstractBean {
         }
     }
 
+    //vergleiche: TicketCustomerBean
     public void addEntryToTicket(String content) {
         Entry newEntry = new Entry(securityBean.getUser().getId(), content, new Date());
         currentTicket.addEntry(newEntry);
@@ -128,6 +129,7 @@ public class TicketEditorBean extends AbstractBean {
         return entryContent;
     }
 
+    // Ticket an den Bearbeiter mit der übergebenen editorId delegieren
     public String delegateTicket(long editorId){
         currentTicket.setEditorId(editorId);
         currentTicket.setStatusToInProcess();
@@ -137,8 +139,8 @@ public class TicketEditorBean extends AbstractBean {
         return REDIRECT;
     }
 
+    // Ticket freigeben. Staus wird auf offen und EditorId auf 0 gesetzt
     public String releaseTicket() {
-        // TODO: Only release MY tickets
         currentTicket.setStatusToOpen();
         currentTicket.setEditorId(0);
         saveTicket(currentTicket);
@@ -147,6 +149,7 @@ public class TicketEditorBean extends AbstractBean {
         return REDIRECT;
     }
 
+    //  Ticket nehmen. Status wird auf in Bearbeitung gesetzt und die übergebene id als EditorId gesetzt
     public String takeTicket(long id) {
         currentTicket.setStatusToInProcess();
         currentTicket.setEditorId(id);
@@ -156,6 +159,7 @@ public class TicketEditorBean extends AbstractBean {
         return REDIRECT;
     }
 
+    // Ticket schließen. Status wird auf offen gesetzt und EditorId auf 0
     public String closeTicket() {
         currentTicket.setStatusToClose();
         currentTicket.setEditorId(0);
@@ -165,6 +169,8 @@ public class TicketEditorBean extends AbstractBean {
         return REDIRECT;
     }
 
+    // ein geschlossenes Ticket kann wieder geöffnet werden
+    // Status wird auf offen gesetzt
     public void reopenTicket() {
         currentTicket.setStatusToOpen();
         saveTicket(currentTicket);

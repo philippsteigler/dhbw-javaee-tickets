@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 public class Entry {
 
-    //Persistent Fields:
+    //Persistente Attribute:
     @Id
     @GeneratedValue
     private long id;
@@ -23,7 +23,7 @@ public class Entry {
     @Column
     private Date createDate;
 
-    //Constructor:
+    //Konstruktor:
     public Entry() { super(); }
 
     public Entry (long creatorId, String content, Date createDate) {
@@ -32,7 +32,7 @@ public class Entry {
         this.createDate = createDate;
     }
 
-    //Accessor Methods:
+    //Zugriffsmethoden:
     public long getCreatorID() {
         return creatorId;
     }
