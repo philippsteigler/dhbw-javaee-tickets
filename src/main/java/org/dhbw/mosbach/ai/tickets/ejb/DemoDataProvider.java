@@ -20,6 +20,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ * Klasse zum Anlegen von Testdaten, sofern beim Starten der Applikation noch keine vorhanden sind.
+ *
+ * Es werden sowohl Rollen und Benutzer, als auch Tickets mit gültigen Einträgen bei Bedarf erzeugt.
+ */
 @Startup
 @Singleton
 @RunAs(Roles.ADMIN)
@@ -49,6 +54,7 @@ public class DemoDataProvider {
 		timerService.createSingleActionTimer(1, new TimerConfig("ddp", false));
 	}
 
+	// Wenn ein Timeout auftritt...
 	@Timeout
 	private void timer() {
 		logger.info("In DemoDataProvider.init");
@@ -57,17 +63,25 @@ public class DemoDataProvider {
 		final boolean isAdmin = context.isCallerInRole(Roles.ADMIN);
 		logger.info("Principal: {}, admin: {}", callerPrincipal, isAdmin);
 
-		// Check whether any data exists
+		// ... dann überprüfe, ob bereits valide Daten in der Datenbank vorhanden sind.
 		final Long userCount = (Long) em.createQuery("SELECT COUNT(u) FROM User u").getSingleResult();
 		final Long ticketCount = (Long) em.createQuery("SELECT COUNT(t) FROM Ticket t").getSingleResult();
 
+		// Wenn keine User existieren, so werden diese für Testzwecke erzeugt.
 		if (userCount == 0)
 			createUsers();
 
+		// Wenn keine Tickets existieren, so werden diese für Testzwecke erzeugt.
 		if (ticketCount == 0)
 			createTickets();
 	}
 
+	/**
+	 * Methoe zum erzeugen von Test-Usern.
+	 *
+	 * Zunächst werden die drei notwendigen Rollen erzeugt und in die Datenbank gespeichert.
+	 * Anschließend werden valide Test-User erzeugt, wobei diesen die zu angelegten Rollen zugewiesen werden.
+	 */
 	private void createUsers() {
 		final Role adminRole = new Role(Roles.ADMIN, "Administrator");
 		final Role editorRole = new Role(Roles.EDITOR, "Bearbeiter");
@@ -76,6 +90,12 @@ public class DemoDataProvider {
 		em.persist(editorRole);
 		em.persist(customerRole);
 
+		// Der User "root" dient zu Testzwecken und besitzt alle der möglichen Rollen!
+		// Ansonsten werden von jeder Sorte einige Benutzer erstellt (1x Admin, 4x Editor, 4x Kunde).
+		//
+		// Mehrere Editoren erlauben es, die Funktion von Tickets Übernehmen und Zuweisen zu testen.
+		// Mehrere Kunden erlauben es, Tickets der gleichen Firma von mehreren Kunden einzusehen.
+		createUser("root", "Root", "Ticket Master", "root@ticket.master", "toor", adminRole, editorRole, customerRole);
 		createUser("admin", "The Admin", "Ticket Master", "admin@ticket.master", "admin", adminRole);
 		createUser("editor1", "Rolf Meyer", "Ticket Master", "rolf@ticket.master", "mosbach", editorRole);
 		createUser("editor2", "Alex Löwen", "Ticket Master", "alex@ticket.master", "mosbach", editorRole);
@@ -85,9 +105,15 @@ public class DemoDataProvider {
 		createUser("customer2", "Jens Hadarmad", "Deutsche Bundesbank", "jens@bundesbank.de", "mosbach", customerRole);
 		createUser("customer3", "Benno Gut", "Deutsche Bundesbank", "benno@bundesbank.de", "mosbach", customerRole);
 		createUser("customer4", "Vanessa Richter", "IBM", "vanessa@ibm.com", "mosbach", customerRole);
-		createUser("root", "Root", "Ticket Master", "root@ticket.master", "toor", adminRole, editorRole, customerRole);
 	}
 
+	/**
+	 * Methoden zum anlegen eines konkreten Test-Users
+	 *
+	 * Zunächst wird ein Benutzer mit seinen erforderlichen Attributen erzeugt.
+	 * Danach wird das Passwort gesetzt.
+	 * Abschließend wird der Benutzer in die Datenbank gespeichert, wobei auch die ID als Primärschlüssel gesetzt wird.
+	 */
 	private User createUser(String login, String userName, String companyName, String email, String password, Role... userRoles) {
 		final User user = new User(login, userName, companyName, email);
 		user.getRoles().addAll(Arrays.asList(userRoles));
