@@ -7,7 +7,7 @@ Issue-Tracking-Application built with Java EE
 2. Start jboss-cli (`%WILDFLY-HOME%/bin/jboss-cli.sh or .bat`)
 3. Connect to Wildfly Server via command `connect`
 4. Enter the following commands:
-`### MySQL Driver
+### MySQL Driver
 ```
 /subsystem=datasources/jdbc-driver=mysql/:add( \
   driver-module-name=com.mysql, \
