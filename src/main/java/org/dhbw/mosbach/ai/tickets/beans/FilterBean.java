@@ -7,7 +7,6 @@ import java.util.Objects;
 @Named
 @SessionScoped
 public class FilterBean extends AbstractBean {
-
     private String selectedOption = "";
 
     public String getSelectedOptionForAllTickets() {
