@@ -1,14 +1,13 @@
 # Ticket Master ENTERPRISE Edition
 Issue-Tracking-Application built with Java EE
 
-## Configuration
+## 1. Wildfly-Configuration
 
-1. Start Wildfly Server (%WildflyHome%/bin/standalone.sh or .bat)
-2. Start jboss-cli (%WildflyHome%/bin/jboss-cli.sh or .bat)
-3. Connect to Wildfly Server via command "connect"
+1. Start Wildfly Server (`%WILDFLY-HOME%/bin/standalone.sh or .bat`)
+2. Start jboss-cli (`%WILDFLY-HOME%/bin/jboss-cli.sh or .bat`)
+3. Connect to Wildfly Server via command `connect`
 4. Enter the following commands:
-
-### MySQL Driver
+`### MySQL Driver
 ```
 /subsystem=datasources/jdbc-driver=mysql/:add( \
   driver-module-name=com.mysql, \
@@ -28,7 +27,7 @@ Issue-Tracking-Application built with Java EE
   jta=true, \
   use-java-context=true, \
   user-name="inf16", \
-  password="61fni", \
+  password="61fni@19", \
 )
 ```
 
@@ -47,3 +46,12 @@ Issue-Tracking-Application built with Java EE
 	hashStorePassword=false, \
 }}])
 ```
+
+## 2. Database-Configuration
+
+After setting up wildfly, you need to configure your MySQL Server according to the previous wildfly-configuration!
+
+1. Create new database-schema called `tickets`
+2. Create new user called `inf16` with password `61fni@19`
+
+Make sure the user has all necessary rights to access the database-schema!
