@@ -56,6 +56,7 @@ public class TicketEditorBean extends AbstractBean {
         addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "entry.saveSuccess");
     }
 
+    // Getter und Setter für Suchfeld.
     public void setSearchString(String searchString) {
         this.searchString = searchString;
     }
@@ -68,6 +69,7 @@ public class TicketEditorBean extends AbstractBean {
         return searchResult;
     }
 
+    // Getter und Setter für Tickets.
     public Ticket getCurrentTicket() {
         return currentTicket;
     }
@@ -84,49 +86,46 @@ public class TicketEditorBean extends AbstractBean {
         return VIEW_DETAILS;
     }
 
+    // Gibt alle Tickets zurück, die dem aktuellen Bearbeiter zugewiesen sind.
+    // Es kann im Betreff nach Zeichenketten gesucht werden.
     public void fetchMyTickets() {
+        // Wenn das Suchfeld leer ist...
         if (searchString.isEmpty()) {
+            // ...dann gib alle Tickets mit der eigenen ID zurück.
             searchResult = ImmutableList.copyOf(ticketDAO.getAllTicketsForEditorID(securityBean.getUser().getId()));
         } else {
+            // Ansonsten gib alle Tickets mit der eignen ID zurück, welche die passende Zeichenkette enthalten.
             searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubjectForEditorID(searchString, securityBean.getUser().getId()));
         }
     }
 
+    // Gibt alle Tickets existierenden zurück.
+    // Es kann im Betreff nach Zeichenketten gesucht und nach einem Status gefiltert werden - auch beides gleichzeitig!
     public void fetchAllTickets() {
+        // Wenn das Suchfeld und die Filteroptionen leer sind...
         if (searchString.isEmpty() && filterBean.getSelectedOptionForAllTickets().isEmpty()) {
+            // ...dann gib alle Tickets im System zurück.
             searchResult = ImmutableList.copyOf(ticketDAO.getAll());
         } else {
+            // Ansonsten, wenn etwas im Suchfeld steht, die Filteroptionen jedoch leer sind...
             if (filterBean.getSelectedOptionForAllTickets().isEmpty()) {
+                // ...dann gib alle Tickets zurück, welche die passende Zeichenkette enthalten.
                 searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubject(searchString));
             } else {
+                // Ansonsten, wenn das Suchfeld leer ist, aber eine der Filteroptionen ausgewählt wurde...
                 if (searchString.isEmpty()) {
+                    // ...dann suche in allen Ticket nach den Tickets mit dem passenden Status.
                     searchResult = ImmutableList.copyOf(ticketDAO.getAll()).stream().filter(
                             ticket -> filterBean.getSelectedOptionForAllTickets().equals(ticket.getStatus().toString())
                     ).collect(Collectors.toList());
                 } else {
+                    // Ansonsten suche in allen Tickets, welche die passende Zeichenkette enthalten UND dem ausgewählten Status-Filter entsprechen.
                     searchResult = ImmutableList.copyOf(ticketDAO.getTicketsContainingSubject(searchString)).stream().filter(
                             ticket -> filterBean.getSelectedOptionForAllTickets().equals(ticket.getStatus().toString())
                     ).collect(Collectors.toList());
                 }
             }
         }
-    }
-
-    //vergleiche: TicketCustomerBean
-    public void addEntryToTicket(String content) {
-        Entry newEntry = new Entry(securityBean.getUser().getId(), content, new Date());
-        currentTicket.addEntry(newEntry);
-        saveEntry(newEntry);
-        saveTicket(currentTicket);
-        entryContent = "";
-    }
-
-    public void setEntryContent(String entryContent) {
-        this.entryContent = entryContent;
-    }
-
-    public String getEntryContent() {
-        return entryContent;
     }
 
     // Ticket an den Bearbeiter mit der übergebenen editorId delegieren
@@ -174,5 +173,23 @@ public class TicketEditorBean extends AbstractBean {
     public void reopenTicket() {
         currentTicket.setStatusToOpen();
         saveTicket(currentTicket);
+    }
+
+    //vergleiche: TicketCustomerBean
+    public void addEntryToTicket(String content) {
+        Entry newEntry = new Entry(securityBean.getUser().getId(), content, new Date());
+        currentTicket.addEntry(newEntry);
+        saveEntry(newEntry);
+        saveTicket(currentTicket);
+        entryContent = "";
+    }
+
+    // Getter und Setter für Einträge.
+    public void setEntryContent(String entryContent) {
+        this.entryContent = entryContent;
+    }
+
+    public String getEntryContent() {
+        return entryContent;
     }
 }
