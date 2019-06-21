@@ -15,14 +15,7 @@ import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
 
 /**
- * Abstract Data Access Object base class.
- *
- * @author Alexander.Auch
- *
- * @param <E>
- *          Entity
- * @param <I>
- *          Type of Identity value (primary key type)
+ * @author Alexander Auch
  */
 public abstract class BaseDAO<E, I> implements Serializable {
 	private static final long serialVersionUID = 1L;

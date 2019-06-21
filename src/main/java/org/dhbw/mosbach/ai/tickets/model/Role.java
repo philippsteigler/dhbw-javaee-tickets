@@ -7,9 +7,16 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ * Klasse zur Modellierung einer konkreten Rolle.
+ *
+ * Jede Rolle besitzt eine eindeituge ID als Primärschlüssel, eine Bezeichnung und eine Beschreibung zur besseren
+ * Verwendbarkeit.
+ */
 @Entity
 public class Role {
 
+	// Attribute analog zu Spalten ein der Role-Tabelle.
 	@Id
 	@GeneratedValue
 	private long id;
@@ -24,12 +31,15 @@ public class Role {
 		super();
 	}
 
+	// Für jede Rolle wird der Name und die Bezeichnung beim Erzeugen gesetzt.
+	// Der Primärschlüssel wird automatisch vergeben.
 	public Role(String name, String description) {
 		super();
 		this.name = name;
 		this.description = description;
 	}
 
+	// Getter und Setter
 	@XmlTransient
 	public long getId() {
 		return id;
@@ -56,6 +66,7 @@ public class Role {
 		this.description = description;
 	}
 
+	// hashCode(), equals() und toString() werden Aufgrund von Vererbung implementiert.
 	@Override
 	public int hashCode() {
 		final int prime = 31;

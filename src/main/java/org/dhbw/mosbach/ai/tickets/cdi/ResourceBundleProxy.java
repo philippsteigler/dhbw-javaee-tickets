@@ -4,35 +4,26 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 /**
- * This class is only needed because weld cannot proxy {@link ResourceBundle}.
- *
- * @author Alexander.Auch
- *
+ * @author Alexander Auch
  */
-public class ResourceBundleProxy
-{
+public class ResourceBundleProxy {
     private final ResourceBundle bundle;
 
-    /**
-     * Needed for weld.
-     */
-    protected ResourceBundleProxy()
-    {
+    protected ResourceBundleProxy() {
         this.bundle = null;
     }
 
-    public ResourceBundleProxy(ResourceBundle bundle)
-    {
+    public ResourceBundleProxy(ResourceBundle bundle) {
         this.bundle = bundle;
     }
 
-    public String getString(String key)
-    {
+    public String getString(String key) {
+        assert bundle != null;
         return bundle.getString(key);
     }
 
-    public Enumeration<String> getKeys()
-    {
+    public Enumeration<String> getKeys() {
+        assert bundle != null;
         return bundle.getKeys();
     }
 }
