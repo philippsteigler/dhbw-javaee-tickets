@@ -15,7 +15,7 @@ public class AdminView implements Serializable {
     private String password;
     private String role = "customer";
 
-    //depended on selected role disable company selection
+    // abhängig der ausgewählten Rolle wird die Unternehmensauswahl deaktiviert
     public boolean disableCompanySelection(String role) {
         if (role == null){
             return true;
@@ -23,13 +23,14 @@ public class AdminView implements Serializable {
         }
         else if (!role.equals("customer")) {
 
-            //if role equals admin or editor (not customer) set company name to "Ticket Master" and disable company selection
+            // wenn als Rolle Admin oder Editor gewählt wird, wird der Unternehmensname auf "Ticket Master" gesetzt
+            // und die Unternehmensauswahl deaktiviert
             setCompanyName("Ticket Master");
             return true;
 
         } else {
 
-            //if the actual value in companyName equals "Ticket Master" set it to default
+            // wenn im aktuellen companyName noch "Ticket Master" steht, wird der Wert entfernt
             if (companyName.equals("Ticket Master")) {
                 setCompanyName("");
             }

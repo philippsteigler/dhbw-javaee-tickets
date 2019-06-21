@@ -15,7 +15,7 @@ public class Ticket {
         inProcess
     }
 
-    //Persistent Fields:
+    //Persistente Attribute:
     @Id
     @GeneratedValue
     private long id;
@@ -36,7 +36,7 @@ public class Ticket {
 
     private List<Entry> entries = new ArrayList<>();
 
-    //Constructor:
+    //Konstruktor:
     public Ticket() { super(); }
 
     public Ticket (String subject, Status status, long editorId, long customerId) {
@@ -47,7 +47,7 @@ public class Ticket {
         this.entries = Lists.newArrayList();
     }
 
-    //Accessor Methods:
+    //Zugriffsmethoden:
     public String getSubject() {
         return subject;
     }

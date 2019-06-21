@@ -25,7 +25,7 @@ public class GeneralView implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
 
-    //get the user who is logged in (for my-profile page)
+    //Daten des eingeloggten Benutzers holen (für "Mein Profil" Seite)
     public void getUserToDisplay(){
         User user = securityBean.getUser();
 
@@ -36,7 +36,7 @@ public class GeneralView implements Serializable {
         roles = user.getRoles();
     }
 
-    //format timestamps from database to nice date format
+    //formatieren des Zeitstempels in ein schönes lesbares Format
     public String formatDate(Date date){
         DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM);
 
@@ -53,7 +53,7 @@ public class GeneralView implements Serializable {
         }
     }
 
-    //Getter and Setter
+    //Getter und Setter
     public String getName() {
         return name;
     }

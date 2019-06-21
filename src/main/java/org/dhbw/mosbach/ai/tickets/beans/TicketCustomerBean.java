@@ -126,7 +126,7 @@ public class TicketCustomerBean extends AbstractBean {
         }
     }
 
-    //create a new entry and add it to current ticket
+    //erstellt einen neuen Eintrag und fügt ihn dem aktuellen Ticket hinzu
     public void addEntryToTicket(String content) {
         Entry newEntry = new Entry(securityBean.getUser().getId(), content, new Date());
         currentTicket.addEntry(newEntry);
@@ -135,7 +135,7 @@ public class TicketCustomerBean extends AbstractBean {
         entryContent = "";
     }
 
-    //create new ticket
+    //erstellt ein neues Ticket
     public String newTicket(String content, String subject) {
         Ticket newTicket = new Ticket(subject, Ticket.Status.open, 0, securityBean.getUser().getId());
         Entry newEntry = new Entry(securityBean.getUser().getId(), content, new Date());
@@ -148,7 +148,7 @@ public class TicketCustomerBean extends AbstractBean {
         return "customer-my-tickets";
     }
 
-    //Getter and Setter
+    //Getter und Setter
     public void setEntryContent(String entryContent) {
         this.entryContent = entryContent;
     }

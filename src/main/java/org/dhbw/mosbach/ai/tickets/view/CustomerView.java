@@ -18,10 +18,9 @@ public class CustomerView implements Serializable {
     @Inject
     private TicketCustomerBean ticketCustomerBean;
 
-    //render button if current customer is creator of selected  ticket
+    // Button wird dargestellt, wenn der eingeloggte Benutzer der Erstelller des Tickets ist
     public boolean renderButton() {
 
-        //Compare current userId with ticket side customerId
         return ticketCustomerBean.getCurrentTicket().getCustomerId() == securityBean.getUser().getId();
     }
 }

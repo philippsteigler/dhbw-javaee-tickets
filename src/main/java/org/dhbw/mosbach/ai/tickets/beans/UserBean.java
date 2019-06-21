@@ -42,24 +42,24 @@ public class UserBean extends AbstractBean {
 
     public String newUser(String login_id, String name, String companyName, String email, String password, String role) {
 
-        //check if login_id already exists (validation is necessary because login_id is an unique value)
+        //überprüft ob die login_id bereits existiert (Validierung ist notwendig, da die login_id einzigartig ist)
         if (checkIfLoginIdExist(login_id)) {
 
-            //clear only login_id input field and print fatal error message
+            //leert das Input Feld und gibt Fehlernachricht aus
             adminView.setLogin_id("");
             addLocalizedFacesMessage(FacesMessage.SEVERITY_FATAL, "admin.loginId.duplicated");
 
-            //stay on page
+            //Seite wird nicht verlassen
             return null;
         } else {
 
-            //create new user and save new user
+            //erstellt neuen Benutzer und speichert ihn
             final User user = new User(login_id, name, companyName, email);
             user.getRoles().add(parseRoles(role));
             userDAO.changePassword(user, password);
             saveUser(user);
 
-            //set all input fields to default
+            //alle Input Felder werden in den default Zustand gesetzt
             adminView.setName("");
             adminView.setLogin_id("");
             adminView.setEmail("");
@@ -67,12 +67,12 @@ public class UserBean extends AbstractBean {
             adminView.setCompanyName("");
             adminView.setPassword("");
 
-            //leave page and go back to user view
+            //Seite verlassen und auf die Benutzerübersicht zurückkehren
             return VIEW_USERS;
         }
     }
 
-    //parse a string of an role to an valid role from database
+    //den übergebenen String zu einem validen Rollen-Objekt aus der Datenbank konvertieren
     private Role parseRoles(String role){
 
         for (Role roleFromDatabase : roles) {
@@ -172,7 +172,7 @@ public class UserBean extends AbstractBean {
 
     private boolean checkIfLoginIdExist(String loginId) {
 
-        //get all login_Ids from database and check if argument loginId already exists
+        //alle login_ids aus der Datenbank laden und überprüfen, ob die übergebene loginId bereits existiert
         List<String> loginIds = userDAO.getLoginIds();
 
         return loginIds.contains(loginId);
