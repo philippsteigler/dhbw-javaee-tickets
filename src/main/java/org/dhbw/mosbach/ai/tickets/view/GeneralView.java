@@ -1,8 +1,6 @@
 package org.dhbw.mosbach.ai.tickets.view;
 
 import org.dhbw.mosbach.ai.tickets.beans.SecurityBean;
-import org.dhbw.mosbach.ai.tickets.beans.TicketEditorBean;
-import org.dhbw.mosbach.ai.tickets.beans.UserBean;
 import org.dhbw.mosbach.ai.tickets.model.Role;
 import org.dhbw.mosbach.ai.tickets.model.User;
 
@@ -27,7 +25,7 @@ public class GeneralView implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
 
-
+    //Daten des eingeloggten Benutzers holen (für "Mein Profil" Seite)
     public void getUserToDisplay(){
         User user = securityBean.getUser();
 
@@ -38,7 +36,7 @@ public class GeneralView implements Serializable {
         roles = user.getRoles();
     }
 
-
+    //formatieren des Zeitstempels in ein schönes lesbares Format
     public String formatDate(Date date){
         DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM);
 
@@ -55,7 +53,7 @@ public class GeneralView implements Serializable {
         }
     }
 
-    //Getter and Setter
+    //Getter und Setter
     public String getName() {
         return name;
     }

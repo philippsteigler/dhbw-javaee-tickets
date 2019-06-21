@@ -56,10 +56,10 @@ public class UserBean extends AbstractBean {
     @RolesAllowed(value = { Roles.ADMIN })
     public String newUser(String login_id, String name, String companyName, String email, String password, String role) {
 
-        // Überprüfe, ob die gewünschte Login-ID bereits vergeben ist.
+        // überprüft ob die login_id bereits existiert (Validierung ist notwendig, da die login_id einzigartig ist)
         if (checkIfLoginIdExist(login_id)) {
 
-            // Wenn ja, dann setze das Eingabe-Feld zurück und gib eine Fehlermeldung an den Anwender aus.
+            // leert das Input Feld und gibt Fehlernachricht aus
             adminView.setLogin_id("");
             addLocalizedFacesMessage(FacesMessage.SEVERITY_FATAL, "admin.loginId.duplicated");
 
@@ -67,7 +67,7 @@ public class UserBean extends AbstractBean {
             return null;
         } else {
 
-            // Ansonsten wird der neue Nutzer angelegt.
+            // erstellt neuen Benutzer und speichert ihn
             final User user = new User(login_id, name, companyName, email);
             user.getRoles().add(parseRoles(role));
             userDAO.changePassword(user, password);
@@ -81,7 +81,7 @@ public class UserBean extends AbstractBean {
             adminView.setCompanyName("");
             adminView.setPassword("");
 
-            // Redirect zur Benutzer-Liste.
+            // Seite verlassen und auf die Benutzerübersicht zurückkehren
             return VIEW_USERS;
         }
     }
@@ -219,7 +219,7 @@ public class UserBean extends AbstractBean {
     @RolesAllowed(value = { Roles.ADMIN })
     private boolean checkIfLoginIdExist(String loginId) {
 
-        //get all login_Ids from database and check if argument loginId already exists
+        // alle login_ids aus der Datenbank laden und überprüfen, ob die übergebene loginId bereits existiert
         List<String> loginIds = userDAO.getLoginIds();
 
         return loginIds.contains(loginId);
