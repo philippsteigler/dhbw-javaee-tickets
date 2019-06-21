@@ -3,12 +3,10 @@ package org.dhbw.mosbach.ai.tickets.database;
 import org.dhbw.mosbach.ai.tickets.model.Role;
 import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.User;
-import org.dhbw.mosbach.ai.tickets.security.CDIRoleCheck;
 import org.jboss.security.Base64Encoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
@@ -20,8 +18,6 @@ import java.util.List;
 
 @Named("userDAO")
 @Dependent
-@CDIRoleCheck
-@RolesAllowed(value = { Roles.ADMIN })
 public class UserDAO extends BaseDAO<User, Long> {
     private static final long serialVersionUID = -6308185751264138344L;
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
@@ -30,6 +26,7 @@ public class UserDAO extends BaseDAO<User, Long> {
         super();
     }
 
+    @RolesAllowed(value = { Roles.ADMIN })
     private MessageDigest getMessageDigest() {
         try {
             return MessageDigest.getInstance("SHA-256");
@@ -39,6 +36,7 @@ public class UserDAO extends BaseDAO<User, Long> {
         }
     }
 
+    @RolesAllowed(value = { Roles.ADMIN })
     public void changePassword(User user, String password) {
         try {
             user.setPassword(Base64Encoder.encode(getMessageDigest().digest(password.getBytes())));
@@ -48,7 +46,6 @@ public class UserDAO extends BaseDAO<User, Long> {
     }
 
     @Override
-    @PermitAll
     public User findByUnique(String fieldName, Object key) {
         return super.findByUnique(fieldName, key);
     }
@@ -65,22 +62,22 @@ public class UserDAO extends BaseDAO<User, Long> {
         return Collections.emptyList();
     }
 
+    @RolesAllowed(value = { Roles.ADMIN })
     public List<Role> getRoles() {
-
         final String query = String.format("FROM %s", Role.class.getName());
 
         return em.createQuery(query, Role.class).getResultList();
     }
 
+    @RolesAllowed(value = { Roles.ADMIN })
     public List<String> getCompanies() {
-
         final String query = String.format("SELECT DISTINCT u.company FROM %s u", User.class.getName());
 
         return em.createQuery(query, String.class).getResultList();
     }
 
+    @RolesAllowed(value = { Roles.ADMIN })
     public List<String> getLoginIds() {
-
         final String query = String.format("SELECT u.login_id FROM %s u", User.class.getName());
 
         return em.createQuery(query, String.class).getResultList();
