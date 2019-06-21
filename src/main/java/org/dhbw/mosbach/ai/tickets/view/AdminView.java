@@ -38,7 +38,7 @@ public class AdminView implements Serializable {
         }
     }
 
-
+    //Getter and Setter
     public String getLogin_id() {
         return login_id;
     }

@@ -19,14 +19,14 @@ public class EditorView implements Serializable {
     @Inject
     private TicketEditorBean ticketEditorBean;
 
-
+    //render button depending on logged-in user and selected ticket
     public boolean renderButton(String button) {
 
         //Get current Ticket and EditorId
         Ticket currentTicket = ticketEditorBean.getCurrentTicket();
         long currentEditorId = securityBean.getUser().getId();
 
-
+        //check specific requirements for each button
         switch(button){
 
             case "reopen":

@@ -42,7 +42,7 @@ public class UserBean extends AbstractBean {
 
     public String newUser(String login_id, String name, String companyName, String email, String password, String role) {
 
-        //check if login_id already exists
+        //check if login_id already exists (validation is necessary because login_id is an unique value)
         if (checkIfLoginIdExist(login_id)) {
 
             //clear only login_id input field and print fatal error message
@@ -72,6 +72,7 @@ public class UserBean extends AbstractBean {
         }
     }
 
+    //parse a string of an role to an valid role from database
     private Role parseRoles(String role){
 
         for (Role roleFromDatabase : roles) {
