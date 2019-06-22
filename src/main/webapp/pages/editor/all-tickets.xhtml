@@ -49,10 +49,10 @@
 
                         <p:outputPanel>
                             <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputText value="#{msgs['editor']}:" />
+                                <h:outputText value="#{msgs['editor']}: " />
                                 <h:outputText value="#{userBean.getUserName(ticket.editorId)}" style="font-weight: bold"/>
 
-                                <h:outputText value="#{msgs['label.subject']}:" />
+                                <h:outputText value="#{msgs['label.subject']}: " />
                                 <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
                             </h:panelGrid>
                         </p:outputPanel>

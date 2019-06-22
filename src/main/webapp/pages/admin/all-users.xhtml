@@ -37,17 +37,17 @@
 
                         <p:outputPanel>
                             <h:panelGrid columns="2" >
-                                <h:outputText value="ID:" />
-                                <h:outputText value="#{user.id}" style="font-weight: bold"/>
+                                <h:outputText value="ID: " style="font-weight: bold" />
+                                <h:outputText value="#{user.id}" />
 
-                                <h:outputText value="Name:" />
-                                <h:outputText value="#{user.name}" style="font-weight: bold"/>
+                                <h:outputText value="Name: " style="font-weight: bold" />
+                                <h:outputText value="#{user.name}" />
                             </h:panelGrid>
                         </p:outputPanel>
 
                         <p:outputPanel>
                             <h:panelGrid columns="2" >
-                                <h:outputText value="Rolle:" />
+                                <h:outputText value="Rolle: " style="font-weight: bold" />
                                 <h:dataTable value="#{user.roles}" var="role">
                                     <h:column>
                                         #{role.name}

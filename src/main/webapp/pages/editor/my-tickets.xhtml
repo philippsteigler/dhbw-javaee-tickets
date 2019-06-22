@@ -19,7 +19,7 @@
             #{ticketEditorBean.fetchMyTickets()}
 
             <p:panel id="searchPanel" >
-                <p:panelGrid id="searchPanelGrid" columns="1">
+                <p:panelGrid id="searchPanelGrid" columns="2">
                     <p:column>
                         <p:inputText id="searchInput" value="#{ticketEditorBean.searchString}">
                             <p:ajax event="keyup" delay="100" update="searchResult"
@@ -41,10 +41,10 @@
 
                         <p:outputPanel>
                             <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputText value="#{msgs['editor']}:" />
+                                <h:outputText value="#{msgs['editor']}: " />
                                 <h:outputText value="#{userBean.getUserName(ticket.editorId)}" style="font-weight: bold"/>
 
-                                <h:outputText value="#{msgs['label.subject']}:" />
+                                <h:outputText value="#{msgs['label.subject']}: " />
                                 <h:outputText value="#{ticket.subject}" style="font-weight: bold"/>
                             </h:panelGrid>
                         </p:outputPanel>

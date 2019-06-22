@@ -22,22 +22,22 @@
         </p:dialog>
 
         <h:panelGrid id="ticketDetailsPanelGridInfo" columns="2" columnClasses="logo,detail">
-            <h:outputLabel value="#{msgs['label.ticketId']}:"/>
+            <h:outputLabel value="#{msgs['label.ticketId']}: "/>
             <h:outputText value="#{ticketCustomerBean.currentTicket.id}"/>
 
-            <h:outputLabel value="#{msgs['label.subject']}:"/>
+            <h:outputLabel value="#{msgs['label.subject']}: "/>
             <h:outputText value="#{ticketCustomerBean.currentTicket.subject}"/>
 
-            <h:outputLabel value="#{msgs['editor']}:"/>
+            <h:outputLabel value="#{msgs['editor']}: "/>
             <h:outputText value="#{userBean.getUserName(ticketCustomerBean.currentTicket.editorId)}" />
 
-            <h:outputLabel value="#{msgs['label.status']}:"/>
+            <h:outputLabel value="#{msgs['label.status']}: "/>
             <h:outputText value="#{generalView.statusToString(ticketCustomerBean.currentTicket.status)}"/>
 
-            <h:outputLabel value="#{msgs['label.customer']}:"/>
+            <h:outputLabel value="#{msgs['label.customer']}: "/>
             <h:outputText value="#{userBean.getUserName(ticketCustomerBean.currentTicket.customerId)}"/>
 
-            <h:outputLabel value="#{msgs['label.company']}:"/>
+            <h:outputLabel value="#{msgs['label.company']}: "/>
             <h:outputText value="#{userBean.getUserCompany(ticketCustomerBean.currentTicket.customerId)}"/>
 
         </h:panelGrid>
