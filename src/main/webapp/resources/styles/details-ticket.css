@@ -24,3 +24,7 @@
 #ticketDetailsPanelGridButtons {
     margin-bottom: 10px;
 }
+
+.delegateButtons {
+    float: right;
+}
