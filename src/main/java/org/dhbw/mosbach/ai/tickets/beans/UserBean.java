@@ -2,6 +2,7 @@ package org.dhbw.mosbach.ai.tickets.beans;
 
 import com.google.common.collect.ImmutableList;
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
+import org.dhbw.mosbach.ai.tickets.ejb.MailService;
 import org.dhbw.mosbach.ai.tickets.model.Role;
 import org.dhbw.mosbach.ai.tickets.model.Roles;
 import org.dhbw.mosbach.ai.tickets.model.User;
@@ -9,6 +10,7 @@ import org.dhbw.mosbach.ai.tickets.view.AdminView;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
@@ -34,6 +36,9 @@ public class UserBean extends AbstractBean {
 
     @Inject
     private AdminView adminView;
+
+    @EJB
+    private MailService mailService;
 
     // Aktuelles User-Objekt wird in dieser Variable zur Verarbeitung gehalten
     private User currentUser;
@@ -72,6 +77,9 @@ public class UserBean extends AbstractBean {
             user.getRoles().add(parseRoles(role));
             userDAO.changePassword(user, password);
             saveUser(user);
+
+            // Bestätigungsmail versenden
+            mailService.sendConfirmationMail(email, login_id, password);
 
             // Setze alle Eingabefelder der Web-Maske zurück.
             adminView.setName("");
