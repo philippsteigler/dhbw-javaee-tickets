@@ -36,7 +36,7 @@
 
                     <h:outputLabel value="#{msgs['label.role']}: " style="font-weight: bold"/>
                     <p:outputPanel>
-                        <h:dataTable value="#{generalView.roles}" var="role"><f:facet name="Role">Status</f:facet>
+                        <h:dataTable value="#{userBean.currentUser.roles}" var="role"><f:facet name="Role">Status</f:facet>
                             <h:column>
                                 #{role.name}
                             </h:column>
