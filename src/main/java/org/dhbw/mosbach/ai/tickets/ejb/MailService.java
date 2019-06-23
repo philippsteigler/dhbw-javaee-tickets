@@ -14,7 +14,7 @@ public class MailService {
 
     // Benutzername und Passwort des Gmail-Konto
     private String username = "ticketsystem.master@gmail.com";
-    private String password = "mbg4ever";
+    private String password = "";
 
     private void sendMail(String recipient, String subject, String content) {
 
