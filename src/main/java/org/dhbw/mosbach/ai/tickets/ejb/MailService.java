@@ -68,6 +68,10 @@ public class MailService {
                 + "Mit freundlichen Grüßen\n"
                 + "der Admin von Ticket Master";
 
-        sendMail(recipient, "Bestätigung Registrierung", content);
+        // Ein neuer Thread wird für das Versenden der E-Mail via sSMTP gestartet
+        // Der Versand kann unter Umständen etwas länger dauern, so bleibt die Website responsive für den Anwender
+        Thread sendingThread = new Thread(() -> sendMail(recipient, "Bestätigung Registrierung", content));
+
+        sendingThread.start();
     }
 }
