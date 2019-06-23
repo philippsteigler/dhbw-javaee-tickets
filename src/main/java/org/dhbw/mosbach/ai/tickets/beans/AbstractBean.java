@@ -1,7 +1,5 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
-import org.dhbw.mosbach.ai.tickets.cdi.ResourceBundleProxy;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;

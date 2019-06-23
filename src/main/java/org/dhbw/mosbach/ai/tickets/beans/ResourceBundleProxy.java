@@ -1,4 +1,4 @@
-package org.dhbw.mosbach.ai.tickets.cdi;
+package org.dhbw.mosbach.ai.tickets.beans;
 
 import java.util.Enumeration;
 import java.util.ResourceBundle;
