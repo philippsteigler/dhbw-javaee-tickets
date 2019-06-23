@@ -35,22 +35,22 @@
             </p:dialog>
 
             <h:panelGrid id="ticketDetailsPanelGridInfo" columns="2" columnClasses="logo,detail">
-                <h:outputLabel value="#{msgs['label.ticketId']}:"/>
+                <h:outputLabel value="#{msgs['label.ticketId']}: "/>
                 <h:outputText value="#{ticketEditorBean.currentTicket.id}"/>
 
-                <h:outputLabel value="#{msgs['label.subject']}:"/>
+                <h:outputLabel value="#{msgs['label.subject']}: "/>
                 <h:outputText value="#{ticketEditorBean.currentTicket.subject}"/>
 
-                <h:outputLabel value="#{msgs['editor']}:"/>
+                <h:outputLabel value="#{msgs['editor']}: "/>
                 <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.editorId)}" />
 
-                <h:outputLabel value="#{msgs['label.status']}:"/>
+                <h:outputLabel value="#{msgs['label.status']}: "/>
                 <h:outputText value="#{generalView.statusToString(ticketEditorBean.currentTicket.status)}"/>
 
-                <h:outputLabel value="#{msgs['label.customer']}:"/>
+                <h:outputLabel value="#{msgs['label.customer']}: "/>
                 <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.customerId)}"/>
 
-                <h:outputLabel value="#{msgs['label.company']}:"/>
+                <h:outputLabel value="#{msgs['label.company']}: "/>
                 <h:outputText value="#{userBean.getUserCompany(ticketEditorBean.currentTicket.customerId)}"/>
 
             </h:panelGrid>
@@ -68,13 +68,13 @@
                 <f:facet name="header">Verlauf</f:facet>
 
                 <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                    <h:outputText value="#{msgs['date']}: " />
+                    <h:outputText value="#{msgs['date']}: "  style="font-weight: bold"  />
                     <h:outputText value="#{generalView.formatDate(entry.createDate)}" />
 
-                    <h:outputText value="#{msgs['editor']}: " />
+                    <h:outputText value="#{msgs['editor']}: "  style="font-weight: bold"  />
                     <h:outputText value="#{userBean.getUserName(entry.creatorID)}" />
 
-                    <h:outputText value="#{msgs['entry']}: " />
+                    <h:outputText value="#{msgs['entry']}: "  style="font-weight: bold"  />
                     <h:outputText value="#{entry.content}" />
                 </h:panelGrid>
             </p:dataScroller>

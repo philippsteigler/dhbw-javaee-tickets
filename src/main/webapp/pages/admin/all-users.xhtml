@@ -28,26 +28,26 @@
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel id="resultPanel" >
+            <p:panel id="resultPanel">
                 <p:dataScroller id="searchResult" value="#{userBean.searchResult}" var="user" chunkSize="10">
                     <f:facet name="header">Benutzer</f:facet>
 
-                    <h:panelGrid columns="3" style="width:100%" columnClasses="button,detail,detail">
+                    <h:panelGrid columns="3" style="width:100%" columnClasses="button,editor">
                         <h:commandButton action="#{userBean.viewUserDetails(user)}" value="Details" id="detailsButton" />
 
                         <p:outputPanel>
-                            <h:panelGrid columns="2" >
-                                <h:outputText value="ID:" />
-                                <h:outputText value="#{user.id}" style="font-weight: bold"/>
+                            <h:panelGrid columns="2" columnClasses="logo,detail">
+                                <h:outputText value="ID: " style="font-weight: bold" />
+                                <h:outputText value="#{user.id}" />
 
-                                <h:outputText value="Name:" />
-                                <h:outputText value="#{user.name}" style="font-weight: bold"/>
+                                <h:outputText value="Name: " style="font-weight: bold" />
+                                <h:outputText value="#{user.name}" />
                             </h:panelGrid>
                         </p:outputPanel>
 
                         <p:outputPanel>
-                            <h:panelGrid columns="2" >
-                                <h:outputText value="Rolle:" />
+                            <h:panelGrid columns="2" columnClasses="logo,detail">
+                                <h:outputText value="Rolle: " style="font-weight: bold" />
                                 <h:dataTable value="#{user.roles}" var="role">
                                     <h:column>
                                         #{role.name}

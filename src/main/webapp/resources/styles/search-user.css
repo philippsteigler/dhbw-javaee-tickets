@@ -8,7 +8,6 @@
 }
 
 #searchPanelGrid {
-    float: right;
     margin: auto;
     width: 100%;
     max-width: 500px;
@@ -23,6 +22,8 @@
     padding-left: 12px;
     padding-right: 12px;
     clear: right;
+    width: 60%;
+    margin: auto;
 }
 
 #searchPanel {
@@ -39,10 +40,16 @@
 }
 
 .button {
-    width: 5%
+    width: 15%
 }
+
 .detail {
-    width: 20%;
+    width: 95%;
+    padding-left: 25px;
+}
+
+.editor {
+    width: 45%;
 }
 
 .infos {
