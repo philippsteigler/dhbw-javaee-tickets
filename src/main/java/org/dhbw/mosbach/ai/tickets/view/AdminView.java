@@ -4,7 +4,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 
-@Named("adminView")
+@Named
 @SessionScoped
 public class AdminView implements Serializable {
 

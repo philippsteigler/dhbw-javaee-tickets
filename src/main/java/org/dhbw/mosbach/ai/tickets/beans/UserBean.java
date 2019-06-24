@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * Klasse zur Verarbeitung von Benutzern.
  */
-@Named("userBean")
+@Named
 @SessionScoped
 public class UserBean extends AbstractBean {
     private static final long serialVersionUID = -7105806000082771152L;
@@ -140,19 +140,6 @@ public class UserBean extends AbstractBean {
 
         // Nach dem Löschen zurück von der Dateilansicht zur Benutzer-Liste.
         return VIEW_USERS;
-    }
-
-    // Methode zum Löschen des eigenen Benutzerkontos über das UserDAO.
-    //
-    // Darf von jedem Benutzer ausgeführt werden.
-    @PermitAll
-    public String deleteAccount() {
-        // Lösche den eigenen Benutzer aus der Datenbank.
-        userDAO.removeDetached(securityBean.getUser());
-        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.deleteSuccess");
-
-        // Nach dem Löschen direkt ausloggen.
-        return securityBean.logout();
     }
 
     // Getter und Setter

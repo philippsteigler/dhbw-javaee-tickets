@@ -12,15 +12,11 @@
     <ui:define name="header">#{msgs['admin.details.title']}</ui:define>
     <ui:define name="content">
         <h:form id="form">
-
             <f:facet name="last">
                 <h:outputStylesheet name="myProfile.css" library="styles" />
             </f:facet>
 
             <p:panel id="userDetails" header="#{msgs['admin.details.data']}" styleClass="panelGridCenterAndTop">
-
-                #{generalView.getUserToDisplay()}
-
                 <h:panelGrid style="width:100%" columns="2" cellpadding="80" columnClasses="description, detail" styleClass="panelGridCenter">
                     <h:outputLabel value="#{msgs['label.name']}: " style="font-weight: bold"/>
                     <h:outputText value="#{userBean.currentUser.name}" />
