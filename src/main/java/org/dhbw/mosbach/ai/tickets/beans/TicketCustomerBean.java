@@ -79,6 +79,23 @@ public class TicketCustomerBean extends AbstractBean {
         return currentEntries;
     }
 
+    // Getter und Setter für Einträge.
+    public void setEntryContent(String entryContent) {
+        this.entryContent = entryContent;
+    }
+
+    public String getEntryContent() {
+        return entryContent;
+    }
+
+    public void setTicketContent(String ticketContent) { this.ticketContent = ticketContent; }
+
+    public String getTicketContent() { return ticketContent; }
+
+    public void setTicketSubject(String ticketSubject) {this.ticketSubject = ticketSubject; }
+
+    public String getTicketSubject() { return ticketSubject; }
+
     public String viewTicketDetails(Ticket ticket) {
         currentTicket = ticket;
         currentEntries = currentTicket.getEntries();
@@ -165,21 +182,4 @@ public class TicketCustomerBean extends AbstractBean {
         saveTicket(currentTicket);
         entryContent = "";
     }
-
-    // Getter und Setter für Einträge.
-    public void setEntryContent(String entryContent) {
-        this.entryContent = entryContent;
-    }
-
-    public String getEntryContent() {
-        return entryContent;
-    }
-
-    public void setTicketContent(String ticketContent) { this.ticketContent = ticketContent; }
-
-    public String getTicketContent() { return ticketContent; }
-
-    public void setTicketSubject(String ticketSubject) {this.ticketSubject = ticketSubject; }
-
-    public String getTicketSubject() { return ticketSubject; }
 }
