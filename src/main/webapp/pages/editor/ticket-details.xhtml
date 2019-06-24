@@ -59,7 +59,7 @@
                 <h:commandButton value="#{msgs['button.add.entry']}" type="button" onclick="PF('dlgEntry').show();" rendered="#{editorView.renderButton('addEntry')}"/>
                 <h:commandButton value="#{msgs['button.delegate']}" type="button" onclick="PF('dlgDelegate').show();" rendered="#{editorView.renderButton('delegate')}"/>
                 <h:commandButton value="#{msgs['button.release']}" action="#{ticketEditorBean.releaseTicket()}" rendered="#{editorView.renderButton('release')}"/>
-                <h:commandButton value="#{msgs['button.take']}" action="#{ticketEditorBean.takeTicket(securityBean.getUser().getId())}" rendered="#{editorView.renderButton('take')}"/>
+                <h:commandButton value="#{msgs['button.take']}" action="#{ticketEditorBean.takeTicket(securityBean.user.id)}" rendered="#{editorView.renderButton('take')}"/>
                 <h:commandButton value="#{msgs['button.close']}" action="#{ticketEditorBean.closeTicket()}" rendered="#{editorView.renderButton('close')}"/>
                 <h:commandButton value="#{msgs['button.reopen']}" action="#{ticketEditorBean.reopenTicket()}" rendered="#{editorView.renderButton('reopen')}"/>
             </h:panelGrid>

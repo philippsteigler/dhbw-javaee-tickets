@@ -1,6 +1,7 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
+import org.dhbw.mosbach.ai.tickets.model.User;
 
 import javax.annotation.security.PermitAll;
 import javax.faces.application.FacesMessage;
@@ -41,15 +42,22 @@ public class ProfileBean extends AbstractBean {
     // Methode zum Ändern des eigenen Passworts.
     // Darf von jedem Benutzer ausgeführt werden.
     @PermitAll
-    public void changePassword(String password) {
+    public String changePassword(String password) {
         if (securityBean.isAuthenticated()) {
+            User user = securityBean.getUser();
+
             // Ändere das Passwort des aktuell eingeloggten Benutzers.
-            userDAO.changePassword(securityBean.getUser(), password);
+            userDAO.changePassword(user, password);
 
             // Speichere die Änderungen direkt in die Datenbank.
-            userDAO.persistOrMerge(securityBean.getUser());
+            userDAO.persistOrMerge(user);
             addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.changePassword");
+
+            // Zur Bestätigung ausloggen und Eingabe des neuen Passworts verlangen.
+            return securityBean.logout();
         }
+
+        return "";
     }
 
     public String getPassword() {
