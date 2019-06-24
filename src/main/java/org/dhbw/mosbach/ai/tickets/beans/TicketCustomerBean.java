@@ -17,6 +17,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Klasse zum Umgang mit Tickets für die Rolle des Kunden.
+ *
+ * Stellt Funktionen zum Lesen von Tickets und Hinzufügen von Ticket-Einträgen bereit.
+ */
 @Named
 @SessionScoped
 @CDIRoleCheck
