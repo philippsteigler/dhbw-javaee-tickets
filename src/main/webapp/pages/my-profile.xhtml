@@ -42,6 +42,20 @@
                 <h:panelGrid style="width:100%" columns="1" cellpadding="80" columnClasses="description, detail" styleClass="commandButton" >
                     <p:growl id="message" showDetail="true" />
 
+                    <p:commandButton value="Passwort ändern" type="button" onclick="PF('changePw').show();" style="margin-bottom: 5px"/>
+
+                    <p:dialog header="Passwort ändern" widgetVar="changePw" modal="true" height="110" width="380">
+                        <h:panelGrid columns="2" id="matchGrid" cellpadding="5">
+                            <h:outputLabel for="newPw1" value="Neues Passwort: " />
+                            <p:password id="newPw1" value="#{profileBean.password}" match="newPw2" label="Passwort" required="true" requiredMessage="Passwort darf nicht leer sein!" style="margin-bottom: 5px; margin-left: 2px"/>
+
+                            <h:outputLabel for="newPw2" value="Password bestätigen:" />
+                            <p:password id="newPw2" value="#{profileBean.password}" label="Passwort" style="margin-left: 2px"/>
+                        </h:panelGrid>
+
+                        <p:commandButton update="matchGrid" value="Speichern" action="#{profileBean.changePassword(profileBean.password)}" onclick="PF('changePw').hide()" style="margin-top: 10px; position: center"/>
+                    </p:dialog>
+
                     <p:commandButton value="Profil löschen" action="#{profileBean.deleteAccount()}" update="message">
                         <p:confirm header="Achtung" message="Möchten Sie Ihr Profil wirklich löschen?"/>
                     </p:commandButton>

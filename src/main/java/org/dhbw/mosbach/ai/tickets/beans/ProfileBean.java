@@ -19,6 +19,9 @@ public class ProfileBean extends AbstractBean {
     @Inject
     private SecurityBean securityBean;
 
+    // Passwort welches neu gesetzt werden soll
+    private String password;
+
     // Methode zum Löschen des eigenen Benutzerkontos über das UserDAO.
     // Darf von jedem Benutzer ausgeführt werden.
     @PermitAll
@@ -45,7 +48,15 @@ public class ProfileBean extends AbstractBean {
 
             // Speichere die Änderungen direkt in die Datenbank.
             userDAO.persistOrMerge(securityBean.getUser());
-            addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.saveSuccess");
+            addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.changePassword");
         }
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
