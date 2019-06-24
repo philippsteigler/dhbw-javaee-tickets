@@ -35,6 +35,7 @@ public class TicketCustomerBean extends AbstractBean {
     @Inject
     private FilterBean filterBean;
 
+    private static final String VIEW_MY_TICKETS = "customer-my-tickets";
     private static final String VIEW_DETAILS = "customer-ticket-details";
 
     private Ticket currentTicket;
@@ -171,7 +172,7 @@ public class TicketCustomerBean extends AbstractBean {
         ticketContent = "";
         ticketSubject = "";
 
-        return "customer-my-tickets";
+        return VIEW_MY_TICKETS;
     }
 
     //erstellt einen neuen Eintrag und fügt ihn dem aktuellen Ticket hinzu
