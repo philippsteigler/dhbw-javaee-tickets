@@ -3,13 +3,13 @@ package org.dhbw.mosbach.ai.tickets.beans;
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
 
 import javax.annotation.security.PermitAll;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class ProfileBean extends AbstractBean {
 
     // Notwendige CDI-Beans werden an dieser Stelle eingebunden.
