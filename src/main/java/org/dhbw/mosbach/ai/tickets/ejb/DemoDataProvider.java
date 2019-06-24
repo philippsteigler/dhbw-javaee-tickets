@@ -114,13 +114,11 @@ public class DemoDataProvider {
 	 * Danach wird das Passwort gesetzt.
 	 * Abschließend wird der Benutzer in die Datenbank gespeichert, wobei auch die ID als Primärschlüssel gesetzt wird.
 	 */
-	private User createUser(String login, String userName, String companyName, String email, String password, Role... userRoles) {
+	private void createUser(String login, String userName, String companyName, String email, String password, Role... userRoles) {
 		final User user = new User(login, userName, companyName, email);
 		user.getRoles().addAll(Arrays.asList(userRoles));
 		userDAOProxy.changePassword(user, password);
 		userDAOProxy.persist(user);
-
-		return user;
 	}
 
 	private void createTickets() {
@@ -252,20 +250,20 @@ public class DemoDataProvider {
 
 	}
 
-	private Ticket createTicket(String subject, Ticket.Status status, String content, long editorId, long customerId, Date createDate, Entry... additionalEntry){
+	private void createTicket(String subject, Ticket.Status status, String content, long editorId, long customerId, Date createDate, Entry... additionalEntry){
 		final Ticket ticket = new Ticket(subject, status, editorId, customerId);
 		final Entry entry = new Entry(customerId, content, createDate);
 
 		ticket.addEntry(entry);
-		if (additionalEntry.length > 0){
+		if (additionalEntry.length > 0) {
 			ticket.addEntry(additionalEntry[0]);
 		}
+
 		ticketDAO.persist(ticket);
 		entryDAO.persist(entry);
-		if (additionalEntry.length > 0){
+		if (additionalEntry.length > 0) {
 			entryDAO.persist(additionalEntry);
 		}
-		return ticket;
 	}
 
 }
