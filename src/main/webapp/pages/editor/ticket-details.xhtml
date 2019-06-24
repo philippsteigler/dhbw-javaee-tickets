@@ -22,7 +22,7 @@
             </p:dialog>
 
             <p:dialog header="#{msgs['ticket.delegate']}" widgetVar="dlgDelegate" modal="true" height="600" width="500" resizable="false">
-                <p:dataScroller id="editors" value="#{userBean.getEditors()}" var="user" chunkSize="10">
+                <p:dataScroller id="editors" value="#{adminBean.getEditors()}" var="user" chunkSize="10">
                     <f:facet name="header">
                         Bearbeiter
                     </f:facet>
@@ -42,16 +42,16 @@
                 <h:outputText value="#{ticketEditorBean.currentTicket.subject}"/>
 
                 <h:outputLabel value="#{msgs['editor']}: "/>
-                <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.editorId)}" />
+                <h:outputText value="#{adminBean.getUserName(ticketEditorBean.currentTicket.editorId)}" />
 
                 <h:outputLabel value="#{msgs['label.status']}: "/>
                 <h:outputText value="#{generalView.statusToString(ticketEditorBean.currentTicket.status)}"/>
 
                 <h:outputLabel value="#{msgs['label.customer']}: "/>
-                <h:outputText value="#{userBean.getUserName(ticketEditorBean.currentTicket.customerId)}"/>
+                <h:outputText value="#{adminBean.getUserName(ticketEditorBean.currentTicket.customerId)}"/>
 
                 <h:outputLabel value="#{msgs['label.company']}: "/>
-                <h:outputText value="#{userBean.getUserCompany(ticketEditorBean.currentTicket.customerId)}"/>
+                <h:outputText value="#{adminBean.getUserCompany(ticketEditorBean.currentTicket.customerId)}"/>
 
             </h:panelGrid>
 
@@ -72,7 +72,7 @@
                     <h:outputText value="#{generalView.formatDate(entry.createDate)}" />
 
                     <h:outputText value="#{msgs['editor']}: "  style="font-weight: bold"  />
-                    <h:outputText value="#{userBean.getUserName(entry.creatorID)}" />
+                    <h:outputText value="#{adminBean.getUserName(entry.creatorID)}" />
 
                     <h:outputText value="#{msgs['entry']}: "  style="font-weight: bold"  />
                     <h:outputText value="#{entry.content}" />

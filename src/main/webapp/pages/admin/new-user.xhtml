@@ -16,8 +16,8 @@
                 <h:outputStylesheet name="new-user.css" library="styles" />
             </f:facet>
 
-            #{userBean.fetchAllRoles()}
-            #{userBean.fetchAllCompanies()}
+            #{addUserBean.fetchAllRoles()}
+            #{addUserBean.fetchAllCompanies()}
 
             <p:panel id="newUserPanel" header="Neuer Benutzer" styleClass="center" >
                 <p:panelGrid id="newUserPanelGridInfo" columns="1">
@@ -26,16 +26,16 @@
 
                 <p:panelGrid id="newUserPanelGridInput" columns="1">
                     <h:outputLabel for="name" value="#{msgs['label.name']}" style="font-weight:bold"/>
-                    <p:inputText id="name" value="#{adminView.name}" required="true" requiredMessage="Name darf nicht leer sein!"/>
+                    <p:inputText id="name" value="#{addUserBean.name}" required="true" requiredMessage="Name darf nicht leer sein!"/>
 
                     <h:outputLabel for="login_id" value="#{msgs['label.login_id']}" style="font-weight:bold"/>
-                    <p:inputText id="login_id" value="#{adminView.login_id}" required="true" requiredMessage="Login-ID darf nicht leer sein!"/>
+                    <p:inputText id="login_id" value="#{addUserBean.login_id}" required="true" requiredMessage="Login-ID darf nicht leer sein!"/>
 
                     <h:outputLabel for="email" value="#{msgs['label.email']}" style="font-weight:bold"/>
-                    <p:inputText id="email" value="#{adminView.email}" required="true" requiredMessage="E-Mail-Adresse darf nicht leer sein!"/>
+                    <p:inputText id="email" value="#{addUserBean.email}" required="true" requiredMessage="E-Mail-Adresse darf nicht leer sein!"/>
 
                     <h:outputLabel for="role" value="#{msgs['label.role']}" style="font-weight:bold"/>
-                    <p:selectOneMenu id="role" value="#{adminView.role}" style="width:125px" required="true" requiredMessage="Rolle darf nicht leer sein!">
+                    <p:selectOneMenu id="role" value="#{addUserBean.role}" style="width:125px" required="true" requiredMessage="Rolle darf nicht leer sein!">
                         <f:selectItem itemLabel="Customer" itemValue="customer" />
                         <f:selectItem itemLabel="Editor" itemValue="editor"/>
                         <f:selectItem itemLabel="Admin" itemValue="admin" />
@@ -43,14 +43,14 @@
                     </p:selectOneMenu>
 
                     <h:outputLabel for="company" value="#{msgs['label.company']}" style="font-weight:bold" />
-                    <p:selectOneMenu id="company" value="#{adminView.companyName}" effect="fold" editable="true" required="true" disabled="#{adminView.disableCompanySelection(adminView.role)}" requiredMessage="Unternehmen darf nicht leer sein!">
-                        <f:selectItems value="#{userBean.companies}"/>
+                    <p:selectOneMenu id="company" value="#{addUserBean.companyName}" effect="fold" editable="true" required="true" disabled="#{adminView.disableCompanySelection(addUserBean.role)}" requiredMessage="Unternehmen darf nicht leer sein!">
+                        <f:selectItems value="#{addUserBean.companies}"/>
                     </p:selectOneMenu>
 
                     <h:outputLabel for="password" value="#{msgs['label.password']}" style="font-weight:bold"/>
-                    <p:password id="password" value="#{adminView.password}" feedback="true" required="true" requiredMessage="Passwort darf nicht leer sein!"/>
+                    <p:password id="password" value="#{addUserBean.password}" feedback="true" required="true" requiredMessage="Passwort darf nicht leer sein!"/>
 
-                    <h:commandButton value="Benutzer anlegen" action="#{userBean.newUser(adminView.login_id, adminView.name, adminView.companyName, adminView.email, adminView.password,  adminView.role)}" />
+                    <h:commandButton value="Benutzer anlegen" action="#{addUserBean.newUser(addUserBean.login_id, addUserBean.name, addUserBean.companyName, addUserBean.email, addUserBean.password,  addUserBean.role)}" />
                 </p:panelGrid>
             </p:panel>
         </h:form>
