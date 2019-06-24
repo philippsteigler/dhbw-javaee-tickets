@@ -1,6 +1,6 @@
 package org.dhbw.mosbach.ai.tickets.view;
 
-import org.dhbw.mosbach.ai.tickets.beans.AddUserBean;
+import org.dhbw.mosbach.ai.tickets.beans.AdminBean;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class AdminView implements Serializable {
 
     @Inject
-    private AddUserBean addUserBean;
+    private AdminBean adminBean;
 
     // abhängig der ausgewählten Rolle wird die Unternehmensauswahl deaktiviert
     public boolean disableCompanySelection(String role) {
@@ -23,13 +23,13 @@ public class AdminView implements Serializable {
 
             // wenn als Rolle Admin oder Editor gewählt wird, wird der Unternehmensname auf "Ticket Master" gesetzt
             // und die Unternehmensauswahl deaktiviert
-            addUserBean.setCompanyName("Ticket Master");
+            adminBean.setCompanyName("Ticket Master");
             return true;
         } else {
 
             // wenn im aktuellen companyName noch "Ticket Master" steht, wird der Wert entfernt
-            if (addUserBean.getCompanyName().equals("Ticket Master")) {
-                addUserBean.setCompanyName("");
+            if (adminBean.getCompanyName().equals("Ticket Master")) {
+                adminBean.setCompanyName("");
             }
 
             return false;

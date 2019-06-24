@@ -42,7 +42,7 @@
                         <p:outputPanel>
                             <h:panelGrid columns="2" cellpadding="5" columnClasses="logo,detail">
                                 <h:outputText value="#{msgs['editor']}: " style="font-weight: bold" />
-                                <h:outputText value="#{adminBean.getUserName(ticket.editorId)}" />
+                                <h:outputText value="#{userBean.getUserName(ticket.editorId)}" />
 
                                 <h:outputText value="#{msgs['label.subject']}: " style="font-weight: bold" />
                                 <h:outputText value="#{ticket.subject}" />

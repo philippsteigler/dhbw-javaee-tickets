@@ -29,16 +29,16 @@
             <h:outputText value="#{ticketCustomerBean.currentTicket.subject}"/>
 
             <h:outputLabel value="#{msgs['editor']}: "/>
-            <h:outputText value="#{adminBean.getUserName(ticketCustomerBean.currentTicket.editorId)}" />
+            <h:outputText value="#{userBean.getUserName(ticketCustomerBean.currentTicket.editorId)}" />
 
             <h:outputLabel value="#{msgs['label.status']}: "/>
             <h:outputText value="#{generalView.statusToString(ticketCustomerBean.currentTicket.status)}"/>
 
             <h:outputLabel value="#{msgs['label.customer']}: "/>
-            <h:outputText value="#{adminBean.getUserName(ticketCustomerBean.currentTicket.customerId)}"/>
+            <h:outputText value="#{userBean.getUserName(ticketCustomerBean.currentTicket.customerId)}"/>
 
             <h:outputLabel value="#{msgs['label.company']}: "/>
-            <h:outputText value="#{adminBean.getUserCompany(ticketCustomerBean.currentTicket.customerId)}"/>
+            <h:outputText value="#{userBean.getUserCompany(ticketCustomerBean.currentTicket.customerId)}"/>
 
         </h:panelGrid>
 
@@ -54,7 +54,7 @@
                 <h:outputText value="#{generalView.formatDate(entry.createDate)}" />
 
                 <h:outputText value="#{msgs['editor']}: "  style="font-weight: bold"  />
-                <h:outputText value="#{adminBean.getUserName(entry.creatorID)}" />
+                <h:outputText value="#{userBean.getUserName(entry.creatorID)}" />
 
                 <h:outputText value="#{msgs['entry']}: "  style="font-weight: bold"  />
                 <h:outputText value="#{entry.content}" />
