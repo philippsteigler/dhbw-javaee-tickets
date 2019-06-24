@@ -20,15 +20,32 @@ public class ProfileBean extends AbstractBean {
     private SecurityBean securityBean;
 
     // Methode zum Löschen des eigenen Benutzerkontos über das UserDAO.
-    //
     // Darf von jedem Benutzer ausgeführt werden.
     @PermitAll
     public String deleteAccount() {
-        // Lösche den eigenen Benutzer aus der Datenbank.
-        userDAO.removeDetached(securityBean.getUser());
-        addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.deleteSuccess");
+        if (securityBean.isAuthenticated()) {
+            // Lösche den eigenen Benutzer aus der Datenbank.
+            userDAO.removeDetached(securityBean.getUser());
+            addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.deleteSuccess");
 
-        // Nach dem Löschen direkt ausloggen.
-        return securityBean.logout();
+            // Nach dem Löschen direkt ausloggen.
+            return securityBean.logout();
+        }
+
+        return "";
+    }
+
+    // Methode zum Ändern des eigenen Passworts.
+    // Darf von jedem Benutzer ausgeführt werden.
+    @PermitAll
+    public void changePassword(String password) {
+        if (securityBean.isAuthenticated()) {
+            // Ändere das Passwort des aktuell eingeloggten Benutzers.
+            userDAO.changePassword(securityBean.getUser(), password);
+
+            // Speichere die Änderungen direkt in die Datenbank.
+            userDAO.persistOrMerge(securityBean.getUser());
+            addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.saveSuccess");
+        }
     }
 }
