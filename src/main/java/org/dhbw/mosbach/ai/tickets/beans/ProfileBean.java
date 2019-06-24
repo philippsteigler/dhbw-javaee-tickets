@@ -8,6 +8,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * Klasse zur Verwaltung des eigenen Benutzeraccounts über die Ansicht "Mein Profil".
+ */
 @Named
 @ViewScoped
 public class ProfileBean extends AbstractBean {

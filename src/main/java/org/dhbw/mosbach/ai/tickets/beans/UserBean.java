@@ -9,6 +9,9 @@ import javax.inject.Named;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Hilfsklasse zur nutzerfreundlichen Anzeige von Inhalten in der Darstellungsschicht.
+ */
 @Named
 @ViewScoped
 public class UserBean extends AbstractBean {
@@ -35,7 +38,6 @@ public class UserBean extends AbstractBean {
         if (!findUser.isEmpty()) {
             return findUser.get(0).getName();
         } else return "None";
-
     }
 
     // Methode zur Übersetzung von Benutzer-IDs in Unternehmen.
