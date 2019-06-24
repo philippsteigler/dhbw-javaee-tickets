@@ -31,9 +31,7 @@ public class UserDAO extends BaseDAO<User, Long> {
     }
 
     // Methode zur Berechnung eines Passwort-Hashes, da in der Datenbank keine Passwörter im Klartext gespeichert werden.
-    //
-    // Nur der Administrator darf auf diese kritischen Daten zugreifen!
-    @RolesAllowed(value = { Roles.ADMIN })
+    @RolesAllowed(value = { Roles.ADMIN, Roles.EDITOR, Roles.CUSTOMER })
     private MessageDigest getMessageDigest() {
         try {
             return MessageDigest.getInstance("SHA-256");
@@ -44,9 +42,7 @@ public class UserDAO extends BaseDAO<User, Long> {
     }
 
     // Methode zum Setzen/Ändern des Passworts für einen Benutzer.
-    //
-    // Nur der Administrator darf auf diese kritischen Daten zugreifen!
-    @RolesAllowed(value = { Roles.ADMIN })
+    @RolesAllowed(value = { Roles.ADMIN, Roles.EDITOR, Roles.CUSTOMER })
     public void changePassword(User user, String password) {
         try {
             user.setPassword(Base64Encoder.encode(getMessageDigest().digest(password.getBytes())));
