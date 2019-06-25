@@ -1,13 +1,19 @@
 package org.dhbw.mosbach.ai.tickets.beans;
 
+import org.dhbw.mosbach.ai.tickets.database.TicketDAO;
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
+import org.dhbw.mosbach.ai.tickets.model.Roles;
+import org.dhbw.mosbach.ai.tickets.model.Ticket;
 import org.dhbw.mosbach.ai.tickets.model.User;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.Max;
+import java.util.List;
 
 /**
  * Klasse zur Verwaltung des eigenen Benutzeraccounts über die Ansicht "Mein Profil".
@@ -21,8 +27,11 @@ public class ProfileBean extends AbstractBean {
     private UserDAO userDAO;
 
     @Inject
-    private SecurityBean securityBean;
+    private TicketDAO ticketDAO;
 
+    @Inject
+    private SecurityBean securityBean;
+    
     // Passwort welches neu gesetzt werden soll
     private String password;
 
@@ -31,6 +40,9 @@ public class ProfileBean extends AbstractBean {
     @PermitAll
     public String deleteAccount() {
         if (securityBean.isAuthenticated()) {
+            // Tickets von Bearbeiter freigeben
+            releaseTicketsIfEditorIsDeleted(securityBean.getUser());
+
             // Lösche den eigenen Benutzer aus der Datenbank.
             userDAO.removeDetached(securityBean.getUser());
             addLocalizedFacesMessage(FacesMessage.SEVERITY_INFO, "user.deleteSuccess");
@@ -61,6 +73,22 @@ public class ProfileBean extends AbstractBean {
         }
 
         return "";
+    }
+
+
+    // Falls ein Bearbeiter gelöscht wird, sollen alle Tickets die er in Bearbeitung hat in den Status offen gesetzt werden
+    @RolesAllowed(value = { Roles.EDITOR })
+    private void releaseTicketsIfEditorIsDeleted(User deletedEditor) {
+
+        // Alle Tickets des zu löschenden Bearbeiters laden
+        List<Ticket> tickets = ticketDAO.getAllTicketsForEditorID(deletedEditor.getId());
+
+        for (Ticket ticket : tickets) {
+            ticket.setStatusToOpen();
+            ticket.setEditorId(0);
+
+            ticketDAO.persistOrMerge(ticket);
+        }
     }
 
     public String getPassword() {
