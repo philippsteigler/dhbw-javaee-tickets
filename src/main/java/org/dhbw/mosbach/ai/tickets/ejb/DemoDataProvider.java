@@ -77,7 +77,7 @@ public class DemoDataProvider {
 	}
 
 	/**
-	 * Methoe zum erzeugen von Test-Usern.
+	 * Methoe zum Erzeugen von Test-Usern.
 	 *
 	 * Zunächst werden die drei notwendigen Rollen erzeugt und in die Datenbank gespeichert.
 	 * Anschließend werden valide Test-User erzeugt, wobei diesen die zu angelegten Rollen zugewiesen werden.
@@ -108,21 +108,28 @@ public class DemoDataProvider {
 	}
 
 	/**
-	 * Methoden zum anlegen eines konkreten Test-Users
+	 * Methoden zum Anlegen eines konkreten Test-Users
 	 *
 	 * Zunächst wird ein Benutzer mit seinen erforderlichen Attributen erzeugt.
 	 * Danach wird das Passwort gesetzt.
 	 * Abschließend wird der Benutzer in die Datenbank gespeichert, wobei auch die ID als Primärschlüssel gesetzt wird.
 	 */
-	private User createUser(String login, String userName, String companyName, String email, String password, Role... userRoles) {
+	private void createUser(String login, String userName, String companyName, String email, String password, Role... userRoles) {
 		final User user = new User(login, userName, companyName, email);
 		user.getRoles().addAll(Arrays.asList(userRoles));
 		userDAOProxy.changePassword(user, password);
 		userDAOProxy.persist(user);
-
-		return user;
 	}
 
+    /**
+     * Methode zum Erzeugen von Test-Tickets.
+     *
+     * Zunächst werden alle verfügbaren Bearbeiter und Kunden erfasst.
+     * Anschließend werden Tickets mit Testdaten erzeugt.
+     *
+     * Dabei wird zufällig festgelegt, welcher Kunde ein Ticket eingereicht hat und welcher Editor ein Ticket gerade
+     * in Bearbeitung hat!
+     */
 	private void createTickets() {
 		List<User> editors = userDAOProxy.getAll().stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("editor"))).collect(Collectors.toList());
 		List<User> customers = userDAOProxy.getAll().stream().filter(user -> user.getRoles().stream().allMatch(role -> role.getName().equals("customer"))).collect(Collectors.toList());
@@ -252,20 +259,27 @@ public class DemoDataProvider {
 
 	}
 
-	private Ticket createTicket(String subject, Ticket.Status status, String content, long editorId, long customerId, Date createDate, Entry... additionalEntry){
+    /**
+     * Methode zum Anlegen eines konkreten Tickets.
+     *
+     * Zunächst wird ein Ticket mit Header erstellt.
+     * Anschließend wird der erste Eintrag eines Tickets angelegt und diesem hinzugefügt.
+     * Zum Schluss wird das Ticket und dessen Eintrag in die entsprechenden Tabellen der Datenbank gespeichert.
+     */
+	private void createTicket(String subject, Ticket.Status status, String content, long editorId, long customerId, Date createDate, Entry... additionalEntry){
 		final Ticket ticket = new Ticket(subject, status, editorId, customerId);
 		final Entry entry = new Entry(customerId, content, createDate);
 
 		ticket.addEntry(entry);
-		if (additionalEntry.length > 0){
+		if (additionalEntry.length > 0) {
 			ticket.addEntry(additionalEntry[0]);
 		}
+
 		ticketDAO.persist(ticket);
 		entryDAO.persist(entry);
-		if (additionalEntry.length > 0){
+		if (additionalEntry.length > 0) {
 			entryDAO.persist(additionalEntry);
 		}
-		return ticket;
 	}
 
 }

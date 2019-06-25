@@ -17,6 +17,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Klasse zum Umgang mit Tickets für die Rolle des Bearbeiters.
+ *
+ * Stellt Funktionen zum Lesen, Bearbeiten, Delegieren, Schließen, usw. von Tickets sowie Hinzufügen von
+ * Ticket-Einträgen bereit.
+ */
 @Named
 @SessionScoped
 @CDIRoleCheck
@@ -76,6 +82,15 @@ public class TicketEditorBean extends AbstractBean {
 
     public List<Entry> getCurrentEntries() {
         return currentEntries;
+    }
+
+    // Getter und Setter für Einträge.
+    public void setEntryContent(String entryContent) {
+        this.entryContent = entryContent;
+    }
+
+    public String getEntryContent() {
+        return entryContent;
     }
 
     public String viewTicketDetails(Ticket ticket, String redirect) {
@@ -182,14 +197,5 @@ public class TicketEditorBean extends AbstractBean {
         saveEntry(newEntry);
         saveTicket(currentTicket);
         entryContent = "";
-    }
-
-    // Getter und Setter für Einträge.
-    public void setEntryContent(String entryContent) {
-        this.entryContent = entryContent;
-    }
-
-    public String getEntryContent() {
-        return entryContent;
     }
 }

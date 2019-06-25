@@ -9,6 +9,9 @@ import javax.inject.Named;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Hilfsklasse zur nutzerfreundlichen Anzeige von Inhalten in der Darstellungsschicht.
+ */
 @Named
 @ViewScoped
 public class UserBean extends AbstractBean {
@@ -28,21 +31,23 @@ public class UserBean extends AbstractBean {
     }
 
     // Methode zur Übersetzung von Benutzer-IDs in Benutzernamen.
-    //
     // Wird zur schöneren Anzeige im Frontend benötigt, da für Tickets nur die IDs der User hinterlegt sind.
     public String getUserName(long id) {
         List<User> findUser = userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList());
+
         if (!findUser.isEmpty()) {
             return findUser.get(0).getName();
         } else return "None";
-
     }
 
     // Methode zur Übersetzung von Benutzer-IDs in Unternehmen.
-    //
-    // Wird zur schöneren Anzeige in den Ticket-Details benötigt, um die Firma eines Users anzuzeigen, da nur dessen
-    // User-ID aus einem Ticket bekannt ist.
+    // Wird zur schöneren Anzeige in den Ticket-Details benötigt, um die Firma eines Users anzuzeigen,
+    // da nur dessen User-ID aus einem Ticket bekannt ist.
     public String getUserCompany(long id) {
-        return userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getCompany();
+        User findUser = userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0);
+
+        if (findUser != null) {
+            return findUser.getCompany();
+        } else return "None";
     }
 }

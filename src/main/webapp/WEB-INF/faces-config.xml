@@ -26,11 +26,6 @@
             <to-view-id>/pages/admin/user-details.xhtml</to-view-id>
             <redirect />
         </navigation-case>
-        <navigation-case>
-            <from-outcome>admin-new-user</from-outcome>
-            <to-view-id>/pages/admin/new-user.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
 
         <!-- Editor Pages -->
         <navigation-case>
@@ -58,11 +53,6 @@
         <navigation-case>
             <from-outcome>customer-all-tickets</from-outcome>
             <to-view-id>/pages/customer/company-tickets.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>customer-new-ticket</from-outcome>
-            <to-view-id>/pages/customer/new-ticket.xhtml</to-view-id>
             <redirect />
         </navigation-case>
         <navigation-case>

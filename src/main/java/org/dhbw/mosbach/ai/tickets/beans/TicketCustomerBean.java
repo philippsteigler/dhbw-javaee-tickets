@@ -17,6 +17,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Klasse zum Umgang mit Tickets für die Rolle des Kunden.
+ *
+ * Stellt Funktionen zum Lesen von Tickets und Hinzufügen von Ticket-Einträgen bereit.
+ */
 @Named
 @SessionScoped
 @CDIRoleCheck
@@ -35,6 +40,7 @@ public class TicketCustomerBean extends AbstractBean {
     @Inject
     private FilterBean filterBean;
 
+    private static final String VIEW_MY_TICKETS = "customer-my-tickets";
     private static final String VIEW_DETAILS = "customer-ticket-details";
 
     private Ticket currentTicket;
@@ -78,6 +84,23 @@ public class TicketCustomerBean extends AbstractBean {
     public List<Entry> getCurrentEntries() {
         return currentEntries;
     }
+
+    // Getter und Setter für Einträge.
+    public void setEntryContent(String entryContent) {
+        this.entryContent = entryContent;
+    }
+
+    public String getEntryContent() {
+        return entryContent;
+    }
+
+    public void setTicketContent(String ticketContent) { this.ticketContent = ticketContent; }
+
+    public String getTicketContent() { return ticketContent; }
+
+    public void setTicketSubject(String ticketSubject) {this.ticketSubject = ticketSubject; }
+
+    public String getTicketSubject() { return ticketSubject; }
 
     public String viewTicketDetails(Ticket ticket) {
         currentTicket = ticket;
@@ -154,7 +177,7 @@ public class TicketCustomerBean extends AbstractBean {
         ticketContent = "";
         ticketSubject = "";
 
-        return "customer-my-tickets";
+        return VIEW_MY_TICKETS;
     }
 
     //erstellt einen neuen Eintrag und fügt ihn dem aktuellen Ticket hinzu
@@ -165,21 +188,4 @@ public class TicketCustomerBean extends AbstractBean {
         saveTicket(currentTicket);
         entryContent = "";
     }
-
-    // Getter und Setter für Einträge.
-    public void setEntryContent(String entryContent) {
-        this.entryContent = entryContent;
-    }
-
-    public String getEntryContent() {
-        return entryContent;
-    }
-
-    public void setTicketContent(String ticketContent) { this.ticketContent = ticketContent; }
-
-    public String getTicketContent() { return ticketContent; }
-
-    public void setTicketSubject(String ticketSubject) {this.ticketSubject = ticketSubject; }
-
-    public String getTicketSubject() { return ticketSubject; }
 }
