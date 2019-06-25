@@ -56,7 +56,7 @@
                         <p:commandButton update="matchGrid" value="Speichern" action="#{profileBean.changePassword(profileBean.password)}" onclick="PF('changePw').hide()" style="margin-top: 10px; position: center"/>
                     </p:dialog>
 
-                    <p:commandButton value="Profil löschen" action="#{profileBean.deleteAccount()}" update="message">
+                    <p:commandButton value="Profil löschen" action="#{profileBean.deleteAccount()}" update="message" immediate="true">
                         <p:confirm header="Achtung" message="Möchten Sie Ihr Profil wirklich löschen?"/>
                     </p:commandButton>
 
