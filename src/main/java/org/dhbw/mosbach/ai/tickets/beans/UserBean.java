@@ -52,11 +52,8 @@ public class UserBean extends AbstractBean {
 
         // Falls der Kunde nicht mehr exisitert wird ein IndexOutOfBounds Fehler abgefangen
         try {
-            User findUser = userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0);
+            return userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getCompany();
 
-            if (findUser != null) {
-                return findUser.getCompany();
-            } else return "None";
         } catch (final IndexOutOfBoundsException e){
             logger.warn("Searched Company for deleted Customer: ", e);
         }

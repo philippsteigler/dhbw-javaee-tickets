@@ -31,7 +31,7 @@ public class ProfileBean extends AbstractBean {
 
     @Inject
     private SecurityBean securityBean;
-    
+
     // Passwort welches neu gesetzt werden soll
     private String password;
 
