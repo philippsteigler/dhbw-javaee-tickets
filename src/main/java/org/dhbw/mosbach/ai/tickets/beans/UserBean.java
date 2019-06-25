@@ -2,6 +2,8 @@ package org.dhbw.mosbach.ai.tickets.beans;
 
 import org.dhbw.mosbach.ai.tickets.database.UserDAO;
 import org.dhbw.mosbach.ai.tickets.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -22,6 +24,9 @@ public class UserBean extends AbstractBean {
 
     @Inject
     private SecurityBean securityBean;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
+
 
     // Gib alle möglichen Editoren zurück. Wird im Frontend zum Delegieren von Tickets benötigt.
     // Der eigene User wird nicht zum Delegieren aufgelistet.
@@ -44,10 +49,15 @@ public class UserBean extends AbstractBean {
     // Wird zur schöneren Anzeige in den Ticket-Details benötigt, um die Firma eines Users anzuzeigen,
     // da nur dessen User-ID aus einem Ticket bekannt ist.
     public String getUserCompany(long id) {
-        User findUser = userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0);
 
-        if (findUser != null) {
-            return findUser.getCompany();
-        } else return "None";
+        // Falls der Kunde nicht mehr exisitert wird ein IndexOutOfBounds Fehler abgefangen
+        try {
+            return userDAO.getAll().stream().filter(user -> user.getId() == id).collect(Collectors.toList()).get(0).getCompany();
+
+        } catch (final IndexOutOfBoundsException e){
+            logger.warn("Searched Company for deleted Customer: ", e);
+        }
+
+        return "None";
     }
 }
