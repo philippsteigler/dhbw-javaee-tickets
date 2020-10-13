@@ -22,7 +22,7 @@
         <version.slf4j-api>1.7.7</version.slf4j-api>
         <version.logback>1.1.2</version.logback>
 
-        <version.junit>4.12</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.jsf>2.2.18</version.jsf>
 
         <version.arquillian>1.4.1.Final</version.arquillian>
